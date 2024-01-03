@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+*:disabled {
+	opacity: 50%;
+}
+
+:root {
+	--main-color: #242424;
+
+	--accent-color: #141414;
+	--call-to-action-color: #00d1ff;
+
+	--default-gap: 1rem;
+}
+
+html {
+	background-color: var(--main-color);
+}
+
+input,
+button {
+	border-radius: var(--default-gap);
+	padding: var(--default-gap);
+
+	border: none;
+	outline: none;
+}
+
+input {
+	background-color: var(--accent-color);
+
+	color: white;
+
+	cursor: text;
+
+	&::placeholder {
+		color: #ffffff50;
+	}
+
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+	}
+
+	&[type='number'] {
+		text-align: center;
+	}
+}
+
+button {
+	background-color: var(--call-to-action-color);
+
+	color: black;
+
+	cursor: pointer;
+}

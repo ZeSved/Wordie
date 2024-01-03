@@ -1,0 +1,8 @@
+.btns {
+	display: flex;
+
+	gap: var(--default-gap);
+	padding: var(--default-gap);
+
+	width: fit-content;
+}
