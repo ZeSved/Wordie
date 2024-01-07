@@ -1,51 +1,58 @@
-import { generate } from 'random-words'
 import { DefSet } from '../App'
+import { getWord } from '../utils/getWord'
 import s from './user-input.module.scss'
-import { ChangeEvent } from 'react'
 
 export default function UserInput({
-	userSettings,
-	setUserSettings,
+	user,
+	setUser,
 }: {
-	userSettings: DefSet
-	setUserSettings: React.Dispatch<React.SetStateAction<DefSet>>
+	user: DefSet
+	setUser: React.Dispatch<React.SetStateAction<DefSet>>
 }) {
-	function handleInput(e: ChangeEvent<HTMLInputElement>, val: number) {
-		if (parseInt(e.target.value) === 0) return
-		else setUserSettings({ maxSize: val, minSize: parseInt(e.target.value) })
-	}
-
 	return (
 		<>
 			<div className={s.btns}>
 				<div>
-					<label htmlFor={`${userSettings.minSize}`}>Minimum Word Length</label>
+					<label htmlFor={`${user.minSize}`}>Minimum Word Length</label>
 					<input
-						placeholder={`${userSettings.minSize}`}
+						placeholder={`${user.minSize}`}
 						type='number'
-						onChange={(e) => handleInput(e, userSettings.maxSize)}
+						onChange={(e) => {
+							setUser({
+								maxSize: user.maxSize,
+								minSize: parseInt(e.currentTarget.value),
+								word: user.word,
+								wordList: user.wordList,
+							})
+						}}
 						name=''
-						id={`${userSettings.minSize}`}
+						id={`${user.minSize}`}
 					/>
 				</div>
 				<div>
-					<label htmlFor={`${userSettings.maxSize}`}>Maximum Word Length</label>
+					<label htmlFor={`${user.maxSize}`}>Maximum Word Length</label>
 					<input
-						placeholder={`${userSettings.maxSize}`}
+						placeholder={`${user.maxSize}`}
 						type='number'
-						onChange={(e) => handleInput(e, userSettings.minSize)}
+						onChange={(e) => {
+							setUser({
+								maxSize: parseInt(e.currentTarget.value),
+								minSize: user.minSize,
+								word: user.word,
+								wordList: user.wordList,
+							})
+						}}
 						name=''
-						id={`${userSettings.maxSize}`}
+						id={`${user.maxSize}`}
 					/>
 				</div>
 				<button
 					onClick={() =>
-						console.log(
-							generate({ minLength: userSettings.minSize, maxLength: userSettings.maxSize })
-						)
+						setUser({ maxSize: 7, minSize: 4, word: user.word, wordList: user.wordList })
 					}>
 					Reset Settings
 				</button>
+				<button onClick={() => getWord(user, setUser)}>Regenerate Word</button>
 			</div>
 		</>
 	)
