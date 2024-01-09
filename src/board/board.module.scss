@@ -5,7 +5,10 @@
 	width: fit-content;
 	height: fit-content;
 
-	gap: var(--default-gap);
+	max-width: 90vw;
+	max-height: 70vh;
+
+	gap: 2px;
 
 	> div {
 		width: fit-content;
@@ -15,13 +18,12 @@
 		flex-direction: column;
 		justify-content: space-around;
 
-		gap: calc(var(--default-gap) * 2);
+		gap: 6px;
 
-		> input {
-			width: 6rem;
-			aspect-ratio: 1;
-
-			padding: var(--default-gap);
+		.box {
+			height: fit-content;
+			width: fit-content;
+			padding: 1rem 2rem;
 
 			font-size: xx-large;
 			text-align: center;
@@ -29,6 +31,8 @@
 			border-radius: var(--default-gap);
 
 			background-color: var(--accent-color);
+
+			color: white;
 		}
 	}
 }

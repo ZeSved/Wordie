@@ -5,7 +5,7 @@ export function getWord(
   user: DefSet,
   setUser: React.Dispatch<React.SetStateAction<DefSet>>
 ) {
-  const word = generate({ maxLength: user.maxSize, minLength: user.minSize })
+  const word = generate({ maxLength: user.maxSize ?? user.minSize + 1, minLength: user.minSize ?? user.maxSize - 1 })
 
   const wordList: WordList[][] = []
 
@@ -14,7 +14,7 @@ export function getWord(
 
     for (let j = 0; j <= 5; j++) {
       subArr.push({
-        content: word[i],
+        content: word[i].toUpperCase(),
         guessed: {
           content: '',
           correct: false,

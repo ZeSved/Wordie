@@ -1,5 +1,4 @@
 import { DefSet } from '../types/types'
-import { calculateSize } from '../utils/calculateSize'
 import s from './board.module.scss'
 
 export default function Board({
@@ -9,21 +8,32 @@ export default function Board({
 	user: DefSet
 	setUser: React.Dispatch<React.SetStateAction<DefSet>>
 }) {
+	window.addEventListener('keydown', (e) => {
+		const newArr = [...user.wordList]
+
+		newArr[
+			newArr.findIndex((item) => item[0].guessed.content.length === 0)
+		][2].guessed.content = e.key.toUpperCase()
+
+		setUser({
+			maxSize: user.maxSize,
+			minSize: user.minSize,
+			word: user.word,
+			wordList: newArr,
+		})
+	})
+
 	return (
 		<section className={s.main}>
 			{user.wordList.map((ltr, i) => (
 				<div key={i}>
 					{ltr.map((lt, i) => (
-						<input
+						<div
+							className={s.box}
 							key={i}
-							type='text'
-							// placeholder={lt.content}
-							style={{
-								height: calculateSize(user.wordList[0]),
-								aspectRatio: calculateSize(user.wordList[0]),
-							}}
-							id={lt.content}
-						/>
+							id={lt.content}>
+							{lt.guessed.content}
+						</div>
 					))}
 				</div>
 			))}
