@@ -1,4 +1,5 @@
-import { DefSet } from '../App'
+import { DefSet } from '../types/types'
+import { calculateSize } from '../utils/calculateSize'
 import s from './board.module.scss'
 
 export default function Board({
@@ -16,7 +17,12 @@ export default function Board({
 						<input
 							key={i}
 							type='text'
-							placeholder={lt}
+							// placeholder={lt.content}
+							style={{
+								height: calculateSize(user.wordList[0]),
+								aspectRatio: calculateSize(user.wordList[0]),
+							}}
+							id={lt.content}
 						/>
 					))}
 				</div>

@@ -1,4 +1,5 @@
-import { DefSet } from '../App'
+import { DefSet } from '../types/types'
+import { calculateSize } from '../utils/calculateSize'
 import { getWord } from '../utils/getWord'
 import s from './user-input.module.scss'
 
@@ -47,9 +48,15 @@ export default function UserInput({
 					/>
 				</div>
 				<button
-					onClick={() =>
-						setUser({ maxSize: 7, minSize: 4, word: user.word, wordList: user.wordList })
-					}>
+					onClick={() => {
+						setUser({
+							maxSize: 7,
+							minSize: 4,
+							word: user.word,
+							wordList: user.wordList,
+						})
+						calculateSize(user.wordList[0])
+					}}>
 					Reset Settings
 				</button>
 				<button onClick={() => getWord(user, setUser)}>Regenerate Word</button>

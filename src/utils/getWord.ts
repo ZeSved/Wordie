@@ -1,5 +1,5 @@
 import { generate } from "random-words";
-import { DefSet } from "../App";
+import { DefSet, WordList } from "../types/types";
 
 export function getWord(
   user: DefSet,
@@ -7,13 +7,19 @@ export function getWord(
 ) {
   const word = generate({ maxLength: user.maxSize, minLength: user.minSize })
 
-  const wordList: string[][] = []
+  const wordList: WordList[][] = []
 
   for (let i = 0; i < word.length; i++) {
-    const subArr: string[] = []
+    const subArr: WordList[] = []
 
     for (let j = 0; j <= 5; j++) {
-      subArr.push(word[i])
+      subArr.push({
+        content: word[i],
+        guessed: {
+          content: '',
+          correct: false,
+        }
+      })
     }
 
     wordList.push(subArr)
@@ -21,8 +27,8 @@ export function getWord(
 
   setUser({ maxSize: user.maxSize, minSize: user.minSize, word: `${word}`, wordList: wordList })
 
-  console.log(word)
-  console.log(wordList)
+  // console.log(word)
+  // console.log(wordList)
 
   return wordList
 }
