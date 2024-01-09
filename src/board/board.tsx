@@ -11,9 +11,13 @@ export default function Board({
 	window.addEventListener('keydown', (e) => {
 		const newArr = [...user.wordList]
 
+		// for (let i = 0; i < 6; i++)
+
 		newArr[
-			newArr.findIndex((item) => item[0].guessed.content.length === 0)
-		][2].guessed.content = e.key.toUpperCase()
+			newArr.findIndex((item) => item[item.findIndex((it) => it.guessed.content.length === 0)])
+		][
+			newArr.findIndex((item) => item[item.findIndex((it) => it.guessed.content.length === 0)])
+		].guessed.content = e.key.toUpperCase()
 
 		setUser({
 			maxSize: user.maxSize,
