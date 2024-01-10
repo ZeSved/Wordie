@@ -1,4 +1,5 @@
 import { DefSet } from '../types/types'
+import { findFirst } from '../utils/findFirst'
 import s from './board.module.scss'
 
 export default function Board({
@@ -9,21 +10,11 @@ export default function Board({
 	setUser: React.Dispatch<React.SetStateAction<DefSet>>
 }) {
 	window.addEventListener('keydown', (e) => {
-		const newArr = [...user.wordList]
-
-		// for (let i = 0; i < 6; i++)
-
-		newArr[
-			newArr.findIndex((item) => item[item.findIndex((it) => it.guessed.content.length === 0)])
-		][
-			newArr.findIndex((item) => item[item.findIndex((it) => it.guessed.content.length === 0)])
-		].guessed.content = e.key.toUpperCase()
-
 		setUser({
 			maxSize: user.maxSize,
 			minSize: user.minSize,
 			word: user.word,
-			wordList: newArr,
+			wordList: findFirst(user.wordList, e),
 		})
 	})
 
