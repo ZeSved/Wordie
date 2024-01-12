@@ -12,6 +12,8 @@ export default function Board({
 	function typeLetter(e: KeyboardEvent) {
 		const newArr = [...user.wordList]
 
+		console.log(e.key.toUpperCase())
+
 		dispatch({ type: 'set-word-list', payload: newArr })
 	}
 
