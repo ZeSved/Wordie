@@ -10,6 +10,8 @@ export default function Board({
 	dispatch: React.Dispatch<Action>
 }) {
 	function typeLetter(e: KeyboardEvent) {
+		if (!/[a-z]/.test(e.key)) return
+
 		const newArr = [...user.wordList]
 
 		console.log(e.key.toUpperCase())
