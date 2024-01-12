@@ -1,31 +1,27 @@
-import { DefSet } from '../types/types'
+import { useEffect } from 'react'
+import { Action, DefSet } from '../types/types'
 import s from './board.module.scss'
 
 export default function Board({
 	user,
-	setUser,
+	dispatch,
 }: {
 	user: DefSet
-	setUser: React.Dispatch<React.SetStateAction<DefSet>>
+	dispatch: React.Dispatch<Action>
 }) {
-	window.addEventListener('keydown', (e) => {
+	function typeLetter(e: KeyboardEvent) {
 		const newArr = [...user.wordList]
 
-		// for (let i = 0; i < 6; i++)
+		dispatch({ type: 'set-word-list', payload: newArr })
+	}
 
-		newArr[
-			newArr.findIndex((item) => item[item.findIndex((it) => it.guessed.content.length === 0)])
-		][
-			newArr.findIndex((item) => item[item.findIndex((it) => it.guessed.content.length === 0)])
-		].guessed.content = e.key.toUpperCase()
+	useEffect(() => {
+		window.addEventListener('keydown', (e) => typeLetter(e))
 
-		setUser({
-			maxSize: user.maxSize,
-			minSize: user.minSize,
-			word: user.word,
-			wordList: newArr,
-		})
-	})
+		return () => {
+			window.removeEventListener('keydown', typeLetter)
+		}
+	}, [])
 
 	return (
 		<section className={s.main}>

@@ -1,13 +1,13 @@
-import { DefSet } from '../types/types'
+import { Action, DefSet } from '../types/types'
 import { getWord } from '../utils/getWord'
 import s from './user-input.module.scss'
 
 export default function UserInput({
 	user,
-	setUser,
+	dispatch,
 }: {
 	user: DefSet
-	setUser: React.Dispatch<React.SetStateAction<DefSet>>
+	dispatch: React.Dispatch<Action>
 }) {
 	return (
 		<>
@@ -18,12 +18,7 @@ export default function UserInput({
 						placeholder={`${user.minSize}`}
 						type='number'
 						onChange={(e) => {
-							setUser({
-								maxSize: user.maxSize,
-								minSize: parseInt(e.currentTarget.value),
-								word: user.word,
-								wordList: user.wordList,
-							})
+							dispatch({ type: 'set-min-size', payload: parseInt(e.currentTarget.value) })
 						}}
 						name=''
 						id={`${user.minSize}`}
@@ -35,12 +30,7 @@ export default function UserInput({
 						placeholder={`${user.maxSize}`}
 						type='number'
 						onChange={(e) => {
-							setUser({
-								maxSize: parseInt(e.currentTarget.value),
-								minSize: user.minSize,
-								word: user.word,
-								wordList: user.wordList,
-							})
+							dispatch({ type: 'set-max-size', payload: parseInt(e.currentTarget.value) })
 						}}
 						name=''
 						id={`${user.maxSize}`}
@@ -49,20 +39,14 @@ export default function UserInput({
 				<div>
 					<button
 						onClick={() => {
-							setUser({
-								maxSize: 7,
-								minSize: 4,
-								word: user.word,
-								wordList: user.wordList,
-							})
+							dispatch({ type: 'set-max-size', payload: 7 })
+							dispatch({ type: 'set-min-size', payload: 4 })
 						}}>
 						Reset Settings
 					</button>
 				</div>
 				<div>
-					<button onClick={() => getWord(user, setUser)}>
-						Regenerate Word
-					</button>
+					<button onClick={() => getWord(user, dispatch)}>Regenerate Word</button>
 				</div>
 			</div>
 		</>

@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useReducer } from 'react'
 import './App.css'
 import Board from './board/board'
 import UserInput from './user-input/user-input'
 import { DefSet } from './types/types'
+import { reducer } from './utils/reducer'
 
 export const DEFAULT_SETTINGS: DefSet = {
 	maxSize: 7,
@@ -12,18 +13,18 @@ export const DEFAULT_SETTINGS: DefSet = {
 }
 
 function App() {
-	const [user, setUser] = useState<DefSet>(DEFAULT_SETTINGS)
+	const [user, dispatch] = useReducer(reducer, DEFAULT_SETTINGS)
 
 	return (
 		<div className='wrapper'>
 			<div className='main'>
 				<Board
-					setUser={setUser}
+					dispatch={dispatch}
 					user={user}
 				/>
 				<UserInput
 					user={user}
-					setUser={setUser}
+					dispatch={dispatch}
 				/>
 			</div>
 		</div>

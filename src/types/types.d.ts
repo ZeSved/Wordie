@@ -12,3 +12,17 @@ export type WordList = {
     correct: boolean
   }
 }
+
+export type Action =
+  | {
+    type: 'set-min-size' | 'set-max-size'
+    payload: number
+  }
+  | {
+    type: 'set-word'
+    payload: string
+  }
+  | {
+    type: 'set-word-list'
+    payload: WordList[][]
+  }

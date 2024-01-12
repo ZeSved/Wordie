@@ -1,9 +1,9 @@
 import { generate } from "random-words";
-import { DefSet, WordList } from "../types/types";
+import { Action, DefSet, WordList } from "../types/types";
 
 export function getWord(
   user: DefSet,
-  setUser: React.Dispatch<React.SetStateAction<DefSet>>
+  dispatch: React.Dispatch<Action>
 ) {
   const word = generate({ maxLength: user.maxSize ?? user.minSize + 1, minLength: user.minSize ?? user.maxSize - 1 })
 
@@ -25,7 +25,8 @@ export function getWord(
     wordList.push(subArr)
   }
 
-  setUser({ maxSize: user.maxSize, minSize: user.minSize, word: `${word}`, wordList: wordList })
+  dispatch({ type: "set-word", payload: `${word}` })
+  dispatch({ type: "set-word-list", payload: wordList })
 
   // console.log(word)
   // console.log(wordList)
