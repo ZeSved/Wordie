@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Action, DefSet } from '../types/types'
 import { getWord } from '../utils/getWord'
 import s from './user-input.module.scss'
@@ -9,6 +10,10 @@ export default function UserInput({
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
+	useEffect(() => {
+		getWord(user, dispatch)
+	}, [])
+
 	return (
 		<>
 			<div className={s.btns}>
@@ -47,6 +52,16 @@ export default function UserInput({
 				</div>
 				<div>
 					<button onClick={() => getWord(user, dispatch)}>Regenerate Word</button>
+				</div>
+				<div>
+					<button
+						onClick={() =>
+							confirm(
+								'Are you sure you want to reveal the word? This will reset all progress and generate a new word.'
+							) && alert(`The word was '${user.word}'`)
+						}>
+						Reveal Word
+					</button>
 				</div>
 			</div>
 		</>

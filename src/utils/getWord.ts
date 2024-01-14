@@ -9,12 +9,12 @@ export function getWord(
 
   const wordList: WordList[][] = []
 
-  for (let i = 0; i < word.length; i++) {
+  for (let i = 0; i <= 5; i++) {
     const subArr: WordList[] = []
 
-    for (let j = 0; j <= 5; j++) {
+    for (let j = 0; j < word.length; j++) {
       subArr.push({
-        content: word[i].toUpperCase(),
+        content: word[j].toUpperCase(),
         guessed: {
           content: '',
           correct: false,

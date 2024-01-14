@@ -1,5 +1,6 @@
 .main {
 	display: flex;
+	flex-direction: column;
 	justify-content: space-around;
 
 	width: fit-content;
@@ -8,31 +9,48 @@
 	max-width: 90vw;
 	max-height: 70vh;
 
-	gap: 2px;
+	gap: 6px;
 
 	> div {
 		width: fit-content;
 		height: fit-content;
 
 		display: flex;
-		flex-direction: column;
 		justify-content: space-around;
 
-		gap: 6px;
+		gap: 2px;
 
 		.box {
 			height: fit-content;
 			width: fit-content;
-			padding: 1rem 2rem;
+			padding: 0.5rem 0.7rem;
 
-			font-size: xx-large;
 			text-align: center;
 
 			border-radius: var(--default-gap);
 
 			background-color: var(--accent-color);
 
-			color: white;
+			> p {
+				font-size: xx-large;
+				padding: 0.4rem 1.2rem;
+				border-radius: 0.5rem 0.3rem;
+				color: white;
+			}
+		}
+
+		.correct > p,
+		.guessed > p,
+		.hasContent > p {
+			color: var(--accent-color);
+		}
+
+		.correct {
+			background-color: #00ff00;
+		}
+
+		.guessed {
+			background-color: #eeff00;
 		}
 	}
 }

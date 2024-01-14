@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Action, DefSet } from '../types/types'
 import s from './board.module.scss'
+import { boardCheck } from '../utils/boardCheck'
 
 export default function Board({
 	user,
@@ -10,17 +11,19 @@ export default function Board({
 	dispatch: React.Dispatch<Action>
 }) {
 	function typeLetter(e: KeyboardEvent) {
-		if (!/[a-z]/.test(e.key)) return
+		if (!/^[a-z]$/.test(e.key)) return
 
+		const indexesOfFirst = boardCheck(user)
 		const newArr = [...user.wordList]
-
-		console.log(e.key.toUpperCase())
+		const indexedArr = newArr[indexesOfFirst.index1][indexesOfFirst.index2]
+		indexedArr.guessed.content = e.key.toUpperCase()
+		if (indexedArr.content === indexedArr.guessed.content) indexedArr.guessed.correct = true
 
 		dispatch({ type: 'set-word-list', payload: newArr })
 	}
 
 	useEffect(() => {
-		window.addEventListener('keydown', (e) => typeLetter(e))
+		window.addEventListener('keydown', typeLetter)
 
 		return () => {
 			window.removeEventListener('keydown', typeLetter)
@@ -33,10 +36,15 @@ export default function Board({
 				<div key={i}>
 					{ltr.map((lt, i) => (
 						<div
-							className={s.box}
+							className={`${s.box} ${lt.guessed.correct && s.correct} ${
+								!lt.guessed.content && s.hasContent
+							}`}
 							key={i}
 							id={lt.content}>
-							{lt.guessed.content}
+							<p>
+								{lt.guessed.content}
+								{!lt.guessed.content && 'X'}
+							</p>
 						</div>
 					))}
 				</div>
