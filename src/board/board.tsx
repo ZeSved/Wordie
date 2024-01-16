@@ -11,13 +11,26 @@ export default function Board({
 	dispatch: React.Dispatch<Action>
 }) {
 	function typeLetter(e: KeyboardEvent) {
-		if (!/^[a-z]$/.test(e.key)) return
-
 		const indexesOfFirst = boardCheck(user)
 		const newArr = [...user.wordList]
 		const indexedArr = newArr[indexesOfFirst.index1][indexesOfFirst.index2]
-		indexedArr.guessed.content = e.key.toUpperCase()
-		if (indexedArr.content === indexedArr.guessed.content) indexedArr.guessed.correct = true
+
+		switch (true) {
+			case /^[a-z]$/.test(e.key):
+				if (
+					indexesOfFirst.index1 === user.curRow &&
+					indexesOfFirst.index2 === 0 &&
+					newArr[user.curRow][0].guessed.content !== ''
+				)
+					return
+
+				indexedArr.guessed.content = e.key.toUpperCase()
+				if (indexedArr.content === indexedArr.guessed.content)
+					indexedArr.guessed.correct = true
+				break
+			case e.key === 'Backspace':
+				console.log('works')
+		}
 
 		dispatch({ type: 'set-word-list', payload: newArr })
 	}
@@ -33,7 +46,9 @@ export default function Board({
 	return (
 		<section className={s.main}>
 			{user.wordList.map((ltr, i) => (
-				<div key={i}>
+				<div
+					className={user.curRow === i ? s.current : ''}
+					key={i}>
 					{ltr.map((lt, i) => (
 						<div
 							className={`${s.box} ${lt.guessed.correct && s.correct} ${

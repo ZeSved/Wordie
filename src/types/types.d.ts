@@ -3,6 +3,7 @@ export type DefSet = {
   minSize: number
   word: string
   wordList: WordList[][]
+  curRow: number
 }
 
 export type WordList = {
@@ -25,4 +26,8 @@ export type Action =
   | {
     type: 'set-word-list'
     payload: WordList[][]
+  }
+  | {
+    type: 'set-cur_row'
+    payload: number
   }

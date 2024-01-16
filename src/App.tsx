@@ -10,6 +10,7 @@ export const DEFAULT_SETTINGS: DefSet = {
 	minSize: 4,
 	word: '',
 	wordList: [],
+	curRow: 0,
 }
 
 function App() {
