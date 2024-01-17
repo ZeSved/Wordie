@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Action, DefSet } from '../types/types'
 import { getWord } from '../utils/getWord'
 import s from './user-input.module.scss'
@@ -10,10 +9,6 @@ export default function UserInput({
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
-	useEffect(() => {
-		getWord(user, dispatch)
-	}, [])
-
 	return (
 		<>
 			<div className={s.btns}>
@@ -23,7 +18,10 @@ export default function UserInput({
 						placeholder={`${user.minSize}`}
 						type='number'
 						onChange={(e) => {
-							dispatch({ type: 'set-min-size', payload: parseInt(e.currentTarget.value) })
+							dispatch({
+								type: 'set-min-size',
+								payload: parseInt(e.currentTarget.value),
+							})
 						}}
 						name=''
 						id={`${user.minSize}`}
@@ -35,7 +33,10 @@ export default function UserInput({
 						placeholder={`${user.maxSize}`}
 						type='number'
 						onChange={(e) => {
-							dispatch({ type: 'set-max-size', payload: parseInt(e.currentTarget.value) })
+							dispatch({
+								type: 'set-max-size',
+								payload: parseInt(e.currentTarget.value),
+							})
 						}}
 						name=''
 						id={`${user.maxSize}`}
@@ -51,7 +52,15 @@ export default function UserInput({
 					</button>
 				</div>
 				<div>
-					<button onClick={() => getWord(user, dispatch)}>Regenerate Word</button>
+					<button
+						onClick={() =>
+							dispatch({
+								type: 'set-word-list',
+								payload: getWord(user, dispatch),
+							})
+						}>
+						Regenerate Word
+					</button>
 				</div>
 				<div>
 					<button

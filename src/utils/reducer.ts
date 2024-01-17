@@ -22,5 +22,10 @@ export function reducer(user: DefSet, action: Action): DefSet {
         ...user,
         wordList: action.payload
       }
+    case 'set-cur_row':
+      return {
+        ...user,
+        curRow: action.payload
+      }
   }
 }

@@ -1,9 +1,11 @@
-import { useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import './App.css'
 import Board from './board/board'
 import UserInput from './user-input/user-input'
 import { DefSet } from './types/types'
 import { reducer } from './utils/reducer'
+import { getWord } from './utils/getWord'
+import { typeLetter } from './utils/typeLetter'
 
 export const DEFAULT_SETTINGS: DefSet = {
 	maxSize: 7,
@@ -15,6 +17,21 @@ export const DEFAULT_SETTINGS: DefSet = {
 
 function App() {
 	const [user, dispatch] = useReducer(reducer, DEFAULT_SETTINGS)
+
+	useEffect(() => {
+		dispatch({
+			type: 'set-word-list',
+			payload: getWord(user, dispatch),
+		})
+
+		window.addEventListener('keydown', (e) => typeLetter(e, user, dispatch))
+
+		return () => {
+			window.removeEventListener('keydown', (e) =>
+				typeLetter(e, user, dispatch)
+			)
+		}
+	}, [])
 
 	return (
 		<div className='wrapper'>

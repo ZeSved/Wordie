@@ -6,6 +6,7 @@ export function getWord(
   dispatch: React.Dispatch<Action>
 ) {
   const word = generate({ maxLength: user.maxSize ?? user.minSize + 1, minLength: user.minSize ?? user.maxSize - 1 })
+  console.log(word)
 
   const wordList: WordList[][] = []
 
@@ -25,11 +26,9 @@ export function getWord(
     wordList.push(subArr)
   }
 
-  dispatch({ type: "set-word", payload: `${word}` })
-  dispatch({ type: "set-word-list", payload: wordList })
+  console.log(wordList)
 
-  // console.log(word)
-  // console.log(wordList)
+  dispatch({ type: "set-word", payload: `${word}` })
 
   return wordList
 }
