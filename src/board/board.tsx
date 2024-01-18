@@ -8,6 +8,7 @@ export default function Board({
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
+	console.log(user.wordList)
 	return (
 		<section className={s.main}>
 			{user.wordList.map((ltr, i) => (

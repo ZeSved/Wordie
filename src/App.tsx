@@ -19,10 +19,10 @@ function App() {
 	const [user, dispatch] = useReducer(reducer, DEFAULT_SETTINGS)
 
 	useEffect(() => {
-		dispatch({
-			type: 'set-word-list',
-			payload: getWord(user, dispatch),
-		})
+		getWord(user, dispatch)
+
+		console.log(user.word)
+		console.log(user.wordList)
 
 		window.addEventListener('keydown', (e) => typeLetter(e, user, dispatch))
 

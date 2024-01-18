@@ -4,6 +4,7 @@ import { boardCheck } from "./boardCheck"
 export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispatch<Action>) {
   const indexesOfFirst = boardCheck(user)
   const newArr = [...user.wordList]
+  console.log(user.word)
   console.log(user.wordList)
   console.log(indexesOfFirst)
   console.log(newArr)
@@ -14,8 +15,7 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
       if (
         indexesOfFirst.index1 === user.curRow &&
         (indexesOfFirst.index2 === 0 ||
-          indexesOfFirst.index2 === newArr[0].length - 1) &&
-        newArr[user.curRow][0].guessed.content !== ''
+          indexesOfFirst.index2 === newArr[0].length - 1)
       )
         return
 
@@ -31,6 +31,7 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
         return
 
       newArr[user.curRow][indexesOfFirst.index2 - 1].guessed.content = ''
+      break
   }
 
   dispatch({ type: 'set-word-list', payload: newArr })

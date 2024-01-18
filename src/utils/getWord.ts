@@ -5,8 +5,8 @@ export function getWord(
   user: DefSet,
   dispatch: React.Dispatch<Action>
 ) {
-  const word = generate({ maxLength: user.maxSize ?? user.minSize + 1, minLength: user.minSize ?? user.maxSize - 1 })
-  console.log(word)
+  // const word = generate({ maxLength: user.maxSize ?? user.minSize + 1, minLength: user.minSize ?? user.maxSize - 1 })
+  const word = 'house'
 
   const wordList: WordList[][] = []
 
@@ -28,7 +28,9 @@ export function getWord(
 
   console.log(wordList)
 
-  dispatch({ type: "set-word", payload: `${word}` })
+  dispatch({ type: "set-word", payload: word })
+  dispatch({ type: "set-word-list", payload: wordList })
 
-  return wordList
+  console.log(user.word)
+  console.log(user.wordList)
 }

@@ -52,13 +52,7 @@ export default function UserInput({
 					</button>
 				</div>
 				<div>
-					<button
-						onClick={() =>
-							dispatch({
-								type: 'set-word-list',
-								payload: getWord(user, dispatch),
-							})
-						}>
+					<button onClick={() => getWord(user, dispatch)}>
 						Regenerate Word
 					</button>
 				</div>
