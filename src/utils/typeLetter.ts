@@ -1,13 +1,9 @@
-import { Action, DefSet } from "../types/types"
+import { DefSet } from "../types/types"
 import { boardCheck } from "./boardCheck"
 
-export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispatch<Action>) {
+export function typeLetter(e: KeyboardEvent, user: DefSet) {
   const indexesOfFirst = boardCheck(user)
   const newArr = [...user.wordList]
-  console.log(user.word)
-  console.log(user.wordList)
-  console.log(indexesOfFirst)
-  console.log(newArr)
   const indexedArr = newArr[indexesOfFirst.index1][indexesOfFirst.index2]
 
   switch (true) {
@@ -34,5 +30,5 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
       break
   }
 
-  dispatch({ type: 'set-word-list', payload: newArr })
+  return newArr
 }

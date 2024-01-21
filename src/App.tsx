@@ -4,8 +4,9 @@ import Board from './board/board'
 import UserInput from './user-input/user-input'
 import { DefSet } from './types/types'
 import { reducer } from './utils/reducer'
-import { getWord } from './utils/getWord'
 import { typeLetter } from './utils/typeLetter'
+import { generate } from 'random-words'
+import { createContent } from './utils/createContent'
 
 export const DEFAULT_SETTINGS: DefSet = {
 	maxSize: 7,
@@ -15,20 +16,40 @@ export const DEFAULT_SETTINGS: DefSet = {
 	curRow: 0,
 }
 
+const WORD_KEY = 'word'
+const WORDLIST_KEY = 'word_list'
+
 function App() {
 	const [user, dispatch] = useReducer(reducer, DEFAULT_SETTINGS)
 
 	useEffect(() => {
-		getWord(user, dispatch)
+		// const word = generate({
+		// 	maxLength: user.maxSize ?? user.minSize + 1,
+		// 	minLength: user.minSize ?? user.maxSize - 1,
+		// })
+		const word = 'house'
+
+		dispatch({ type: 'set-word', payload: window.localStorage.getItem(WORD_KEY) ?? word })
+		dispatch({
+			type: 'set-word-list',
+			payload: JSON.parse(
+				window.localStorage.getItem(WORDLIST_KEY) ?? JSON.stringify(createContent(word))
+			),
+		})
+
+		console.log(createContent(word))
 
 		console.log(user.word)
 		console.log(user.wordList)
+		console.log(word)
 
-		window.addEventListener('keydown', (e) => typeLetter(e, user, dispatch))
+		window.addEventListener('keydown', (e) =>
+			dispatch({ type: 'set-word-list', payload: typeLetter(e, user)! })
+		)
 
 		return () => {
 			window.removeEventListener('keydown', (e) =>
-				typeLetter(e, user, dispatch)
+				dispatch({ type: 'set-word-list', payload: typeLetter(e, user)! })
 			)
 		}
 	}, [])
@@ -36,10 +57,7 @@ function App() {
 	return (
 		<div className='wrapper'>
 			<div className='main'>
-				<Board
-					dispatch={dispatch}
-					user={user}
-				/>
+				<Board user={user} />
 				<UserInput
 					user={user}
 					dispatch={dispatch}

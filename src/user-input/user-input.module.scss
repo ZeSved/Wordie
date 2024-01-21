@@ -33,6 +33,14 @@
 		}
 	}
 
+	.nosave {
+		background-color: #00d1ff40;
+
+		> button {
+			background-color: #00d1ff01;
+		}
+	}
+
 	:last-child {
 		border-radius: 0 var(--default-gap) var(--default-gap) 0;
 	}

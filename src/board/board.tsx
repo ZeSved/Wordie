@@ -1,13 +1,7 @@
-import { Action, DefSet } from '../types/types'
+import { DefSet } from '../types/types'
 import s from './board.module.scss'
 
-export default function Board({
-	user,
-	dispatch,
-}: {
-	user: DefSet
-	dispatch: React.Dispatch<Action>
-}) {
+export default function Board({ user }: { user: DefSet }) {
 	console.log(user.wordList)
 	return (
 		<section className={s.main}>

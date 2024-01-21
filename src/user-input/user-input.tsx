@@ -1,5 +1,5 @@
+import { useState } from 'react'
 import { Action, DefSet } from '../types/types'
-import { getWord } from '../utils/getWord'
 import s from './user-input.module.scss'
 
 export default function UserInput({
@@ -9,6 +9,8 @@ export default function UserInput({
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
+	const [saveProgress, setSaveProgress] = useState(false)
+
 	return (
 		<>
 			<div className={s.btns}>
@@ -51,10 +53,8 @@ export default function UserInput({
 						Reset Settings
 					</button>
 				</div>
-				<div>
-					<button onClick={() => getWord(user, dispatch)}>
-						Regenerate Word
-					</button>
+				<div className={saveProgress ? '' : s.nosave}>
+					<button onClick={() => setSaveProgress(!saveProgress)}>Save Progress</button>
 				</div>
 				<div>
 					<button
