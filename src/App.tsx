@@ -4,8 +4,7 @@ import Board from './board/board'
 import UserInput from './user-input/user-input'
 import { DefSet } from './types/types'
 import { reducer } from './utils/reducer'
-import { typeLetter } from './utils/typeLetter'
-import { generate } from 'random-words'
+// import { generate } from 'random-words'
 import { createContent } from './utils/createContent'
 
 export const DEFAULT_SETTINGS: DefSet = {
@@ -36,8 +35,7 @@ function App() {
 		dispatch({
 			type: 'set-word-list',
 			payload: JSON.parse(
-				window.localStorage.getItem(WORDLIST_KEY) ??
-					JSON.stringify(createContent(word))
+				window.localStorage.getItem(WORDLIST_KEY) ?? JSON.stringify(createContent(word))
 			),
 		})
 
