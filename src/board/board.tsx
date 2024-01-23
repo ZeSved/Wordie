@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
 import { Action, DefSet } from '../types/types'
+
 import s from './board.module.scss'
 import { typeLetter } from '../utils/typeLetter'
+import { useEffect } from 'react'
 
 export default function Board({
 	user,
@@ -10,19 +11,17 @@ export default function Board({
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
-	console.log(user.wordList)
-
 	useEffect(() => {
-		window.addEventListener('keydown', (e) =>
-			dispatch({ type: 'set-word-list', payload: typeLetter(e, user)! })
-		)
+		function keyDownHandler(e: KeyboardEvent) {
+			typeLetter(e, user, dispatch)
+		}
+
+		window.addEventListener('keydown', keyDownHandler)
 
 		return () => {
-			window.removeEventListener('keydown', (e) =>
-				dispatch({ type: 'set-word-list', payload: typeLetter(e, user)! })
-			)
+			window.removeEventListener('keydown', keyDownHandler)
 		}
-	}, [])
+	}, [user])
 
 	return (
 		<section className={s.main}>

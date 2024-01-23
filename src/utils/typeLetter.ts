@@ -1,34 +1,38 @@
-import { DefSet, WordList } from "../types/types"
+import { Action, DefSet, Token } from "../types/types"
+
 import { findFirstInRow } from "./findFirstInRow"
 
-export function typeLetter(e: KeyboardEvent, user: DefSet) {
+const ALLOWED_LETTERS = /^[a-z]$/
+
+export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispatch<Action>) {
   const index = findFirstInRow(user)
-  const newArr = [...user.wordList]
 
-  if (newArr) {
-    console.log(newArr)
-    const indexedArr = newArr[user.curRow][index]
-    const indexedGuess = indexedArr.guessed
-
-    switch (true) {
-      case /^[a-z]$/.test(e.key):
-        if (newArr[user.curRow][newArr[user.curRow].length - 1].guessed.content) return
-
-        indexedGuess.content = e.key.toUpperCase()
-        if (indexedArr.content === indexedGuess.content)
-          indexedGuess.correct = true
-        break
-      case e.key === 'Backspace':
-        if (
-          // newArr[indexesOfFirst.index1].length <= 0 ||
-          newArr[user.curRow].length <= 0
-        )
-          return
-
-        newArr[user.curRow][index - 1].guessed.content = ''
-        break
-    }
+  function updateWordList(wordList: Token[][] | undefined) {
+    wordList && dispatch({ type: 'set-word-list', payload: wordList })
   }
 
-  return newArr
+  if (ALLOWED_LETTERS.test(e.key)) {
+    if (index === -1) return
+    const { guessed: guess, content }: Token = user.wordList[user.curRow][index]
+
+    guess.content = e.key.toUpperCase()
+    guess.correct = content === guess.content
+
+    return updateWordList(user.wordList)
+  }
+
+  if (e.key === 'Backspace') {
+    if (index === 0) return
+
+    const prevLetterIndex = (index === -1 ? user.word.length : index) - 1
+
+    user.wordList[user.curRow][prevLetterIndex].guessed.content = ''
+    return updateWordList(user.wordList)
+  }
+
+  if (e.key === 'Enter') {
+    if (index !== -1) return
+
+    return dispatch({ type: "set-cur_row", payload: user.curRow + 1 })
+  }
 }

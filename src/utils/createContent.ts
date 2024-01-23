@@ -1,10 +1,10 @@
-import { WordList } from "../types/types"
+import { Token } from "../types/types"
 
 export function createContent(word: string) {
-  const wordList: WordList[][] = []
+  const wordList: Token[][] = []
 
   for (let i = 0; i <= 5; i++) {
-    const subArr: WordList[] = []
+    const subArr: Token[] = []
 
     for (let j = 0; j < word.length; j++) {
       subArr.push({

@@ -2,11 +2,11 @@ export type DefSet = {
   maxSize: number
   minSize: number
   word: string
-  wordList: WordList[][]
+  wordList: Token[][]
   curRow: number
 }
 
-export type WordList = {
+export type Token = {
   content: string
   guessed: {
     content: string
@@ -25,7 +25,7 @@ export type Action =
   }
   | {
     type: 'set-word-list'
-    payload: WordList[][]
+    payload: Token[][]
   }
   | {
     type: 'set-cur_row'

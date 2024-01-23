@@ -1,11 +1,14 @@
-import { useEffect, useReducer } from 'react'
 import './App.css'
+
+import { useEffect, useReducer } from 'react'
+
 import Board from './board/board'
-import UserInput from './user-input/user-input'
 import { DefSet } from './types/types'
-import { reducer } from './utils/reducer'
-// import { generate } from 'random-words'
+import UserInput from './user-input/user-input'
 import { createContent } from './utils/createContent'
+import { reducer } from './utils/reducer'
+
+// import { generate } from 'random-words'
 
 export const DEFAULT_SETTINGS: DefSet = {
 	maxSize: 7,
@@ -38,12 +41,6 @@ function App() {
 				window.localStorage.getItem(WORDLIST_KEY) ?? JSON.stringify(createContent(word))
 			),
 		})
-
-		console.log(createContent(word))
-
-		console.log(user.word)
-		console.log(user.wordList)
-		console.log(word)
 	}, [])
 
 	return (

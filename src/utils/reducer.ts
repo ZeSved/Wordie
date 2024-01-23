@@ -13,6 +13,9 @@ export function reducer(user: DefSet, action: Action): DefSet {
         maxSize: action.payload
       }
     case 'set-word':
+      const rootElm = document.documentElement
+      rootElm.style.setProperty('--word-length', action.payload.length.toString());
+
       return {
         ...user,
         word: action.payload
