@@ -29,11 +29,15 @@ function App() {
 		// })
 		const word = 'house'
 
-		dispatch({ type: 'set-word', payload: window.localStorage.getItem(WORD_KEY) ?? word })
+		dispatch({
+			type: 'set-word',
+			payload: window.localStorage.getItem(WORD_KEY) ?? word,
+		})
 		dispatch({
 			type: 'set-word-list',
 			payload: JSON.parse(
-				window.localStorage.getItem(WORDLIST_KEY) ?? JSON.stringify(createContent(word))
+				window.localStorage.getItem(WORDLIST_KEY) ??
+					JSON.stringify(createContent(word))
 			),
 		})
 
@@ -42,22 +46,15 @@ function App() {
 		console.log(user.word)
 		console.log(user.wordList)
 		console.log(word)
-
-		window.addEventListener('keydown', (e) =>
-			dispatch({ type: 'set-word-list', payload: typeLetter(e, user)! })
-		)
-
-		return () => {
-			window.removeEventListener('keydown', (e) =>
-				dispatch({ type: 'set-word-list', payload: typeLetter(e, user)! })
-			)
-		}
 	}, [])
 
 	return (
 		<div className='wrapper'>
 			<div className='main'>
-				<Board user={user} />
+				<Board
+					user={user}
+					dispatch={dispatch}
+				/>
 				<UserInput
 					user={user}
 					dispatch={dispatch}
