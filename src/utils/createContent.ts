@@ -10,6 +10,7 @@ export function createContent(word: string) {
       subArr.push({
         content: word[j].toUpperCase(),
         guessed: {
+          existsAnywhere: false,
           content: '',
           correct: false,
         },

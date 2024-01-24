@@ -9,6 +9,7 @@ export type DefSet = {
 export type Token = {
   content: string
   guessed: {
+    existsAnywhere: boolean
     content: string
     correct: boolean
   }

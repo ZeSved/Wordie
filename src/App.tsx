@@ -35,10 +35,12 @@ function App() {
 			type: 'set-word',
 			payload: window.localStorage.getItem(WORD_KEY) ?? word,
 		})
+
 		dispatch({
 			type: 'set-word-list',
 			payload: JSON.parse(
-				window.localStorage.getItem(WORDLIST_KEY) ?? JSON.stringify(createContent(word))
+				window.localStorage.getItem(WORDLIST_KEY) ??
+					JSON.stringify(createContent(word))
 			),
 		})
 	}, [])

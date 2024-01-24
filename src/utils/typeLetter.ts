@@ -17,6 +17,7 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
 
     guess.content = e.key.toUpperCase()
     guess.correct = content === guess.content
+    guess.existsAnywhere = !guess.correct ? user.word.includes(e.key) : guess.existsAnywhere
 
     return updateWordList(user.wordList)
   }
