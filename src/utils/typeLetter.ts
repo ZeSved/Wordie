@@ -11,6 +11,17 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
     wordList && dispatch({ type: 'set-word-list', payload: wordList })
   }
 
+  // function checkIfWon(wordList: Token[][] | undefined) {
+  //   if (wordList) {
+  //     const word = []
+  //     for (let i = 0; i <= user.word.length; i++) {
+  //       word.push(wordList[user.curRow][i].guessed.content)
+  //     }
+
+  //     return word.join('') === user.word
+  //   }
+  // }
+
   if (ALLOWED_LETTERS.test(e.key)) {
     if (index === -1) return
     const { guessed: guess, content }: Token = user.wordList[user.curRow][index]
@@ -33,6 +44,12 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
 
   if (e.key === 'Enter') {
     if (index !== -1) return
+
+    // if (checkIfWon(user.wordList)) {
+    //   dispatch({ type: "set-status", payload: "won" })
+    // }
+
+    if (user.curRow === 6) dispatch({ type: "set-status", payload: "lost" })
 
     return dispatch({ type: "set-cur_row", payload: user.curRow + 1 })
   }

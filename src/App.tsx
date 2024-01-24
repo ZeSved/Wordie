@@ -7,8 +7,9 @@ import { DefSet } from './types/types'
 import UserInput from './user-input/user-input'
 import { createContent } from './utils/createContent'
 import { reducer } from './utils/reducer'
+import FinalScreen from './final-screen/finalScreen'
 
-// import { generate } from 'random-words'
+import { generate } from 'random-words'
 
 export const DEFAULT_SETTINGS: DefSet = {
 	maxSize: 7,
@@ -16,20 +17,21 @@ export const DEFAULT_SETTINGS: DefSet = {
 	word: '',
 	wordList: [],
 	curRow: 0,
+	status: 'playing',
 }
 
-const WORD_KEY = 'word'
-const WORDLIST_KEY = 'word_list'
+export const WORD_KEY = 'word'
+export const WORDLIST_KEY = 'word_list'
 
 function App() {
 	const [user, dispatch] = useReducer(reducer, DEFAULT_SETTINGS)
 
 	useEffect(() => {
-		// const word = generate({
-		// 	maxLength: user.maxSize ?? user.minSize + 1,
-		// 	minLength: user.minSize ?? user.maxSize - 1,
-		// })
-		const word = 'house'
+		const word = generate({
+			maxLength: user.maxSize ?? user.minSize + 1,
+			minLength: user.minSize ?? user.maxSize - 1,
+		})
+		// const word = 'house'
 
 		dispatch({
 			type: 'set-word',
@@ -39,8 +41,7 @@ function App() {
 		dispatch({
 			type: 'set-word-list',
 			payload: JSON.parse(
-				window.localStorage.getItem(WORDLIST_KEY) ??
-					JSON.stringify(createContent(word))
+				window.localStorage.getItem(WORDLIST_KEY) ?? JSON.stringify(createContent(word))
 			),
 		})
 	}, [])
@@ -48,6 +49,12 @@ function App() {
 	return (
 		<div className='wrapper'>
 			<div className='main'>
+				{user.status !== 'playing' && (
+					<FinalScreen
+						user={user}
+						dispatch={dispatch}
+					/>
+				)}
 				<Board
 					user={user}
 					dispatch={dispatch}

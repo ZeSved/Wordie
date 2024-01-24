@@ -1,0 +1,33 @@
+.blurContainer {
+	position: absolute;
+	z-index: 100;
+	height: 100vh;
+	width: 100vw;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	backdrop-filter: blur(10px);
+
+	> div {
+		background-color: var(--call-to-action-color);
+		width: fit-content;
+		height: fit-content;
+
+		padding: var(--default-gap);
+		border-radius: var(--default-gap);
+
+		> h2 {
+			font-size: 2.5rem;
+			text-align: center;
+		}
+
+		> ul > li {
+			padding: 0.5rem;
+			> p {
+				font-size: 1.5rem;
+			}
+		}
+	}
+}

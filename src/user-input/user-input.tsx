@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Action, DefSet } from '../types/types'
 import s from './user-input.module.scss'
+import { WORDLIST_KEY, WORD_KEY } from '../App'
 
 export default function UserInput({
 	user,
@@ -10,6 +11,16 @@ export default function UserInput({
 	dispatch: React.Dispatch<Action>
 }) {
 	const [saveProgress, setSaveProgress] = useState(false)
+
+	useEffect(() => {
+		if (saveProgress) {
+			window.localStorage.setItem(WORD_KEY, JSON.stringify(user.word))
+			window.localStorage.setItem(WORDLIST_KEY, JSON.stringify(user.wordList))
+		} else {
+			window.localStorage.removeItem(WORD_KEY)
+			window.localStorage.removeItem(WORDLIST_KEY)
+		}
+	}, [saveProgress, user])
 
 	return (
 		<>

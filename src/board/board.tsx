@@ -15,7 +15,12 @@ export default function Board({
 	function assignClasses(u: Token, i: number) {
 		const classNames = [s.box]
 
-		!u.guessed.content && classNames.push(s.hasContent)
+		!u.guessed.content && classNames.push(s.empty)
+
+		if (user.curRow === i && u.showHint) {
+			classNames.splice(1, 1)
+			classNames.push(s.hint)
+		}
 
 		if (user.curRow > i) {
 			u.guessed.correct && classNames.push(s.correct)
@@ -23,12 +28,6 @@ export default function Board({
 		}
 
 		return classNames
-	}
-
-	function show(j: number) {
-		for (let i = user.curRow; i >= 0; i--) {
-			if (user.wordList[i][j].guessed.correct) return true
-		}
 	}
 
 	useEffect(() => {
@@ -56,7 +55,7 @@ export default function Board({
 							id={lt.content}>
 							<p>
 								{lt.guessed.content}
-								{!lt.guessed.content && 'X'}
+								{!lt.guessed.content && lt.content}
 							</p>
 						</div>
 					))}

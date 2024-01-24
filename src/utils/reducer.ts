@@ -30,5 +30,10 @@ export function reducer(user: DefSet, action: Action): DefSet {
         ...user,
         curRow: action.payload
       }
+    case 'set-status':
+      return {
+        ...user,
+        status: action.payload
+      }
   }
 }

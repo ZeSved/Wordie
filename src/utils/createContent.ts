@@ -1,6 +1,6 @@
 import { Token } from "../types/types"
 
-export function createContent(word: string) {
+export function createContent(word: string | string[]) {
   const wordList: Token[][] = []
 
   for (let i = 0; i <= 5; i++) {
@@ -9,6 +9,7 @@ export function createContent(word: string) {
     for (let j = 0; j < word.length; j++) {
       subArr.push({
         content: word[j].toUpperCase(),
+        showHint: false,
         guessed: {
           existsAnywhere: false,
           content: '',

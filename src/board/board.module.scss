@@ -51,8 +51,12 @@
 
 		.correct > p,
 		.guessed > p,
-		.hasContent > p {
+		.empty > p {
 			color: var(--accent-color);
+		}
+
+		.hint > p {
+			color: #ffffff50;
 		}
 
 		.correct {
