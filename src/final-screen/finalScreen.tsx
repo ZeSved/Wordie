@@ -1,10 +1,11 @@
 import { DefSet, Action } from '../types/types'
+import { generateWord } from '../utils/generateWord'
 import s from './finalScreen.module.scss'
 
 export default function FinalScreen({
 	user,
-}: // dispatch,
-{
+	dispatch,
+}: {
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
@@ -36,6 +37,21 @@ export default function FinalScreen({
 						</li>
 					))}
 				</ul>
+				<div>
+					<button
+						onClick={() => {
+							dispatch({ type: 'set-status', payload: 'playing' })
+							generateWord(user, dispatch)
+						}}>
+						Generate New Word
+					</button>
+					<button
+						onClick={() =>
+							dispatch({ type: 'set-status', payload: 'playing' })
+						}>
+						Close
+					</button>
+				</div>
 			</div>
 		</div>
 	)
