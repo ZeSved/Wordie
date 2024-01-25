@@ -11,16 +11,19 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
     wordList && dispatch({ type: 'set-word-list', payload: wordList })
   }
 
-  // function checkIfWon(wordList: Token[][] | undefined) {
-  //   if (wordList) {
-  //     const word = []
-  //     for (let i = 0; i <= user.word.length; i++) {
-  //       word.push(wordList[user.curRow][i].guessed.content)
-  //     }
+  function checkIfWon() {
+    for (let i = 0; i < user.word.length; i++) {
+      if (!user.wordList[user.curRow][i].guessed.correct) {
+        return false
+      }
+    }
 
-  //     return word.join('') === user.word
-  //   }
-  // }
+    return true
+  }
+
+  function updateCurrentRow() {
+    dispatch({ type: "set-cur_row", payload: user.curRow + 1 })
+  }
 
   if (ALLOWED_LETTERS.test(e.key)) {
     if (index === -1) return
@@ -45,12 +48,15 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
   if (e.key === 'Enter') {
     if (index !== -1) return
 
-    // if (checkIfWon(user.wordList)) {
-    //   dispatch({ type: "set-status", payload: "won" })
-    // }
+    if (checkIfWon()) {
+      dispatch({ type: "set-status", payload: "won" })
+      return updateCurrentRow()
+    }
 
-    if (user.curRow === 6) dispatch({ type: "set-status", payload: "lost" })
+    if (user.curRow === 5) {
+      dispatch({ type: "set-status", payload: "lost" })
+    }
 
-    return dispatch({ type: "set-cur_row", payload: user.curRow + 1 })
+    return updateCurrentRow()
   }
 }
