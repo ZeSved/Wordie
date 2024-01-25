@@ -3,8 +3,8 @@ import s from './finalScreen.module.scss'
 
 export default function FinalScreen({
 	user,
-	dispatch,
-}: {
+}: // dispatch,
+{
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
