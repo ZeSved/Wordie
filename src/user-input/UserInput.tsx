@@ -1,6 +1,7 @@
 // import { useEffect, useState } from 'react'
 import { Action, DefSet } from '../types/types'
-import s from './user-input.module.scss'
+import ButtonBar from '../utils/components/ButtonBar'
+// import s from './user-input.module.scss'
 import { generateWord } from '../utils/generateWord'
 
 export default function UserInput({
@@ -12,7 +13,7 @@ export default function UserInput({
 }) {
 	return (
 		<>
-			<div className={s.btns}>
+			<ButtonBar>
 				<div>
 					<button onClick={() => generateWord(user, dispatch)}>
 						Generate New Word
@@ -28,7 +29,7 @@ export default function UserInput({
 						Reveal Word
 					</button>
 				</div>
-			</div>
+			</ButtonBar>
 		</>
 	)
 }

@@ -2,15 +2,13 @@ import './App.css'
 
 import { useEffect, useReducer } from 'react'
 
-import Board from './board/board'
 import { DefSet } from './types/types'
-import UserInput from './user-input/user-input'
-// import { createContent } from './utils/createContent'
 import { reducer } from './utils/reducer'
-import FinalScreen from './final-screen/finalScreen'
-
-// import { generate } from 'random-words'
 import { generateWord } from './utils/generateWord'
+
+import UserInput from './user-input/UserInput'
+import Board from './board/Board'
+import FinalScreen from './final-screen/FinalScreen'
 
 export const DEFAULT_SETTINGS: DefSet = {
 	maxSize: 7,

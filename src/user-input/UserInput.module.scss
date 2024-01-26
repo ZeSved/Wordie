@@ -1,0 +1,51 @@
+.btns {
+	display: flex;
+
+	gap: 2px;
+
+	width: fit-content;
+
+	> div {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: calc(var(--default-gap) / 2);
+
+		background-color: var(--call-to-action-color);
+
+		padding: calc(var(--default-gap) / 2);
+
+		color: black;
+
+		> button {
+			width: fit-content;
+			border-radius: var(--default-gap);
+		}
+
+		> input {
+			border-radius: var(--default-gap);
+			width: 85%;
+		}
+
+		:last-child {
+			border-radius: calc(var(--default-gap) / 2);
+		}
+	}
+
+	.nosave {
+		background-color: #00d1ff40;
+
+		> button {
+			background-color: #00d1ff01;
+		}
+	}
+
+	:last-child {
+		border-radius: 0 var(--default-gap) var(--default-gap) 0;
+	}
+
+	:first-child {
+		border-radius: var(--default-gap) 0 0 var(--default-gap);
+	}
+}

@@ -8,10 +8,14 @@
 	align-items: center;
 	justify-content: center;
 
-	backdrop-filter: blur(10px);
-
 	> div {
-		background-color: var(--call-to-action-color);
+		display: flex;
+		flex-direction: column;
+		gap: var(--default-gap);
+
+		background-color: var(--accent-color) + '60';
+		backdrop-filter: blur(10px);
+
 		width: fit-content;
 		height: fit-content;
 
@@ -21,12 +25,19 @@
 		> h2 {
 			font-size: 2.5rem;
 			text-align: center;
+			color: var(--call-to-action-color);
+			background-color: var(--accent-color);
+			border-radius: var(--default-gap);
 		}
 
-		> ul > li {
-			padding: 0.5rem;
-			> p {
-				font-size: 1.5rem;
+		> ul {
+			background-color: var(--call-to-action-color);
+			border-radius: var(--default-gap);
+			> li {
+				padding: 0.5rem;
+				> p {
+					font-size: 1.5rem;
+				}
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 import { DefSet, Action } from '../types/types'
+import ButtonBar from '../utils/components/ButtonBar'
 import { generateWord } from '../utils/generateWord'
 import s from './finalScreen.module.scss'
 
@@ -37,21 +38,25 @@ export default function FinalScreen({
 						</li>
 					))}
 				</ul>
-				<div>
-					<button
-						onClick={() => {
-							dispatch({ type: 'set-status', payload: 'playing' })
-							generateWord(user, dispatch)
-						}}>
-						Generate New Word
-					</button>
-					<button
-						onClick={() =>
-							dispatch({ type: 'set-status', payload: 'playing' })
-						}>
-						Close
-					</button>
-				</div>
+				<ButtonBar>
+					<div>
+						<button
+							onClick={() => {
+								dispatch({ type: 'set-status', payload: 'playing' })
+								generateWord(user, dispatch)
+							}}>
+							Generate New Word
+						</button>
+					</div>
+					<div>
+						<button
+							onClick={() =>
+								dispatch({ type: 'set-status', payload: 'playing' })
+							}>
+							Close
+						</button>
+					</div>
+				</ButtonBar>
 			</div>
 		</div>
 	)

@@ -1,10 +1,5 @@
-root {
-	--c: 2;
-}
-
-.btns {
+.container {
 	display: flex;
-
 	gap: 2px;
 
 	width: fit-content;
@@ -34,14 +29,6 @@ root {
 
 		:last-child {
 			border-radius: calc(var(--default-gap) / 2);
-		}
-	}
-
-	.nosave {
-		background-color: #00d1ff40;
-
-		> button {
-			background-color: #00d1ff01;
 		}
 	}
 

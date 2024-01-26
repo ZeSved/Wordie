@@ -1,6 +1,6 @@
 import { Action, DefSet, Token } from '../types/types'
 
-import s from './board.module.scss'
+import s from './Board.module.scss'
 import { typeLetter } from '../utils/typeLetter'
 import { useEffect } from 'react'
 import classNames from 'classnames'

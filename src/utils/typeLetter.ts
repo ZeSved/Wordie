@@ -25,13 +25,22 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
     dispatch({ type: "set-cur_row", payload: user.curRow + 1 })
   }
 
+  function lettersInWord(letter: string) {
+    let count = 0
+    for (let i = 0; i < user.word.length; i++) {
+      if (user.word.toString().charAt(i) === letter) count++
+    }
+
+    return true
+  }
+
   if (ALLOWED_LETTERS.test(e.key)) {
     if (index === -1) return
     const { guessed: guess, content }: Token = user.wordList[user.curRow][index]
 
     guess.content = e.key.toUpperCase()
     guess.correct = content === guess.content
-    guess.existsAnywhere = !guess.correct ? user.word.includes(e.key) : guess.existsAnywhere
+    guess.existsAnywhere = user.word.includes(e.key) && !guess.correct ? lettersInWord(e.key) : false
 
     return updateWordList(user.wordList)
   }
