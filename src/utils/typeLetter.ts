@@ -1,37 +1,18 @@
 import { Action, DefSet, Token } from "../types/types"
 
-import { findFirstInRow } from "./findFirstInRow"
+import { findFirstInRow, getValues } from "./boardChecks"
 
 const ALLOWED_LETTERS = /^[a-z]$/
 
-export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispatch<Action>) {
+export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispatch<Action>, progress: number[], setprogress: React.Dispatch<React.SetStateAction<number[]>>) {
   const index = findFirstInRow(user)
 
   function updateWordList(wordList: Token[][] | undefined) {
     wordList && dispatch({ type: 'set-word-list', payload: wordList })
   }
 
-  function checkIfWon() {
-    for (let i = 0; i < user.word.length; i++) {
-      if (!user.wordList[user.curRow][i].guessed.correct) {
-        return false
-      }
-    }
-
-    return true
-  }
-
   function updateCurrentRow() {
     dispatch({ type: "set-cur_row", payload: user.curRow + 1 })
-  }
-
-  function lettersInWord(letter: string) {
-    let count = 0
-    for (let i = 0; i < user.word.length; i++) {
-      if (user.word.toString().charAt(i) === letter) count++
-    }
-
-    return true
   }
 
   if (ALLOWED_LETTERS.test(e.key)) {
@@ -40,7 +21,9 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
 
     guess.content = e.key.toUpperCase()
     guess.correct = content === guess.content
-    guess.existsAnywhere = user.word.includes(e.key) && !guess.correct ? lettersInWord(e.key) : false
+    guess.existsAnywhere = !guess.correct ? user.word.includes(e.key) : false
+
+    if (!progress.includes(index) && guess.correct) { setprogress([...progress, index]) }
 
     return updateWordList(user.wordList)
   }
@@ -57,14 +40,18 @@ export function typeLetter(e: KeyboardEvent, user: DefSet, dispatch: React.Dispa
   if (e.key === 'Enter') {
     if (index !== -1) return
 
-    if (checkIfWon()) {
+    dispatch({ type: "set-progress", payload: (100 / user.word.length) * (progress.length > 1 ? progress.length : 1) })
+
+    if (getValues(user).last === user.word.length) {
       dispatch({ type: "set-status", payload: "won" })
       return updateCurrentRow()
     }
 
     if (user.curRow === 5) {
       dispatch({ type: "set-status", payload: "lost" })
+      return updateCurrentRow()
     }
+
 
     return updateCurrentRow()
   }

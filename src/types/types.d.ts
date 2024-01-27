@@ -1,10 +1,9 @@
 export type DefSet = {
-  maxSize: number
-  minSize: number
   word: string[] | string
   wordList: Token[][]
   curRow: number
   status: Status
+  progress: number
 }
 
 export type Token = {
@@ -21,10 +20,6 @@ type Status = 'won' | 'lost' | 'playing'
 
 export type Action =
   | {
-    type: 'set-min-size' | 'set-max-size'
-    payload: number
-  }
-  | {
     type: 'set-word'
     payload: string[] | string
   }
@@ -39,4 +34,8 @@ export type Action =
   | {
     type: 'set-status'
     payload: Status
+  }
+  | {
+    type: 'set-progress'
+    payload: number
   }

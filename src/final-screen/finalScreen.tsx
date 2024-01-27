@@ -43,16 +43,13 @@ export default function FinalScreen({
 						<button
 							onClick={() => {
 								dispatch({ type: 'set-status', payload: 'playing' })
-								generateWord(user, dispatch)
+								generateWord(dispatch)
 							}}>
 							Generate New Word
 						</button>
 					</div>
 					<div>
-						<button
-							onClick={() =>
-								dispatch({ type: 'set-status', payload: 'playing' })
-							}>
+						<button onClick={() => dispatch({ type: 'set-status', payload: 'playing' })}>
 							Close
 						</button>
 					</div>

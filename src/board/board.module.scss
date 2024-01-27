@@ -1,6 +1,8 @@
 .main {
 	--columns: var(--word-length, 5);
 
+	user-select: none;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;

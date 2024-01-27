@@ -2,7 +2,7 @@ import { Action, DefSet, Token } from '../types/types'
 
 import s from './Board.module.scss'
 import { typeLetter } from '../utils/typeLetter'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 export default function Board({
@@ -12,6 +12,8 @@ export default function Board({
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
+	const [progress, setprogress] = useState<number[]>([])
+
 	function assignClasses(u: Token, i: number) {
 		const classNames = [s.box]
 
@@ -32,7 +34,7 @@ export default function Board({
 
 	useEffect(() => {
 		function keyDownHandler(e: KeyboardEvent) {
-			typeLetter(e, user, dispatch)
+			typeLetter(e, user, dispatch, progress, setprogress)
 		}
 
 		window.addEventListener('keydown', keyDownHandler)

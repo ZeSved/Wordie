@@ -12,6 +12,7 @@
 
 *:disabled {
 	opacity: 50%;
+	cursor: default;
 }
 
 :root {
@@ -25,6 +26,26 @@
 
 html {
 	background-color: var(--main-color);
+}
+
+select {
+	background-color: transparent;
+	border: none;
+	outline: none;
+	height: fit-content;
+	width: fit-content;
+	color: black;
+
+	> option {
+		background-color: var(--main-color);
+		color: var(--call-to-action-color);
+		text-align: center;
+	}
+
+	&:hover {
+		background-color: var(--call-to-action-color);
+		color: var(--main-color);
+	}
 }
 
 input,

@@ -1,7 +1,6 @@
 // import { useEffect, useState } from 'react'
 import { Action, DefSet } from '../types/types'
 import ButtonBar from '../utils/components/ButtonBar'
-// import s from './user-input.module.scss'
 import { generateWord } from '../utils/generateWord'
 
 export default function UserInput({
@@ -15,19 +14,21 @@ export default function UserInput({
 		<>
 			<ButtonBar>
 				<div>
-					<button onClick={() => generateWord(user, dispatch)}>
-						Generate New Word
-					</button>
+					<button onClick={() => generateWord(dispatch)}>Generate New Word</button>
 				</div>
 				<div>
 					<button
+						disabled
 						onClick={() =>
 							confirm(
 								'Are you sure you want to reveal the word? This will reset all progress and generate a new word.'
 							) && alert(`The word was '${user.word}'`)
 						}>
-						Reveal Word
+						{user.word}
 					</button>
+				</div>
+				<div>
+					<p>Progress: {user.progress}%</p>
 				</div>
 			</ButtonBar>
 		</>

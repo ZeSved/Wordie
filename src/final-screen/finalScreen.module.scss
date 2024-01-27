@@ -8,19 +8,20 @@
 	align-items: center;
 	justify-content: center;
 
+	backdrop-filter: blur(10px);
+
 	> div {
 		display: flex;
 		flex-direction: column;
 		gap: var(--default-gap);
 
-		background-color: var(--accent-color) + '60';
-		backdrop-filter: blur(10px);
+		background-color: var(--accent-color);
 
 		width: fit-content;
 		height: fit-content;
 
 		padding: var(--default-gap);
-		border-radius: var(--default-gap);
+		border-radius: calc(var(--default-gap) * 2);
 
 		> h2 {
 			font-size: 2.5rem;

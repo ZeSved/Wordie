@@ -11,12 +11,11 @@ import Board from './board/Board'
 import FinalScreen from './final-screen/FinalScreen'
 
 export const DEFAULT_SETTINGS: DefSet = {
-	maxSize: 7,
-	minSize: 4,
 	word: '',
 	wordList: [],
 	curRow: 0,
 	status: 'playing',
+	progress: 0,
 }
 
 export const WORD_KEY = 'word'
@@ -26,7 +25,7 @@ function App() {
 	const [user, dispatch] = useReducer(reducer, DEFAULT_SETTINGS)
 
 	useEffect(() => {
-		generateWord(user, dispatch)
+		generateWord(dispatch)
 	}, [])
 
 	return (

@@ -1,11 +1,11 @@
 import { generate } from "random-words";
-import { DefSet, Action } from "../types/types";
+import { Action } from "../types/types";
 import { createContent } from "./createContent";
 
-export function generateWord(user: DefSet, dispatch: React.Dispatch<Action>) {
+export function generateWord(dispatch: React.Dispatch<Action>) {
   const word = generate({
-    maxLength: user.maxSize ?? user.minSize + 1,
-    minLength: user.minSize ?? user.maxSize - 1,
+    maxLength: 20,
+    minLength: 3,
   })
   // const word = 'house'
 
@@ -20,4 +20,5 @@ export function generateWord(user: DefSet, dispatch: React.Dispatch<Action>) {
   })
 
   dispatch({ type: "set-cur_row", payload: 0 })
+  dispatch({ type: "set-progress", payload: 0 })
 }
