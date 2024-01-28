@@ -12,7 +12,8 @@ export default function Board({
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
-	const [progress, setprogress] = useState<number[]>([])
+	const [progress, setProgress] = useState<number[]>([])
+	// const [guesses, setGuesses] = useState<number[]>([])
 
 	function assignClasses(u: Token, i: number) {
 		const classNames = [s.box]
@@ -34,7 +35,7 @@ export default function Board({
 
 	useEffect(() => {
 		function keyDownHandler(e: KeyboardEvent) {
-			typeLetter(e, user, dispatch, progress, setprogress)
+			typeLetter(e, user, dispatch, progress, setProgress)
 		}
 
 		window.addEventListener('keydown', keyDownHandler)
