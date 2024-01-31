@@ -1,11 +1,17 @@
 import { useState } from "react"
+import { DefSet } from "../types/types"
 
-export function useProgress() {
+export function useProgress({ wordList: list, word }: DefSet) {
   const [correct, setCorrect] = useState([])
+  const [exists, setexists] = useState([])
+
+  const correctPercentage = 100 / word.length
+  const existsPercentage = correctPercentage / (word.length * 6)
+
   const progressData = {
     indexes: {
-      correct: [],
-      exists: []
+      correct: correct,
+      exists: exists
     },
     progress: 0
   }
