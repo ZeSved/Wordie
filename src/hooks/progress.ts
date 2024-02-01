@@ -1,12 +1,22 @@
 import { useState } from "react"
 import { DefSet } from "../types/types"
 
-export function useProgress({ wordList: list, word }: DefSet) {
-  const [correct, setCorrect] = useState([])
-  const [exists, setexists] = useState([])
+export function useProgress({ wordList: list, word, curRow }: DefSet) {
+  const [correct, setCorrect] = useState<number[]>([])
+  const [exists, setExists] = useState<number[]>([])
 
   const correctPercentage = 100 / word.length
   const existsPercentage = correctPercentage / (word.length * 6)
+
+  function getIndexInWord(ltr: string) {
+    const indexes: number[] = []
+
+    for (let i = 0; i < word.length; i++) {
+      if (word[i] === ltr) indexes.push(i)
+    }
+
+    return indexes
+  }
 
   const progressData = {
     indexes: {
@@ -16,10 +26,13 @@ export function useProgress({ wordList: list, word }: DefSet) {
     progress: 0
   }
 
-  // TODO: calculate if there is an initial value
+  for (let i = 0; i < word.length; i++) {
+    if (!correct.includes(i) && list[curRow][i].guessed.correct) setCorrect([...correct, i])
+  }
 
-  // TODO: calculate the percentage each correct/existing letter should give depending
-  // TODO: on the length of the word
+
+
+  // TODO: calculate if there is an initial value
 
   // TODO: fill arrays with only necessary/non-used indexes
 
