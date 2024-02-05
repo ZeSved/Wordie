@@ -10,10 +10,13 @@ export function useProgress({ wordList: list, word, curRow }: DefSet) {
 
   function getIndexInWord(ltr: string) {
     const indexes: number[] = []
+    const indexesCorrect: number[] = []
 
     for (let i = 0; i < word.length; i++) {
       if (word[i] === ltr) indexes.push(i)
     }
+
+
 
     return indexes
   }
@@ -27,7 +30,9 @@ export function useProgress({ wordList: list, word, curRow }: DefSet) {
   }
 
   for (let i = 0; i < word.length; i++) {
-    if (!correct.includes(i) && list[curRow][i].guessed.correct) setCorrect([...correct, i])
+    if (!correct.includes(i) && list[curRow][i].guessed.correct) {
+      setCorrect([...correct, i])
+    }
   }
 
 
