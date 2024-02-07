@@ -7,8 +7,8 @@ import { reducer } from './utils/reducer'
 import { generateWord } from './utils/generateWord'
 
 import UserInput from './user-input/UserInput'
-import Board from './board/Board'
 import FinalScreen from './final-screen/FinalScreen'
+import Board from './board/Board'
 
 export const DEFAULT_SETTINGS: DefSet = {
 	word: '',
@@ -16,6 +16,7 @@ export const DEFAULT_SETTINGS: DefSet = {
 	curRow: 0,
 	status: 'playing',
 	progress: 0,
+	difficulty: 'medium',
 }
 
 export const WORD_KEY = 'word'
@@ -25,7 +26,7 @@ function App() {
 	const [user, dispatch] = useReducer(reducer, DEFAULT_SETTINGS)
 
 	useEffect(() => {
-		generateWord(dispatch)
+		generateWord(dispatch, user.difficulty)
 	}, [])
 
 	return (

@@ -43,7 +43,7 @@ export default function FinalScreen({
 						<button
 							onClick={() => {
 								dispatch({ type: 'set-status', payload: 'playing' })
-								generateWord(dispatch)
+								generateWord(dispatch, user.difficulty)
 							}}>
 							Generate New Word
 						</button>

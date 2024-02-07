@@ -4,6 +4,7 @@ export type DefSet = {
   curRow: number
   status: Status
   progress: number
+  difficulty: Difficulty
 }
 
 export type Token = {
@@ -17,6 +18,7 @@ export type Token = {
 }
 
 type Status = 'won' | 'lost' | 'playing'
+type Difficulty = 'easy' | 'medium' | 'hard' | 'extreme'
 
 export type Action =
   | {
@@ -38,4 +40,12 @@ export type Action =
   | {
     type: 'set-progress'
     payload: number
+  }
+  | {
+    type: 'set-progress'
+    payload: number
+  }
+  | {
+    type: 'set-difficulty'
+    payload: Difficulty
   }

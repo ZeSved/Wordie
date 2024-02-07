@@ -2,7 +2,7 @@ import { Action, DefSet, Token } from "../types/types"
 
 import { findFirstInRow, getValues } from "./boardChecks"
 
-const ALLOWED_LETTERS = /^[a-z]$/
+const ALLOWED_LETTERS = /^[a-zA-Z]$/
 
 export function typeLetter(
   e: KeyboardEvent,

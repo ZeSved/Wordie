@@ -13,21 +13,24 @@ export default function Board({
 	dispatch: React.Dispatch<Action>
 }) {
 	const [progress, setProgress] = useState<number[]>([])
-	// const [guesses, setGuesses] = useState<number[]>([])
 
-	function assignClasses(u: Token, i: number) {
+	function assignClasses(u: Token, i: number, ltrI: number) {
 		const classNames = [s.box]
 
 		!u.guessed.content && classNames.push(s.empty)
 
-		if (user.curRow === i && u.showHint) {
+		if (user.curRow === i && user.curRow > 0 && progress.includes(ltrI)) {
 			classNames.splice(1, 1)
 			classNames.push(s.hint)
 		}
 
+		if (u.guessed.content) {
+			classNames.splice(1, 1)
+		}
+
 		if (user.curRow > i) {
 			u.guessed.correct && classNames.push(s.correct)
-			u.guessed.existsAnywhere && classNames.push(s.guessed)
+			u.guessed.existsAnywhere && user.difficulty !== 'extreme' && classNames.push(s.guessed)
 		}
 
 		return classNames
@@ -53,7 +56,7 @@ export default function Board({
 					key={i}>
 					{ltr.map((lt, j) => (
 						<div
-							className={classNames(assignClasses(lt, i))}
+							className={classNames(assignClasses(lt, i, j))}
 							key={j}
 							id={lt.content}>
 							<p>

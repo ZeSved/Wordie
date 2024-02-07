@@ -14,7 +14,11 @@ export default function UserInput({
 		<>
 			<ButtonBar>
 				<div>
-					<button onClick={() => generateWord(dispatch)}>Generate New Word</button>
+					<button
+						disabled
+						onClick={() => generateWord(dispatch, user.difficulty)}>
+						Generate New Word
+					</button>
 				</div>
 				<div>
 					<button
