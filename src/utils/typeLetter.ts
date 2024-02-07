@@ -22,40 +22,13 @@ export function typeLetter(
     dispatch({ type: "set-cur_row", payload: user.curRow + 1 })
   }
 
-  function assignExistsAnywhere() {
-    user.word.toString().split('').forEach(letter => {
-      let letterCount = 0
-      const ind = curRowArr.indexOf(curRowArr.find(a => a.content === letter)!)
-
-      for (let i = 0; i < user.word.length; i++) {
-        if (user.word[i] === letter) letterCount += 1
-      }
-
-      if (letterCount > 1) {
-        if (curRowArr.find(a => a.guessed.content === letter)?.guessed.correct === false) {
-          curRowArr[ind].guessed.existsAnywhere = true
-          updateWordList(user.wordList)
-        }
-      } else {
-        if (curRowArr.find(a => a.guessed.content === letter)?.guessed.correct === false) {
-          curRowArr[ind].guessed.existsAnywhere = true
-          updateWordList(user.wordList)
-        }
-      }
-
-      // if (letterCount === 1) {
-
-      // }
-    })
-  }
-
   if (ALLOWED_LETTERS.test(e.key)) {
     if (index === -1) return
     const { guessed: guess, content }: Token = curRowArr[index]
 
     guess.content = e.key.toUpperCase()
     guess.correct = content === guess.content
-    // guess.existsAnywhere = !guess.correct ? user.word.includes(e.key) : false
+    guess.existsAnywhere = !guess.correct ? user.word.includes(e.key) : false
 
     if (!progress.includes(index) && guess.correct) { setProgress([...progress, index]) }
 
@@ -81,8 +54,6 @@ export function typeLetter(
       dispatch({ type: "set-status", payload: "won" })
       return updateCurrentRow()
     }
-
-    assignExistsAnywhere()
 
     if (user.curRow === 5) {
       dispatch({ type: "set-status", payload: "lost" })
