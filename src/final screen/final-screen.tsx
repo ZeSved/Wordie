@@ -23,11 +23,35 @@ export default function FinalScreen({
 			name: 'Time taken: ',
 			value: '...',
 		},
+		{
+			name: 'Difficulty: ',
+			value: user.difficulty,
+		},
 	]
+
+	// const allTimeStats = JSON.parse(window.localStorage.getItem('allTimeStats')!)
+
+	// const allTime = [
+	// 	{
+	// 		name: 'Word: ',
+	// 		value: user.word,
+	// 	},
+	// ]
+
 	return (
 		<div className={s.blurContainer}>
 			<div>
 				<h2>You {user.status}!</h2>
+				<ul>
+					{content.map((c, i) => (
+						<li key={i}>
+							<p>
+								{c.name}
+								{c.value}
+							</p>
+						</li>
+					))}
+				</ul>
 				<ul>
 					{content.map((c, i) => (
 						<li key={i}>

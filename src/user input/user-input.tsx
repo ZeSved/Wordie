@@ -1,5 +1,5 @@
-// import { useEffect, useState } from 'react'
-import { Action, DefSet } from '../types/types'
+import { useEffect } from 'react'
+import { Action, DefSet, Difficulty } from '../types/types'
 import ButtonBar from '../utils/components/ButtonBar'
 import { generateWord } from '../utils/generateWord'
 
@@ -10,15 +10,33 @@ export default function UserInput({
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
+	useEffect(() => {
+		generateWord(dispatch, user.difficulty)
+	}, [user.difficulty])
+
+	function handleDifficulty(currentTarget: HTMLSelectElement) {
+		const diff = currentTarget.value as Difficulty
+
+		dispatch({ type: 'set-difficulty', payload: diff })
+	}
+
+	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
+
 	return (
 		<>
 			<ButtonBar>
 				<div>
-					<button
-						disabled
-						onClick={() => generateWord(dispatch, user.difficulty)}>
-						Generate New Word
-					</button>
+					<select
+						onChange={(e) => handleDifficulty(e.currentTarget)}
+						defaultValue={user.difficulty}>
+						{difficulties.map((d) => (
+							<option
+								key={d}
+								value={d.toLowerCase()}>
+								{d}
+							</option>
+						))}
+					</select>
 				</div>
 				<div>
 					<button
@@ -40,6 +58,9 @@ export default function UserInput({
 						%
 					</p>
 				</div>
+				{/* <div>
+					<p>Time: ...</p>
+				</div> */}
 			</ButtonBar>
 		</>
 	)

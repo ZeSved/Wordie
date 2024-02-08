@@ -22,6 +22,10 @@
 			border-radius: var(--default-gap);
 		}
 
+		> p {
+			padding: var(--default-gap);
+		}
+
 		> input {
 			border-radius: var(--default-gap);
 			width: 85%;
