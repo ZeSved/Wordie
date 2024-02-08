@@ -32,7 +32,13 @@ export default function UserInput({
 					</button>
 				</div>
 				<div>
-					<p>Progress: {user.progress}%</p>
+					<p>
+						Progress:{' '}
+						{user.progress.toString().length > 3
+							? user.progress.toString().substring(0, 4)
+							: user.progress}
+						%
+					</p>
 				</div>
 			</ButtonBar>
 		</>
