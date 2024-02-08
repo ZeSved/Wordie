@@ -1,7 +1,7 @@
 import { DefSet, Action } from '../types/types'
 import ButtonBar from '../utils/components/ButtonBar'
 import { generateWord } from '../utils/generateWord'
-import s from './finalScreen.module.scss'
+import s from './final-screen.module.scss'
 
 export default function FinalScreen({
 	user,

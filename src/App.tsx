@@ -16,7 +16,7 @@ export const DEFAULT_SETTINGS: DefSet = {
 	curRow: 0,
 	status: 'playing',
 	progress: 0,
-	difficulty: 'medium',
+	difficulty: 'easy',
 }
 
 export const WORD_KEY = 'word'

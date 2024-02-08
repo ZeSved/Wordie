@@ -40,6 +40,12 @@ export function typeLetter(
 
     const prevLetterIndex = (index === -1 ? user.word.length : index) - 1
 
+    for (let i = 0; i < user.curRow; i++) {
+      if (!user.wordList[i][prevLetterIndex].guessed.correct && progress.includes(prevLetterIndex)) {
+        progress.splice(progress.indexOf(prevLetterIndex))
+      }
+    }
+
     curRowArr[prevLetterIndex].guessed.content = ''
     return updateWordList(user.wordList)
   }
