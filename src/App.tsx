@@ -6,9 +6,9 @@ import { DefSet } from './types/types'
 import { reducer } from './utils/reducer'
 import { generateWord } from './utils/generateWord'
 
-import UserInput from './user-input/UserInput'
-import FinalScreen from './final-screen/FinalScreen'
-import Board from './board/Board'
+import UserInput from './user input/user-input'
+import FinalScreen from './final screen/final-screen'
+import Board from './game board/game-board'
 
 export const DEFAULT_SETTINGS: DefSet = {
 	word: '',
