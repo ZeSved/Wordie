@@ -10,58 +10,44 @@ export default function FinalScreen({
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
-	const content = [
+	const allTime = JSON.parse(window.localStorage.getItem('allTimeStats')!)
+
+	const stats = [
 		{
-			name: 'Word: ',
-			value: user.word,
+			title: 'This Game',
+			content: [
+				{ value: `Word: ${user.word}` },
+				{ value: `Number of Attempts: ${user.curRow}` },
+				{ value: `Time Taken: ${user.timeTaken}` },
+				{ value: `Difficulty: ${user.difficulty}` },
+			],
 		},
 		{
-			name: 'Number of attempts: ',
-			value: user.curRow,
-		},
-		{
-			name: 'Time taken: ',
-			value: '...',
-		},
-		{
-			name: 'Difficulty: ',
-			value: user.difficulty,
+			title: 'All Time',
+			content: [
+				{ value: `Games Played: ${allTime.games.played}` },
+				{ value: `Games Won: ${allTime.games.won}` },
+				{ value: `Win Ratio: ${(allTime.games.won / allTime.games.played) * 100}%` },
+			],
 		},
 	]
-
-	// const allTimeStats = JSON.parse(window.localStorage.getItem('allTimeStats')!)
-
-	// const allTime = [
-	// 	{
-	// 		name: 'Word: ',
-	// 		value: user.word,
-	// 	},
-	// ]
 
 	return (
 		<div className={s.blurContainer}>
 			<div>
 				<h2>You {user.status}!</h2>
-				<ul>
-					{content.map((c, i) => (
-						<li key={i}>
-							<p>
-								{c.name}
-								{c.value}
-							</p>
-						</li>
-					))}
-				</ul>
-				<ul>
-					{content.map((c, i) => (
-						<li key={i}>
-							<p>
-								{c.name}
-								{c.value}
-							</p>
-						</li>
-					))}
-				</ul>
+				{stats.map(({ content, title }) => (
+					<>
+						<h3>{title}</h3>
+						<ul>
+							{content.map(({ value }) => (
+								<li key={value}>
+									<p>{value}</p>
+								</li>
+							))}
+						</ul>
+					</>
+				))}
 				<ButtonBar>
 					<div>
 						<button

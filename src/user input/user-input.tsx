@@ -17,6 +17,7 @@ export default function UserInput({
 	function handleDifficulty(currentTarget: HTMLSelectElement) {
 		const diff = currentTarget.value as Difficulty
 
+		dispatch({ type: 'set-time', payload: 0 })
 		dispatch({ type: 'set-difficulty', payload: diff })
 	}
 
@@ -58,9 +59,9 @@ export default function UserInput({
 						%
 					</p>
 				</div>
-				{/* <div>
-					<p>Time: ...</p>
-				</div> */}
+				<div>
+					<p>Time: {user.timeTaken}</p>
+				</div>
 			</ButtonBar>
 		</>
 	)

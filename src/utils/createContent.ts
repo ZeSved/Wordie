@@ -9,7 +9,6 @@ export function createContent(word: string | string[]) {
     for (let j = 0; j < word.length; j++) {
       subArr.push({
         content: word[j].toUpperCase(),
-        showHint: false,
         guessed: {
           existsAnywhere: false,
           content: '',

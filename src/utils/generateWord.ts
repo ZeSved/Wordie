@@ -13,4 +13,5 @@ export function generateWord(dispatch: React.Dispatch<Action>, d: Difficulty) {
   dispatch({ type: "set-word-list", payload: createContent(word) })
   dispatch({ type: "set-cur_row", payload: 0 })
   dispatch({ type: "set-progress", payload: 0 })
+  dispatch({ type: "set-time", payload: 0 })
 }

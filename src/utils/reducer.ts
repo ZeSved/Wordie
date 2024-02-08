@@ -35,5 +35,10 @@ export function reducer(user: DefSet, action: Action): DefSet {
         ...user,
         difficulty: action.payload
       }
+    case 'set-time':
+      return {
+        ...user,
+        timeTaken: action.payload
+      }
   }
 }

@@ -13,6 +13,7 @@ export function typeLetter(
 ) {
   const index = findFirstInRow(user)
   const curRowArr = user.wordList[user.curRow]
+  const allTime = JSON.parse(window.localStorage.getItem('allTimeStats')!)
 
   function updateWordList(wordList: Token[][] | undefined) {
     wordList && dispatch({ type: 'set-word-list', payload: wordList })
@@ -58,11 +59,20 @@ export function typeLetter(
 
     if (lastRow === user.word.length) {
       dispatch({ type: "set-status", payload: "won" })
+
+      allTime.games.played += 1
+      allTime.games.won += 1
+      window.localStorage.setItem('allTimeStats', JSON.stringify(allTime))
+
       return updateCurrentRow()
     }
 
     if (user.curRow === 5) {
       dispatch({ type: "set-status", payload: "lost" })
+
+      allTime.games.played += 1
+      window.localStorage.setItem('allTimeStats', JSON.stringify(allTime))
+
       return updateCurrentRow()
     }
 

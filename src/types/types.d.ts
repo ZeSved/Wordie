@@ -5,11 +5,11 @@ export type DefSet = {
   status: Status
   progress: number
   difficulty: Difficulty
+  timeTaken: number
 }
 
 export type Token = {
   content: string
-  showHint: boolean
   guessed: {
     existsAnywhere: boolean
     content: string
@@ -30,20 +30,12 @@ export type Action =
     payload: Token[][]
   }
   | {
-    type: 'set-cur_row'
+    type: 'set-cur_row' | 'set-progress' | 'set-time'
     payload: number
   }
   | {
     type: 'set-status'
     payload: Status
-  }
-  | {
-    type: 'set-progress'
-    payload: number
-  }
-  | {
-    type: 'set-progress'
-    payload: number
   }
   | {
     type: 'set-difficulty'
