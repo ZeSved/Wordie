@@ -23,6 +23,11 @@ export function typeLetter(
     dispatch({ type: "set-cur_row", payload: user.curRow + 1 })
   }
 
+  function updateSave() {
+    allTime.games.played += 1
+    window.localStorage.setItem('allTimeStats', JSON.stringify(allTime))
+  }
+
   if (ALLOWED_LETTERS.test(e.key)) {
     if (index === -1) return
     const { guessed: guess, content }: Token = curRowArr[index]
@@ -41,9 +46,9 @@ export function typeLetter(
 
     const prevLetterIndex = (index === -1 ? user.word.length : index) - 1
 
-    for (let i = 0; i < user.curRow; i++) {
+    for (let i = 0; i <= user.curRow; i++) {
       if (!user.wordList[i][prevLetterIndex].guessed.correct && progress.includes(prevLetterIndex)) {
-        progress.splice(progress.indexOf(prevLetterIndex))
+        progress.splice(progress.indexOf(prevLetterIndex), 1)
       }
     }
 
@@ -60,9 +65,8 @@ export function typeLetter(
     if (lastRow === user.word.length) {
       dispatch({ type: "set-status", payload: "won" })
 
-      allTime.games.played += 1
       allTime.games.won += 1
-      window.localStorage.setItem('allTimeStats', JSON.stringify(allTime))
+      updateSave()
 
       return updateCurrentRow()
     }
@@ -70,8 +74,7 @@ export function typeLetter(
     if (user.curRow === 5) {
       dispatch({ type: "set-status", payload: "lost" })
 
-      allTime.games.played += 1
-      window.localStorage.setItem('allTimeStats', JSON.stringify(allTime))
+      updateSave()
 
       return updateCurrentRow()
     }
