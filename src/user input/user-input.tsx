@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import { Action, DefSet, Difficulty } from '../types/types'
 import ButtonBar from '../utils/components/ButtonBar'
-import { generateWord } from '../utils/generateWord'
+import { newGame } from '../utils/generateWord'
+import { shorten } from '../utils/shorten'
 
 export default function UserInput({
 	user,
@@ -11,7 +12,7 @@ export default function UserInput({
 	dispatch: React.Dispatch<Action>
 }) {
 	useEffect(() => {
-		generateWord(dispatch, user.difficulty)
+		newGame(dispatch, user)
 	}, [user.difficulty])
 
 	function handleDifficulty(currentTarget: HTMLSelectElement) {
@@ -51,13 +52,7 @@ export default function UserInput({
 					</button>
 				</div>
 				<div>
-					<p>
-						Progress:{' '}
-						{user.progress.toString().length > 3
-							? user.progress.toString().substring(0, 4)
-							: user.progress}
-						%
-					</p>
+					<p>Progress: {shorten(user.progress)}%</p>
 				</div>
 				<div>
 					<p>Time: {user.timeTaken}</p>

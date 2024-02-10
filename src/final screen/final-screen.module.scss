@@ -10,7 +10,13 @@
 
 	backdrop-filter: blur(10px);
 
-	> div {
+	.cause {
+		border: 2px solid var(--call-to-action-color);
+		margin-inline: auto;
+	}
+
+	> div,
+	.cause {
 		display: flex;
 		flex-direction: column;
 		gap: var(--default-gap);
@@ -44,6 +50,9 @@
 			border-radius: var(--default-gap);
 			> li {
 				padding: 0.5rem;
+
+				display: flex;
+				justify-content: space-between;
 				> p {
 					font-size: 1.5rem;
 				}

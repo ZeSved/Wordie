@@ -4,7 +4,7 @@ import { useEffect, useReducer, useState } from 'react'
 
 import { DefSet } from './types/types'
 import { reducer } from './utils/reducer'
-import { generateWord } from './utils/generateWord'
+import { newGame } from './utils/generateWord'
 
 import UserInput from './user input/user-input'
 import FinalScreen from './final screen/final-screen'
@@ -29,18 +29,10 @@ export const allTimeStats = {
 
 function App() {
 	const [user, dispatch] = useReducer(reducer, DEFAULT_SETTINGS)
-	const [intervalId, setIntervalId] = useState<number>()
+	const [intervalId, setIntervalId] = useState<number>(0)
 
 	useEffect(() => {
-		generateWord(dispatch, user.difficulty)
-
-		const interval = setInterval(() => {
-			dispatch({ type: 'set-time', payload: (user.timeTaken += 1) })
-		}, 1000)
-
-		setIntervalId(interval)
-
-		return () => clearInterval(interval)
+		newGame(dispatch, user)
 	}, [])
 
 	useEffect(() => {
@@ -53,6 +45,16 @@ function App() {
 			dispatch({ type: 'set-status', payload: 'lost' })
 		}
 	}, [user.timeTaken, user.status])
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			dispatch({ type: 'set-time', payload: (user.timeTaken += 1) })
+		}, 1000)
+
+		setIntervalId(interval)
+
+		return () => clearInterval(interval)
+	}, [user.word])
 
 	return (
 		<div className='wrapper'>

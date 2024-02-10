@@ -1,7 +1,7 @@
 import { Action, DefSet, Token } from '../types/types'
 
 import s from './game-board.module.scss'
-import { typeLetter } from '../utils/typeLetter'
+import { handleKeyboardInput } from '../utils/handleKeyboardInput'
 import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 
@@ -38,7 +38,7 @@ export default function Board({
 
 	useEffect(() => {
 		function keyDownHandler(e: KeyboardEvent) {
-			typeLetter(e, user, dispatch, progress, setProgress)
+			handleKeyboardInput(e, user, dispatch, progress, setProgress)
 		}
 
 		window.addEventListener('keydown', keyDownHandler)
@@ -47,6 +47,12 @@ export default function Board({
 			window.removeEventListener('keydown', keyDownHandler)
 		}
 	}, [user])
+
+	useEffect(() => {
+		if (user.status !== 'playing') {
+			setProgress([])
+		}
+	}, [user.status])
 
 	return (
 		<section className={s.main}>
