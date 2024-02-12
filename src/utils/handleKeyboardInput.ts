@@ -108,15 +108,24 @@ class helper {
     return true
   }
 
-  static findNumberOfOccurences() {
-    const regexOfOccurance = /^.*(.).*\1.*$/
-    let timesOfOccurrence = 1
-    // let matchingAmount = '*\1.*'
+  static findNumberOfOccurences(word: string) {
+    let numberOfOccurences = 1
 
-    for (let i = 0; i <= timesOfOccurrence; i++) {
+    word.split('').forEach(l => {
+      while (!makeRegex(l).test(word)) {
 
+      }
+    })
+
+    function makeRegex(l: string) {
+      let regex = '/'
+
+      for (let i = numberOfOccurences; i > 0; i--) {
+        regex += `[^${l}]*${l}`
+      }
+
+      return new RegExp(`${regex}/`)
     }
-
 
   }
 }
