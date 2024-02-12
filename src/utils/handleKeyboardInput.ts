@@ -20,7 +20,7 @@ export function handleKeyboardInput(
 
     guess.content = e.key.toUpperCase()
     guess.correct = content === guess.content
-    guess.existsAnywhere = !guess.correct ? user.word.includes(e.key) : false
+    // guess.existsAnywhere = !guess.correct ? user.word.includes(e.key.toLowerCase()) : false
 
     if (!progress.includes(index) && guess.correct) { setProgress([...progress, index]) }
 
@@ -53,6 +53,16 @@ export function handleKeyboardInput(
   if (e.key === 'Enter') {
     if (index !== -1) return
     const lastRow = helper.checkCurrentRow(user)
+
+    // curRowArr.forEach(obj => {
+    //   const ob = curRowArr.find(r => r.content === obj.guessed.content)
+
+    //   if (!obj.guessed.correct && user.word.includes(e.key) && ob) {
+    //     obj.guessed.existsAnywhere = true
+    //   }
+    // })
+
+    // helper.updateWordList(user.wordList, dispatch)
 
     dispatch({ type: "set-progress", payload: (100 / user.word.length) * progress.length })
 
@@ -108,24 +118,24 @@ class helper {
     return true
   }
 
-  static findNumberOfOccurences(word: string) {
-    let numberOfOccurences = 1
+  // static findNumberOfOccurences(word: string) {
+  //   let numberOfOccurences = 1
 
-    word.split('').forEach(l => {
-      while (!makeRegex(l).test(word)) {
+  //   word.split('').forEach(l => {
+  //     while (!makeRegex(l).test(word)) {
 
-      }
-    })
+  //     }
+  //   })
 
-    function makeRegex(l: string) {
-      let regex = '/'
+  //   function makeRegex(l: string) {
+  //     let regex = '/'
 
-      for (let i = numberOfOccurences; i > 0; i--) {
-        regex += `[^${l}]*${l}`
-      }
+  //     for (let i = numberOfOccurences; i > 0; i--) {
+  //       regex += `[^${l}]*${l}`
+  //     }
 
-      return new RegExp(`${regex}/`)
-    }
+  //     return new RegExp(`${regex}/`)
+  //   }
 
-  }
+  // }
 }

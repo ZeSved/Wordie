@@ -10,7 +10,7 @@ import UserInput from './user input/user-input'
 import FinalScreen from './final screen/final-screen'
 import Board from './game board/game-board'
 
-export const DEFAULT_SETTINGS: DefSet = {
+export const DEFAULT_GAME: DefSet = {
 	word: '',
 	wordList: [],
 	curRow: 0,
@@ -28,7 +28,7 @@ export const allTimeStats = {
 }
 
 function App() {
-	const [user, dispatch] = useReducer(reducer, DEFAULT_SETTINGS)
+	const [user, dispatch] = useReducer(reducer, DEFAULT_GAME)
 	const [intervalId, setIntervalId] = useState<number>(0)
 
 	useEffect(() => {
