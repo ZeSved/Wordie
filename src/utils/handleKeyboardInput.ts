@@ -108,10 +108,15 @@ class helper {
     return true
   }
 
-  // static findNumberOfOccurences(){
-  //   const timesOfOccurrence = 
-  //   /^.*(.).*\1.*$/ === 1 occurence
-  //   /^.*(.).*\1.*\1.*\1.*$/ === 3 occurences
+  static findNumberOfOccurences() {
+    const regexOfOccurance = /^.*(.).*\1.*$/
+    let timesOfOccurrence = 1
+    // let matchingAmount = '*\1.*'
 
-  // }
+    for (let i = 0; i <= timesOfOccurrence; i++) {
+
+    }
+
+
+  }
 }
