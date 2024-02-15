@@ -7,7 +7,7 @@ export function handleKeyboardInput(
   user: DefSet,
   dispatch: React.Dispatch<Action>,
   progress: number[],
-  setProgress: React.Dispatch<React.SetStateAction<number[]>>
+  setProgress: React.Dispatch<React.SetStateAction<number[]>>,
 ) {
   const index = helper.findFirstInRow(user)
   const curRowArr = user.wordList[user.curRow]
@@ -63,6 +63,11 @@ export function handleKeyboardInput(
     // })
 
     // helper.updateWordList(user.wordList, dispatch)
+    curRowArr.forEach(obj => {
+
+    })
+
+    // []
 
     dispatch({ type: "set-progress", payload: (100 / user.word.length) * progress.length })
 
@@ -118,24 +123,42 @@ class helper {
     return true
   }
 
-  // static findNumberOfOccurences(word: string) {
-  //   let numberOfOccurences = 1
+  static findNumberOfOccurences(list: Token[], letter: string) {
+    let exists = 0
+    let matched = 0
 
-  //   word.split('').forEach(l => {
-  //     while (!makeRegex(l).test(word)) {
+    list.forEach(l => {
+      if (l.content === letter) exists += 1
+      if (l.guessed.correct || l.guessed.existsAnywhere) matched += 1
+    })
 
-  //     }
-  //   })
+    return exists > matched ? true : false
 
-  //   function makeRegex(l: string) {
-  //     let regex = '/'
+    // word.split('').forEach(l => {
+    //   let numberOfOccurences = 1
+    //   let hasMatched = false
 
-  //     for (let i = numberOfOccurences; i > 0; i--) {
-  //       regex += `[^${l}]*${l}`
-  //     }
+    //   while (!hasMatched) {
+    //     const reg = makeRegex(l, numberOfOccurences)
 
-  //     return new RegExp(`${regex}/`)
-  //   }
+    //     if (!reg.test(word)) {
+    //       numberOfOccurences += 1
+    //     } else {
+    //       hasMatched = true
 
-  // }
+    //       // setAmount({ ...amount, { exists: }})
+    //     }
+    //   }
+    // })
+
+    // function makeRegex(l: string, occurences: number) {
+    //   let regex = '/'
+
+    //   for (let i = 0; i <= occurences; i++) {
+    //     regex += `[^${l}]*${l}`
+    //   }
+
+    //   return new RegExp(`${regex}[^${l}]*/`)
+    // }
+  }
 }
