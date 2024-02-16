@@ -2,6 +2,7 @@ import { DefSet, Action } from '../types/types'
 import ButtonBar from '../utils/components/ButtonBar'
 import { newGame } from '../utils/generateWord'
 import { shorten } from '../utils/shorten'
+import { allTimeStats } from '../App'
 import s from './final-screen.module.scss'
 
 export default function FinalScreen({
@@ -11,7 +12,9 @@ export default function FinalScreen({
 	user: DefSet
 	dispatch: React.Dispatch<Action>
 }) {
-	const allTime = JSON.parse(window.localStorage.getItem('allTimeStats')!)
+	const allTime = JSON.parse(
+		window.localStorage.getItem('allTimeStats') ?? JSON.stringify(allTimeStats)
+	)
 
 	function capitalizeLetter(word: string | string[]) {
 		if (typeof word === 'string') {
@@ -30,6 +33,7 @@ export default function FinalScreen({
 				{ name: `Number of Attempts:`, value: user.curRow },
 				{ name: `Time Taken:`, value: user.timeTaken },
 				{ name: `Difficulty: `, value: capitalizeLetter(user.difficulty) },
+				{ name: `Correct Guesses Per Second: `, value: shorten(allTime.averageCorrectPerSecond) },
 			],
 		},
 		{

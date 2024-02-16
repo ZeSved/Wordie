@@ -25,6 +25,7 @@ export const allTimeStats = {
 		played: 0,
 		won: 0,
 	},
+	averageCorrectPerSecond: 0,
 }
 
 function App() {

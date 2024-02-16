@@ -29,6 +29,9 @@
 		padding: var(--default-gap);
 		border-radius: calc(var(--default-gap) * 2);
 
+		overflow-y: auto;
+		max-height: 100vh;
+
 		> h2,
 		> h3 {
 			text-align: center;

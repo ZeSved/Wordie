@@ -1,4 +1,5 @@
 import { Action, DefSet, Token } from "../types/types"
+import { allTimeStats } from "../App"
 
 const ALLOWED_LETTERS = /^[a-zA-Z]$/
 
@@ -11,7 +12,7 @@ export function handleKeyboardInput(
 ) {
   const index = helper.findFirstInRow(user)
   const curRowArr = user.wordList[user.curRow]
-  const allTime = JSON.parse(window.localStorage.getItem('allTimeStats')!)
+  const allTime = JSON.parse(window.localStorage.getItem('allTimeStats') ?? JSON.stringify(allTimeStats))
 
   // If any alphabetic key was pressed
   if (ALLOWED_LETTERS.test(e.key)) {
@@ -74,7 +75,7 @@ export function handleKeyboardInput(
     if (lastRow) {
       dispatch({ type: "set-status", payload: "won" })
 
-      helper.updateSave(true, allTime)
+      helper.updateSave(true, allTime, user)
 
       return helper.updateCurrentRow(dispatch, user)
     }
@@ -82,7 +83,7 @@ export function handleKeyboardInput(
     if (user.curRow === 5) {
       dispatch({ type: "set-status", payload: "lost" })
 
-      helper.updateSave(false, allTime)
+      helper.updateSave(false, allTime, user)
 
       return helper.updateCurrentRow(dispatch, user)
     }
@@ -100,9 +101,13 @@ class helper {
     dispatch({ type: "set-cur_row", payload: user.curRow + 1 })
   }
 
-  static updateSave(won = false, allTime: any) {
+  static updateSave(won = false, allTime: any, u: DefSet) {
     allTime.games.played += 1
-    if (won) allTime.games.won += 1
+    if (won) {
+      allTime.games.won += 1
+    }
+    allTime.averageCorrectPerSecond = u.word.length / u.timeTaken
+
     window.localStorage.setItem('allTimeStats', JSON.stringify(allTime))
   }
 
