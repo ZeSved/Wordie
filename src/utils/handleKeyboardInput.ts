@@ -64,11 +64,14 @@ export function handleKeyboardInput(
     // })
 
     // helper.updateWordList(user.wordList, dispatch)
-    curRowArr.forEach(obj => {
 
+    curRowArr.forEach(obj => {
+      if (helper.findNumberOfOccurences(curRowArr, obj.content)) {
+        obj.guessed.existsAnywhere = true
+      }
     })
 
-    // []
+    helper.updateWordList(user.wordList, dispatch)
 
     dispatch({ type: "set-progress", payload: (100 / user.word.length) * progress.length })
 
