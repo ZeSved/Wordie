@@ -4,7 +4,7 @@ import { useEffect, useReducer, useState } from 'react'
 
 import { DefSet } from './types/types'
 import { reducer } from './utils/reducer'
-import { newGame } from './utils/generateWord'
+import { newGame } from './utils/newGame'
 
 import UserInput from './user input/user-input'
 import FinalScreen from './final screen/final-screen'

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Action, DefSet, Difficulty } from '../types/types'
 import ButtonBar from '../utils/components/ButtonBar'
-import { newGame } from '../utils/generateWord'
+import { newGame } from '../utils/newGame'
 import { shorten } from '../utils/shorten'
 
 export default function UserInput({

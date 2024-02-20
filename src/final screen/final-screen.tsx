@@ -1,6 +1,6 @@
 import { DefSet, Action } from '../types/types'
 import ButtonBar from '../utils/components/ButtonBar'
-import { newGame } from '../utils/generateWord'
+import { newGame } from '../utils/newGame'
 import { shorten } from '../utils/shorten'
 import { allTimeStats } from '../App'
 import s from './final-screen.module.scss'
