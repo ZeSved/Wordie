@@ -13,6 +13,7 @@ export default function Board({
 	dispatch: React.Dispatch<Action>
 }) {
 	const [progress, setProgress] = useState<number[]>([])
+	const [guesses, setGuesses] = useState<string[]>([])
 
 	function assignClasses(u: Token, i: number, ltrI: number) {
 		const classNames = [s.box]
@@ -38,7 +39,7 @@ export default function Board({
 
 	useEffect(() => {
 		function keyDownHandler(e: KeyboardEvent) {
-			handleKeyboardInput(e, user, dispatch, progress, setProgress)
+			handleKeyboardInput(e, user, dispatch, progress, setProgress, guesses, setGuesses)
 		}
 
 		window.addEventListener('keydown', keyDownHandler)

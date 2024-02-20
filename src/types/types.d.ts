@@ -1,5 +1,5 @@
 export type DefSet = {
-  word: string[] | string
+  word: string
   wordList: Token[][]
   curRow: number
   status: Status
@@ -23,7 +23,7 @@ type Difficulty = 'easy' | 'medium' | 'hard' | 'extreme'
 export type Action =
   | {
     type: 'set-word'
-    payload: string[] | string
+    payload: string
   }
   | {
     type: 'set-word-list'

@@ -12,7 +12,7 @@ export function newGame(
   })
   // const word = 'house'
 
-  dispatch({ type: "set-word", payload: word })
+  dispatch({ type: "set-word", payload: typeof word === 'string' ? word : word.join('') })
   dispatch({ type: "set-word-list", payload: createContent(word) })
   dispatch({ type: "set-cur_row", payload: 0 })
   dispatch({ type: "set-progress", payload: 0 })

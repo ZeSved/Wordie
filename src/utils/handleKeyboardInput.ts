@@ -9,6 +9,8 @@ export function handleKeyboardInput(
   dispatch: React.Dispatch<Action>,
   progress: number[],
   setProgress: React.Dispatch<React.SetStateAction<number[]>>,
+  guesses: string[],
+  setGuesses: React.Dispatch<React.SetStateAction<string[]>>,
 ) {
   const index = helper.findFirstInRow(user)
   const curRowArr = user.wordList[user.curRow]
@@ -21,7 +23,13 @@ export function handleKeyboardInput(
 
     guess.content = e.key.toUpperCase()
     guess.correct = content === guess.content
-    // guess.existsAnywhere = !guess.correct ? user.word.includes(e.key.toLowerCase()) : false
+
+    if (helper.getAmount(user.word.split(''), e.key.toLowerCase())
+      > helper.getAmount(guesses, e.key.toLowerCase())) {
+      guess.existsAnywhere = !guess.correct ? user.word.includes(e.key.toLowerCase()) : false
+
+      setGuesses([...guesses, e.key.toLowerCase()])
+    }
 
     if (!progress.includes(index) && guess.correct) { setProgress([...progress, index]) }
 
@@ -64,9 +72,9 @@ export function handleKeyboardInput(
     // })
 
     // helper.updateWordList(user.wordList, dispatch)
-    curRowArr.forEach(obj => {
+    // curRowArr.forEach(obj => {
 
-    })
+    // })
 
     // []
 
@@ -95,6 +103,10 @@ export function handleKeyboardInput(
 class helper {
   static updateWordList(wordList: Token[][] | undefined, dispatch: React.Dispatch<Action>) {
     wordList && dispatch({ type: 'set-word-list', payload: wordList })
+  }
+
+  static getAmount(arr: string[], key: string) {
+    return arr.filter((x) => x === key).length
   }
 
   static updateCurrentRow(dispatch: React.Dispatch<Action>, user: DefSet,) {
