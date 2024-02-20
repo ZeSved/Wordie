@@ -76,7 +76,7 @@ export function handleKeyboardInput(
 
     // })
 
-    // []
+    helper.updateWordList(user.wordList, dispatch)
 
     dispatch({ type: "set-progress", payload: (100 / user.word.length) * progress.length })
 
