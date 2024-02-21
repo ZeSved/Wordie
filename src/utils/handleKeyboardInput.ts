@@ -20,15 +20,27 @@ export function handleKeyboardInput(
   if (ALLOWED_LETTERS.test(e.key)) {
     if (index === -1) return
     const { guessed: guess, content }: Token = curRowArr[index]
+    const remainingGuess = user.word.split('').filter((x) => x === e.key.toLowerCase()).length > guesses.filter((x) => x === e.key.toLowerCase()).length
 
     guess.content = e.key.toUpperCase()
     guess.correct = content === guess.content
 
-    if (helper.getAmount(user.word.split(''), e.key.toLowerCase())
-      > helper.getAmount(guesses, e.key.toLowerCase())) {
+    if (remainingGuess) {
       guess.existsAnywhere = !guess.correct ? user.word.includes(e.key.toLowerCase()) : false
 
       setGuesses([...guesses, e.key.toLowerCase()])
+    }
+
+    if (guess.correct && !remainingGuess) {
+      const newArr = [...guesses]
+
+      newArr.splice(newArr.indexOf(e.key.toLowerCase()), 1)
+      user.wordList[user.curRow][user.wordList[user.curRow]
+        .indexOf(user.wordList[user.curRow].find(x => x.guessed.content === guess.content)!)].guessed.existsAnywhere = false
+
+      helper.updateWordList(user.wordList, dispatch)
+
+      setGuesses(newArr)
     }
 
     if (!progress.includes(index) && guess.correct) { setProgress([...progress, index]) }
@@ -63,27 +75,13 @@ export function handleKeyboardInput(
     if (index !== -1) return
     const lastRow = helper.checkCurrentRow(user)
 
-    // curRowArr.forEach(obj => {
-    //   const ob = curRowArr.find(r => r.content === obj.guessed.content)
-
-    //   if (!obj.guessed.correct && user.word.includes(e.key) && ob) {
-    //     obj.guessed.existsAnywhere = true
-    //   }
-    // })
-
-    // helper.updateWordList(user.wordList, dispatch)
-    // curRowArr.forEach(obj => {
-
-    // })
-
-    helper.updateWordList(user.wordList, dispatch)
-
     dispatch({ type: "set-progress", payload: (100 / user.word.length) * progress.length })
 
     if (lastRow) {
       dispatch({ type: "set-status", payload: "won" })
 
       helper.updateSave(true, allTime, user)
+      setGuesses([])
 
       return helper.updateCurrentRow(dispatch, user)
     }
@@ -92,10 +90,12 @@ export function handleKeyboardInput(
       dispatch({ type: "set-status", payload: "lost" })
 
       helper.updateSave(false, allTime, user)
+      setGuesses([])
 
       return helper.updateCurrentRow(dispatch, user)
     }
 
+    setGuesses([])
     return helper.updateCurrentRow(dispatch, user)
   }
 }
@@ -103,10 +103,6 @@ export function handleKeyboardInput(
 class helper {
   static updateWordList(wordList: Token[][] | undefined, dispatch: React.Dispatch<Action>) {
     wordList && dispatch({ type: 'set-word-list', payload: wordList })
-  }
-
-  static getAmount(arr: string[], key: string) {
-    return arr.filter((x) => x === key).length
   }
 
   static updateCurrentRow(dispatch: React.Dispatch<Action>, user: DefSet,) {
@@ -138,44 +134,5 @@ class helper {
     }
 
     return true
-  }
-
-  static findNumberOfOccurences(list: Token[], letter: string) {
-    let exists = 0
-    let matched = 0
-
-    list.forEach(l => {
-      if (l.content === letter) exists += 1
-      if (l.guessed.correct || l.guessed.existsAnywhere) matched += 1
-    })
-
-    return exists > matched ? true : false
-
-    // word.split('').forEach(l => {
-    //   let numberOfOccurences = 1
-    //   let hasMatched = false
-
-    //   while (!hasMatched) {
-    //     const reg = makeRegex(l, numberOfOccurences)
-
-    //     if (!reg.test(word)) {
-    //       numberOfOccurences += 1
-    //     } else {
-    //       hasMatched = true
-
-    //       // setAmount({ ...amount, { exists: }})
-    //     }
-    //   }
-    // })
-
-    // function makeRegex(l: string, occurences: number) {
-    //   let regex = '/'
-
-    //   for (let i = 0; i <= occurences; i++) {
-    //     regex += `[^${l}]*${l}`
-    //   }
-
-    //   return new RegExp(`${regex}[^${l}]*/`)
-    // }
   }
 }
