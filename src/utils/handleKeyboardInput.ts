@@ -9,8 +9,8 @@ export function handleKeyboardInput(
   dispatch: React.Dispatch<Action>,
   progress: number[],
   setProgress: React.Dispatch<React.SetStateAction<number[]>>,
-  guesses: string[],
-  setGuesses: React.Dispatch<React.SetStateAction<string[]>>,
+  marked: string[],
+  setMarked: React.Dispatch<React.SetStateAction<string[]>>,
 ) {
   const index = helper.findFirstInRow(user)
   const curRowArr = user.wordList[user.curRow]
@@ -20,19 +20,24 @@ export function handleKeyboardInput(
   if (ALLOWED_LETTERS.test(e.key)) {
     if (index === -1) return
     const { guessed: guess, content }: Token = curRowArr[index]
-    const remainingGuess = user.word.split('').filter((x) => x === e.key.toLowerCase()).length > guesses.filter((x) => x === e.key.toLowerCase()).length
+    const remainingGuess = user.word.split('').filter((x) => x === e.key.toLowerCase()).length > marked.filter((x) => x === e.key.toLowerCase()).length
+    const newMarked = [...marked]
 
     guess.content = e.key.toUpperCase()
     guess.correct = content === guess.content
 
+    if (guess.correct) {
+      newMarked.push(e.key.toLowerCase())
+    }
+
     if (remainingGuess) {
       guess.existsAnywhere = !guess.correct ? user.word.includes(e.key.toLowerCase()) : false
 
-      setGuesses([...guesses, e.key.toLowerCase()])
+      if (guess.existsAnywhere) { newMarked.push(e.key.toLowerCase()) }
     }
 
     if (guess.correct && !remainingGuess) {
-      const newArr = [...guesses]
+      const newArr = [...marked]
 
       newArr.splice(newArr.indexOf(e.key.toLowerCase()), 1)
       user.wordList[user.curRow][user.wordList[user.curRow]
@@ -40,10 +45,11 @@ export function handleKeyboardInput(
 
       helper.updateWordList(user.wordList, dispatch)
 
-      setGuesses(newArr)
+      setMarked(newArr)
     }
 
     if (!progress.includes(index) && guess.correct) { setProgress([...progress, index]) }
+    setMarked(newMarked)
 
     return helper.updateWordList(user.wordList, dispatch)
   }
@@ -80,8 +86,8 @@ export function handleKeyboardInput(
     if (lastRow) {
       dispatch({ type: "set-status", payload: "won" })
 
-      helper.updateSave(true, allTime, user)
-      setGuesses([])
+      helper.updateSave(true, allTime, user, dispatch)
+      setMarked([])
 
       return helper.updateCurrentRow(dispatch, user)
     }
@@ -89,13 +95,13 @@ export function handleKeyboardInput(
     if (user.curRow === 5) {
       dispatch({ type: "set-status", payload: "lost" })
 
-      helper.updateSave(false, allTime, user)
-      setGuesses([])
+      helper.updateSave(false, allTime, user, dispatch)
+      setMarked([])
 
       return helper.updateCurrentRow(dispatch, user)
     }
 
-    setGuesses([])
+    setMarked([])
     return helper.updateCurrentRow(dispatch, user)
   }
 }
@@ -109,12 +115,16 @@ class helper {
     dispatch({ type: "set-cur_row", payload: user.curRow + 1 })
   }
 
-  static updateSave(won = false, allTime: any, u: DefSet) {
+  static updateSave(won = false, allTime: any, u: DefSet, dispatch: React.Dispatch<Action>,) {
     allTime.games.played += 1
     if (won) {
       allTime.games.won += 1
     }
     allTime.averageCorrectPerSecond = u.word.length / u.timeTaken
+
+    if (won) {
+      dispatch({ type: "set-status", payload: "won" })
+    } else dispatch({ type: "set-status", payload: "lost" })
 
     window.localStorage.setItem('allTimeStats', JSON.stringify(allTime))
   }
