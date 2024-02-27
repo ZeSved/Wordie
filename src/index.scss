@@ -16,10 +16,15 @@
 }
 
 :root {
-	--main-color: #242424;
+	--main-color: #0e0e0e;
+	--secondary: #ffffff95;
 
-	--accent-color: #141414;
-	--call-to-action-color: #00d1ff;
+	--accent: #141414;
+
+	--cta-800: #402060;
+	--cta-600: #592d86;
+	--cta-400: #7339ac;
+	--cta-200: #8c53c6;
 
 	--default-gap: 1rem;
 }
@@ -34,17 +39,12 @@ select {
 	outline: none;
 	height: fit-content;
 	width: fit-content;
-	color: black;
+	color: var(--secondary);
 
 	> option {
 		background-color: var(--main-color);
-		color: var(--call-to-action-color);
+		color: var(--secondary);
 		text-align: center;
-	}
-
-	&:hover {
-		background-color: var(--call-to-action-color);
-		color: var(--main-color);
 	}
 }
 
@@ -58,9 +58,9 @@ button {
 }
 
 input {
-	background-color: var(--accent-color);
+	background-color: var(--accent);
 
-	color: white;
+	color: var(--secondary);
 
 	cursor: text;
 
@@ -79,7 +79,7 @@ input {
 }
 
 button {
-	background-color: var(--call-to-action-color);
+	background-color: var(--cta);
 
 	color: black;
 

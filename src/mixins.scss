@@ -1,0 +1,7 @@
+@mixin ind($clr) {
+	border-bottom: 2px solid $clr;
+
+	> p {
+		color: $clr;
+	}
+}

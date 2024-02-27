@@ -52,7 +52,20 @@ export default function UserInput({
 					</button>
 				</div>
 				<div>
-					<p>Progress: {shorten(user.progress)}%</p>
+					<p>
+						Progress:{' '}
+						<span
+							style={{
+								color:
+									user.progress >= 90
+										? '#00ff0080'
+										: user.progress >= 50
+										? '#00ff0030'
+										: 'var(--secondary)',
+							}}>
+							{shorten(user.progress)}%
+						</span>
+					</p>
 				</div>
 				<div>
 					<p>Time: {user.timeTaken}</p>

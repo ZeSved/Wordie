@@ -2,22 +2,23 @@
 	display: flex;
 	gap: 2px;
 
-	width: fit-content;
-
 	> div {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		gap: calc(var(--default-gap) / 2);
 
-		background-color: var(--call-to-action-color);
+		flex-grow: 1;
+
+		border: 2px solid var(--cta-600);
 
 		padding: calc(var(--default-gap) / 2);
 
-		color: black;
+		color: var(--secondary);
 
 		> button {
 			border-radius: var(--default-gap);
+			color: var(--secondary);
 		}
 
 		> p {
@@ -27,10 +28,6 @@
 		> input {
 			border-radius: var(--default-gap);
 			width: 85%;
-		}
-
-		:last-child {
-			border-radius: calc(var(--default-gap) / 2);
 		}
 	}
 

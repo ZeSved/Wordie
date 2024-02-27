@@ -1,3 +1,5 @@
+@use '../mixins.scss';
+
 .main {
 	--columns: var(--word-length, 5);
 
@@ -16,11 +18,8 @@
 
 	gap: 6px;
 
-	.current {
-		border-radius: var(--default-gap);
-		border-left: 0.3rem solid var(--call-to-action-color);
-		border-right: 0.3rem solid var(--call-to-action-color);
-		padding: 0 calc(var(--default-gap) * 2);
+	.current .box {
+		border-bottom: 4px solid var(--cta-200);
 	}
 
 	> div {
@@ -30,43 +29,49 @@
 		display: flex;
 		justify-content: space-around;
 
-		gap: 2px;
+		gap: var(--default-gap);
 
 		.box {
 			height: fit-content;
 			width: fit-content;
-			padding: 0.5rem 0.7rem;
+			padding: 0.8rem 0.5rem;
 
 			text-align: center;
 
-			border-radius: var(--default-gap);
+			border-bottom: 2px dashed var(--cta-600);
 
-			background-color: var(--accent-color);
+			transition: all 200ms;
+
+			&:hover {
+				border-color: var(--cta-400);
+			}
 
 			> p {
 				font-size: xx-large;
 				padding: 0.4rem 1.2rem;
 				border-radius: 0.5rem 0.3rem;
-				color: white;
+				color: var(--secondary);
+			}
+
+			&.correct {
+				@include mixins.ind(#00ff0095);
+			}
+
+			&.guessed {
+				@include mixins.ind(#eeff0095);
 			}
 		}
 
-		.correct > p,
-		.guessed > p,
 		.empty > p {
-			color: var(--accent-color);
+			color: transparent;
 		}
 
 		.hint > p {
-			color: #ffffff50;
+			color: #ffffff30;
 		}
 
-		.correct {
-			background-color: #00ff00;
-		}
-
-		.guessed {
-			background-color: #eeff00;
+		.guessed > p {
+			color: #eeff00;
 		}
 	}
 }
