@@ -41,7 +41,6 @@ export function handleKeyboardInput(
 
     if (!progress.includes(index) && guess.correct) { setProgress([...progress, index]) }
     setProgressOnRow({ correct, exists })
-    console.log(exists)
 
     return helper.updateWordList(game.wordList, dispatch)
   }
@@ -93,21 +92,6 @@ export function handleKeyboardInput(
 
     dispatch({ type: "set-progress", payload: (100 / game.word.length) * progress.length })
 
-    // game.word.split('').forEach(l => {
-    //   if (helper.remaining(game, progressOnRow, l).full && exists.includes(l)) {
-    //     const newArr = exists
-    //     while (newArr.includes(l)) {
-    //       game.wordList[game.curRow][curRowArr.findIndex(x => x.guessed.content === l)].guessed.existsAnywhere = false
-    //       newArr.splice(exists.indexOf(l), 1)
-    //     }
-    //   }
-    // })
-
-    // game.wordList[game.curRow].forEach(obj => {
-    //   if (helper.remaining(game, progressOnRow, obj.guessed.content).full) {
-    //     obj.guessed.existsAnywhere = false
-    //   }
-    // })
     exists.forEach(x => {
       const i = game.wordList[game.curRow].findIndex(t => t.guessed.content.toLowerCase() === x)
       if (i !== -1) { game.wordList[game.curRow][i].guessed.existsAnywhere = true }

@@ -8,9 +8,11 @@ import classNames from 'classnames'
 export default function Board({
 	game,
 	dispatch,
+	showHints,
 }: {
 	game: Game
 	dispatch: React.Dispatch<Action>
+	showHints: boolean
 }) {
 	const [progress, setProgress] = useState<number[]>([])
 	const [progressOnRow, setProgressOnRow] = useState<ProgressOnRow>({ correct: [], exists: [] })
@@ -20,7 +22,7 @@ export default function Board({
 
 		!u.guessed.content && classNames.push(s.empty)
 
-		if (game.curRow === i && game.curRow > 0 && progress.includes(ltrI)) {
+		if (game.curRow === i && game.curRow > 0 && progress.includes(ltrI) && showHints) {
 			classNames.splice(1, 1)
 			classNames.push(s.hint)
 		}

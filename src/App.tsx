@@ -31,6 +31,7 @@ export const allTimeStats = {
 function App() {
 	const [game, dispatch] = useReducer(reducer, DEFAULT_GAME)
 	const [intervalId, setIntervalId] = useState<number>(0)
+	const [showHints, setShowHints] = useState<boolean>(true)
 
 	useEffect(() => {
 		newGame(dispatch, game)
@@ -69,10 +70,13 @@ function App() {
 				<Board
 					game={game}
 					dispatch={dispatch}
+					showHints={showHints}
 				/>
 				<UserInput
 					game={game}
 					dispatch={dispatch}
+					showHints={showHints}
+					setShowHints={setShowHints}
 				/>
 			</div>
 		</div>

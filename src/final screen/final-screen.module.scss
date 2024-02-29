@@ -1,3 +1,5 @@
+@use '../mixins.scss';
+
 .blurContainer {
 	position: absolute;
 	z-index: 100;
@@ -77,6 +79,10 @@
 			}
 		}
 	}
+}
+
+.input {
+	@include mixins.interactionBar;
 }
 
 @keyframes slideIn {

@@ -1,5 +1,4 @@
 import { Game, Action } from '../types/types'
-import ButtonBar from '../utils/components/ButtonBar'
 import { newGame } from '../utils/newGame'
 import { shorten } from '../utils/shorten'
 import { allTimeStats } from '../App'
@@ -82,7 +81,7 @@ export default function FinalScreen({
 						</ul>
 					</>
 				))}
-				<ButtonBar>
+				<div className={s.input}>
 					<div>
 						<button
 							onClick={() => {
@@ -97,7 +96,7 @@ export default function FinalScreen({
 							Close
 						</button>
 					</div>
-				</ButtonBar>
+				</div>
 			</div>
 		</div>
 	)
