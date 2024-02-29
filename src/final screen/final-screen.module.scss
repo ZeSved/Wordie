@@ -64,12 +64,15 @@
 					border: 2px solid var(--cta-600);
 				}
 
-				> p {
+				> p,
+				a {
 					font-size: 1.5rem;
 					color: var(--secondary);
 
 					max-width: 70%;
 					text-wrap: wrap;
+
+					text-decoration: none;
 				}
 			}
 		}

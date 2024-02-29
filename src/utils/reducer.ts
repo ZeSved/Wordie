@@ -1,43 +1,43 @@
-import { Action, DefSet } from "../types/types";
+import { Action, Game } from "../types/types";
 
-export function reducer(user: DefSet, action: Action): DefSet {
+export function reducer(game: Game, action: Action): Game {
   switch (action.type) {
     case 'set-word':
       const rootElm = document.documentElement
       rootElm.style.setProperty('--word-length', action.payload.length.toString());
 
       return {
-        ...user,
+        ...game,
         word: action.payload
       }
     case 'set-word-list':
       return {
-        ...user,
+        ...game,
         wordList: action.payload
       }
     case 'set-cur_row':
       return {
-        ...user,
+        ...game,
         curRow: action.payload
       }
     case 'set-status':
       return {
-        ...user,
+        ...game,
         status: action.payload
       }
     case 'set-progress':
       return {
-        ...user,
+        ...game,
         progress: action.payload
       }
     case 'set-difficulty':
       return {
-        ...user,
+        ...game,
         difficulty: action.payload
       }
     case 'set-time':
       return {
-        ...user,
+        ...game,
         timeTaken: action.payload
       }
   }

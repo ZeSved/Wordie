@@ -1,19 +1,21 @@
 import { useEffect } from 'react'
-import { Action, DefSet, Difficulty } from '../types/types'
+import { Action, Game, Difficulty } from '../types/types'
 import ButtonBar from '../utils/components/ButtonBar'
 import { newGame } from '../utils/newGame'
 import { shorten } from '../utils/shorten'
 
-export default function UserInput({
-	user,
+export default function gameInput({
+	game,
 	dispatch,
 }: {
-	user: DefSet
+	game: Game
 	dispatch: React.Dispatch<Action>
 }) {
 	useEffect(() => {
-		newGame(dispatch, user)
-	}, [user.difficulty])
+		newGame(dispatch, game)
+	}, [game.difficulty])
+
+	const devMode = window.location.origin === 'http://localhost:5173'
 
 	function handleDifficulty(currentTarget: HTMLSelectElement) {
 		const diff = currentTarget.value as Difficulty
@@ -30,7 +32,7 @@ export default function UserInput({
 				<div>
 					<select
 						onChange={(e) => handleDifficulty(e.currentTarget)}
-						defaultValue={user.difficulty}>
+						defaultValue={game.difficulty}>
 						{difficulties.map((d) => (
 							<option
 								key={d}
@@ -40,35 +42,29 @@ export default function UserInput({
 						))}
 					</select>
 				</div>
-				<div>
-					<button
-						disabled
-						onClick={() =>
-							confirm(
-								'Are you sure you want to reveal the word? This will reset all progress and generate a new word.'
-							) && alert(`The word was '${user.word}'`)
-						}>
-						{user.word}
-					</button>
-				</div>
+				{devMode && (
+					<div>
+						<button disabled>{game.word}</button>
+					</div>
+				)}
 				<div>
 					<p>
 						Progress:{' '}
 						<span
 							style={{
 								color:
-									user.progress >= 90
+									game.progress >= 90
 										? '#00ff0080'
-										: user.progress >= 50
+										: game.progress >= 50
 										? '#00ff0030'
 										: 'var(--secondary)',
 							}}>
-							{shorten(user.progress)}%
+							{shorten(game.progress)}%
 						</span>
 					</p>
 				</div>
 				<div>
-					<p>Time: {user.timeTaken}</p>
+					<p>Time: {game.timeTaken}</p>
 				</div>
 			</ButtonBar>
 		</>

@@ -2,7 +2,7 @@ import './App.css'
 
 import { useEffect, useReducer, useState } from 'react'
 
-import { DefSet } from './types/types'
+import { Game } from './types/types'
 import { reducer } from './utils/reducer'
 import { newGame } from './utils/newGame'
 
@@ -10,7 +10,7 @@ import UserInput from './user input/user-input'
 import FinalScreen from './final screen/final-screen'
 import Board from './game board/game-board'
 
-export const DEFAULT_GAME: DefSet = {
+export const DEFAULT_GAME: Game = {
 	word: '',
 	wordList: [],
 	curRow: 0,
@@ -29,49 +29,49 @@ export const allTimeStats = {
 }
 
 function App() {
-	const [user, dispatch] = useReducer(reducer, DEFAULT_GAME)
+	const [game, dispatch] = useReducer(reducer, DEFAULT_GAME)
 	const [intervalId, setIntervalId] = useState<number>(0)
 
 	useEffect(() => {
-		newGame(dispatch, user)
+		newGame(dispatch, game)
 	}, [])
 
 	useEffect(() => {
-		if (user.status !== 'playing') {
+		if (game.status !== 'playing') {
 			clearInterval(intervalId)
 		}
 
-		if ((user.difficulty === 'hard' || user.difficulty === 'extreme') && user.timeTaken >= 600) {
+		if ((game.difficulty === 'hard' || game.difficulty === 'extreme') && game.timeTaken >= 600) {
 			clearInterval(intervalId)
 			dispatch({ type: 'set-status', payload: 'lost' })
 		}
-	}, [user.timeTaken, user.status])
+	}, [game.timeTaken, game.status])
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			dispatch({ type: 'set-time', payload: (user.timeTaken += 1) })
+			dispatch({ type: 'set-time', payload: (game.timeTaken += 1) })
 		}, 1000)
 
 		setIntervalId(interval)
 
 		return () => clearInterval(interval)
-	}, [user.word])
+	}, [game.word])
 
 	return (
 		<div className='wrapper'>
 			<div className='main'>
-				{user.status !== 'playing' && (
+				{game.status !== 'playing' && (
 					<FinalScreen
-						user={user}
+						game={game}
 						dispatch={dispatch}
 					/>
 				)}
 				<Board
-					user={user}
+					game={game}
 					dispatch={dispatch}
 				/>
 				<UserInput
-					user={user}
+					game={game}
 					dispatch={dispatch}
 				/>
 			</div>

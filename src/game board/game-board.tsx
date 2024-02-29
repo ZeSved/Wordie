@@ -1,4 +1,4 @@
-import { Action, DefSet, Token } from '../types/types'
+import { Action, Game, Token } from '../types/types'
 
 import s from './game-board.module.scss'
 import { handleKeyboardInput } from '../utils/handleKeyboardInput'
@@ -6,21 +6,21 @@ import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 export default function Board({
-	user,
+	game,
 	dispatch,
 }: {
-	user: DefSet
+	game: Game
 	dispatch: React.Dispatch<Action>
 }) {
 	const [progress, setProgress] = useState<number[]>([])
-	const [marked, setMarked] = useState<string[]>([])
+	const [progressOnRow, setProgressOnRow] = useState<ProgressOnRow>({ correct: [], exists: [] })
 
 	function assignClasses(u: Token, i: number, ltrI: number) {
 		const classNames = [s.box]
 
 		!u.guessed.content && classNames.push(s.empty)
 
-		if (user.curRow === i && user.curRow > 0 && progress.includes(ltrI)) {
+		if (game.curRow === i && game.curRow > 0 && progress.includes(ltrI)) {
 			classNames.splice(1, 1)
 			classNames.push(s.hint)
 		}
@@ -29,9 +29,9 @@ export default function Board({
 			classNames.splice(1, 1)
 		}
 
-		if (user.curRow > i) {
+		if (game.curRow > i) {
 			u.guessed.correct && classNames.push(s.correct)
-			u.guessed.existsAnywhere && user.difficulty !== 'extreme' && classNames.push(s.guessed)
+			u.guessed.existsAnywhere && game.difficulty !== 'extreme' && classNames.push(s.guessed)
 		}
 
 		return classNames
@@ -39,7 +39,7 @@ export default function Board({
 
 	useEffect(() => {
 		function keyDownHandler(e: KeyboardEvent) {
-			handleKeyboardInput(e, user, dispatch, progress, setProgress, marked, setMarked)
+			handleKeyboardInput(e, game, dispatch, progress, setProgress, progressOnRow, setProgressOnRow)
 		}
 
 		window.addEventListener('keydown', keyDownHandler)
@@ -47,19 +47,19 @@ export default function Board({
 		return () => {
 			window.removeEventListener('keydown', keyDownHandler)
 		}
-	}, [user])
+	}, [game])
 
 	useEffect(() => {
-		if (user.status !== 'playing') {
+		if (game.status !== 'playing') {
 			setProgress([])
 		}
-	}, [user.status])
+	}, [game.status])
 
 	return (
 		<section className={s.main}>
-			{user.wordList.map((ltr, i) => (
+			{game.wordList.map((ltr, i) => (
 				<div
-					className={user.curRow === i ? s.current : ''}
+					className={game.curRow === i ? s.current : ''}
 					key={i}>
 					{ltr.map((lt, j) => (
 						<div
@@ -77,3 +77,5 @@ export default function Board({
 		</section>
 	)
 }
+
+export type ProgressOnRow = { correct: string[]; exists: string[] }

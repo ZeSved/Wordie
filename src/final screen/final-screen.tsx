@@ -1,4 +1,4 @@
-import { DefSet, Action } from '../types/types'
+import { Game, Action } from '../types/types'
 import ButtonBar from '../utils/components/ButtonBar'
 import { newGame } from '../utils/newGame'
 import { shorten } from '../utils/shorten'
@@ -6,33 +6,35 @@ import { allTimeStats } from '../App'
 import s from './final-screen.module.scss'
 
 export default function FinalScreen({
-	user,
+	game,
 	dispatch,
 }: {
-	user: DefSet
+	game: Game
 	dispatch: React.Dispatch<Action>
 }) {
 	const allTime = JSON.parse(
 		window.localStorage.getItem('allTimeStats') ?? JSON.stringify(allTimeStats)
 	)
 
-	function capitalizeLetter(word: string | string[]) {
-		if (typeof word === 'string') {
-			const newWord = word.split('')
+	function capitalizeLetter(word: string) {
+		const newWord = word.split('')
 
-			newWord[0] = newWord[0].toUpperCase()
-			return newWord.join('')
-		}
+		newWord[0] = newWord[0].toUpperCase()
+		return newWord.join('')
 	}
 
-	const stats = [
+	const stats: Stats[] = [
 		{
 			title: 'This Game',
 			content: [
-				{ name: `Word:`, value: capitalizeLetter(user.word) },
-				{ name: `Number of Attempts:`, value: user.curRow },
-				{ name: `Time Taken:`, value: user.timeTaken },
-				{ name: `Difficulty: `, value: capitalizeLetter(user.difficulty) },
+				{
+					name: `Word:`,
+					value: capitalizeLetter(game.word),
+					linkSrc: `https://www.oxfordlearnersdictionaries.com/definition/english/${game.word}_1?q=${game.word}`,
+				},
+				{ name: `Number of Attempts:`, value: game.curRow },
+				{ name: `Time Taken:`, value: game.timeTaken },
+				{ name: `Difficulty: `, value: capitalizeLetter(game.difficulty) },
 				{ name: `Correct Guesses Per Second: `, value: shorten(allTime.averageCorrectPerSecond) },
 			],
 		},
@@ -52,21 +54,29 @@ export default function FinalScreen({
 	return (
 		<div className={s.blurContainer}>
 			<div>
-				<h2>You {user.status}!</h2>
-				{user.status === 'lost' && (
+				<h2>You {game.status}!</h2>
+				{game.status === 'lost' && (
 					<div className={s.cause}>
 						<h3>Cause: </h3>
-						<h3>{user.timeTaken >= 600 ? 'Time Ran Out' : 'Failed To Guess'}</h3>
+						<h3>{game.timeTaken >= 600 ? 'Time Ran Out' : 'Failed To Guess'}</h3>
 					</div>
 				)}
 				{stats.map(({ content, title }) => (
 					<>
 						<h3>{title}</h3>
 						<ul>
-							{content.map(({ value, name }) => (
+							{content.map(({ value, name, linkSrc }) => (
 								<li key={name}>
 									<p>{name}</p>
-									<p>{value}</p>
+									{linkSrc ? (
+										<a
+											target='_blank'
+											href={linkSrc}>
+											{value}
+										</a>
+									) : (
+										<p>{value}</p>
+									)}
 								</li>
 							))}
 						</ul>
@@ -77,7 +87,7 @@ export default function FinalScreen({
 						<button
 							onClick={() => {
 								dispatch({ type: 'set-status', payload: 'playing' })
-								newGame(dispatch, user)
+								newGame(dispatch, game)
 							}}>
 							Generate New Word
 						</button>
@@ -91,4 +101,13 @@ export default function FinalScreen({
 			</div>
 		</div>
 	)
+}
+
+type Stats = {
+	title: string
+	content: {
+		name: string
+		value: string | number
+		linkSrc?: string
+	}[]
 }

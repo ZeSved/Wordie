@@ -1,10 +1,10 @@
 import { generate } from "random-words";
-import { Action, DefSet } from "../types/types";
+import { Action, Game } from "../types/types";
 import { createContent } from "./createContent";
 
 export function newGame(
   dispatch: React.Dispatch<Action>,
-  { difficulty: d }: DefSet,
+  { difficulty: d }: Game,
 ) {
   const word = generate({
     maxLength: d === "easy" ? 5 : d === "medium" ? 7 : d === "hard" ? 8 : 15,

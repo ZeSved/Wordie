@@ -1,4 +1,4 @@
-export type DefSet = {
+export type Game = {
   word: string
   wordList: Token[][]
   curRow: number
