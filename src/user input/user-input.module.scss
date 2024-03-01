@@ -1,5 +1,68 @@
 @use '../mixins.scss';
 
 .input {
-	@include mixins.interactionBar;
+	display: flex;
+	align-items: center;
+	padding-inline: 1rem;
+
+	border: 2px solid var(--cta-600);
+	border-radius: 100vh;
+
+	> * {
+		border: none;
+		outline: none;
+
+		&:not(div, select) {
+			padding: 1rem;
+			border: solid var(--cta-600);
+			border-width: 0 2px 0 2px;
+		}
+	}
+
+	> select {
+		padding: calc(var(--default-gap) - 2px);
+		border: 1px solid var(--primary);
+		border-radius: 100vh 0 0 100vh;
+
+		background-color: var(--primary);
+		color: var(--secondary);
+	}
+
+	.indicator {
+		display: grid;
+		grid-template-columns: repeat(13, 6px);
+		column-gap: 0.5rem;
+		padding-inline: 0.5rem;
+	}
+
+	> div {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 2px;
+
+		.container {
+			display: flex;
+			justify-content: space-between;
+
+			> p {
+				color: var(--secondary);
+				padding-inline: 1rem;
+			}
+		}
+	}
+}
+
+.active {
+	background-color: var(--cta-600);
+	color: var(--primary);
+}
+.unactive {
+	background-color: var(--primary);
+	color: var(--secondary);
+}
+
+.active,
+.unactive {
+	border: 2px solid var(--cta-600);
 }

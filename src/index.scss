@@ -16,7 +16,7 @@
 }
 
 :root {
-	--main-color: #0e0e0e;
+	--primary: #0e0e0e;
 	--secondary: #ffffff95;
 
 	--accent: #141414;
@@ -30,59 +30,18 @@
 }
 
 html {
-	background-color: var(--main-color);
+	background-color: var(--primary);
 }
 
-select {
-	background-color: transparent;
-	border: none;
-	outline: none;
-	height: fit-content;
-	width: fit-content;
+select > option {
+	background-color: var(--primary);
 	color: var(--secondary);
-
-	> option {
-		background-color: var(--main-color);
-		color: var(--secondary);
-		text-align: center;
-	}
+	text-align: center;
 }
 
 input,
 button {
-	border-radius: var(--default-gap);
-	padding: var(--default-gap);
-
-	border: none;
 	outline: none;
-}
-
-input {
-	background-color: var(--accent);
-
-	color: var(--secondary);
-
-	cursor: text;
-
-	&::placeholder {
-		color: #ffffff50;
-	}
-
-	&::-webkit-outer-spin-button,
-	&::-webkit-inner-spin-button {
-		-webkit-appearance: none;
-	}
-
-	&[type='number'] {
-		text-align: center;
-	}
-}
-
-button {
-	background-color: var(--cta);
-
-	color: black;
-
 	cursor: pointer;
 }
 

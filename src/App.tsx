@@ -28,10 +28,21 @@ export const allTimeStats = {
 	averageCorrectPerSecond: 0,
 }
 
+export type Indicate = {
+	correct: string[]
+	inWord: string[]
+	notInWord: string[]
+}
+
 function App() {
 	const [game, dispatch] = useReducer(reducer, DEFAULT_GAME)
 	const [intervalId, setIntervalId] = useState<number>(0)
 	const [showHints, setShowHints] = useState<boolean>(true)
+	const [indicate, setIndicate] = useState<Indicate>({
+		correct: ['E', 'K'],
+		inWord: ['P', 'A'],
+		notInWord: ['S', 'O'],
+	})
 
 	useEffect(() => {
 		newGame(dispatch, game)
@@ -77,6 +88,7 @@ function App() {
 					dispatch={dispatch}
 					showHints={showHints}
 					setShowHints={setShowHints}
+					indicate={indicate}
 				/>
 			</div>
 		</div>

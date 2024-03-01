@@ -82,7 +82,6 @@
 }
 
 .input {
-	@include mixins.interactionBar;
 }
 
 @keyframes slideIn {
