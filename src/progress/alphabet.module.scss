@@ -1,0 +1,9 @@
+.main {
+	display: grid;
+	grid-template-columns: repeat(13, 2rem);
+	row-gap: 1rem;
+
+	> p {
+		font-size: 2rem;
+	}
+}

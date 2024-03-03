@@ -3,20 +3,17 @@ import { Action, Game, Difficulty } from '../types/types'
 import { newGame } from '../utils/newGame'
 import { shorten } from '../utils/shorten'
 import s from './user-input.module.scss'
-import { Indicate } from '../App'
 
 export default function gameInput({
 	game,
 	dispatch,
 	showHints,
 	setShowHints,
-	indicate,
 }: {
 	game: Game
 	dispatch: React.Dispatch<Action>
 	showHints: boolean
 	setShowHints: React.Dispatch<React.SetStateAction<boolean>>
-	indicate: Indicate
 }) {
 	useEffect(() => {
 		newGame(dispatch, game)
@@ -24,7 +21,6 @@ export default function gameInput({
 
 	const devMode = window.location.origin === 'http://localhost:5173'
 	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
-	const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 	function handleDifficulty(currentTarget: HTMLSelectElement) {
 		const diff = currentTarget.value as Difficulty
@@ -64,23 +60,6 @@ export default function gameInput({
 				onClick={() => setShowHints(!showHints)}>
 				{showHints ? 'Hide Hints' : 'Show Hints'}
 			</button>
-			<div className={s.indicator}>
-				{letters.map((letter) => (
-					<p
-						style={{
-							color: indicate.correct.includes(letter)
-								? '#00ff00'
-								: indicate.inWord.includes(letter)
-								? '#eeff00'
-								: indicate.notInWord.includes(letter)
-								? '#ffffff30'
-								: 'var(--secondary)',
-						}}
-						key={letter}>
-						{letter}
-					</p>
-				))}
-			</div>
 			<div>
 				<div className={s.container}>
 					<p>Progress: </p>

@@ -9,6 +9,7 @@ import { newGame } from './utils/newGame'
 import UserInput from './user input/user-input'
 import FinalScreen from './final screen/final-screen'
 import Board from './game board/game-board'
+import Alphabet from './progress/alphabet'
 
 export const DEFAULT_GAME: Game = {
 	word: '',
@@ -83,12 +84,12 @@ function App() {
 					dispatch={dispatch}
 					showHints={showHints}
 				/>
+				<Alphabet indicate={indicate} />
 				<UserInput
 					game={game}
 					dispatch={dispatch}
 					showHints={showHints}
 					setShowHints={setShowHints}
-					indicate={indicate}
 				/>
 			</div>
 		</div>
