@@ -39,10 +39,11 @@ function App() {
 	const [game, dispatch] = useReducer(reducer, DEFAULT_GAME)
 	const [intervalId, setIntervalId] = useState<number>(0)
 	const [showHints, setShowHints] = useState<boolean>(true)
+	const [showAlphabet, setShowAlphabet] = useState<boolean>(true)
 	const [indicate, setIndicate] = useState<Indicate>({
-		correct: ['E', 'K'],
-		inWord: ['P', 'A'],
-		notInWord: ['S', 'O'],
+		correct: [],
+		inWord: [],
+		notInWord: [],
 	})
 
 	useEffect(() => {
@@ -83,6 +84,8 @@ function App() {
 					game={game}
 					dispatch={dispatch}
 					showHints={showHints}
+					indicate={indicate}
+					setIndicate={setIndicate}
 				/>
 				<Alphabet indicate={indicate} />
 				<UserInput
@@ -90,6 +93,8 @@ function App() {
 					dispatch={dispatch}
 					showHints={showHints}
 					setShowHints={setShowHints}
+					showAlphabet={showAlphabet}
+					setShowAlphabet={setShowAlphabet}
 				/>
 			</div>
 		</div>

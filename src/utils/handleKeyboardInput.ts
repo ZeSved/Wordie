@@ -1,5 +1,5 @@
 import { Action, Game, Token } from "../types/types"
-import { allTimeStats } from "../App"
+import { Indicate, allTimeStats } from "../App"
 import { ProgressOnRow } from "../game board/game-board"
 
 const ALLOWED_LETTERS = /^[a-zA-Z]$/
@@ -12,6 +12,8 @@ export function handleKeyboardInput(
   setProgress: React.Dispatch<React.SetStateAction<number[]>>,
   progressOnRow: ProgressOnRow,
   setProgressOnRow: React.Dispatch<React.SetStateAction<ProgressOnRow>>,
+  indicate: Indicate,
+  setIndicate: React.Dispatch<React.SetStateAction<Indicate>>
 ) {
   const index = helper.findFirstInRow(game)
   const curRowArr = game.wordList[game.curRow]

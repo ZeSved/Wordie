@@ -3,17 +3,29 @@ import { Action, Game, Difficulty } from '../types/types'
 import { newGame } from '../utils/newGame'
 import { shorten } from '../utils/shorten'
 import s from './user-input.module.scss'
+import Radial, { RadialBtn } from './radial'
+
+type Info = {
+	text: string
+	color?: string
+	value: string | number
+	onlyShow?: boolean
+}
 
 export default function gameInput({
 	game,
 	dispatch,
 	showHints,
 	setShowHints,
+	showAlphabet,
+	setShowAlphabet,
 }: {
 	game: Game
 	dispatch: React.Dispatch<Action>
 	showHints: boolean
 	setShowHints: React.Dispatch<React.SetStateAction<boolean>>
+	showAlphabet: boolean
+	setShowAlphabet: React.Dispatch<React.SetStateAction<boolean>>
 }) {
 	useEffect(() => {
 		newGame(dispatch, game)
@@ -21,6 +33,36 @@ export default function gameInput({
 
 	const devMode = window.location.origin === 'http://localhost:5173'
 	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
+
+	const radialBtns: RadialBtn[] = [
+		{
+			active: showHints,
+			text: showHints ? 'Hide Hints' : 'Show Hints',
+			func: () => setShowHints(!showHints),
+		},
+		{
+			active: showAlphabet,
+			text: showAlphabet ? 'Hide Alphabet' : 'Show Alphabet',
+			canEnable: game.difficulty !== 'extreme',
+			func: () => setShowAlphabet(!showAlphabet),
+		},
+	]
+
+	const info: Info[] = [
+		{
+			text: 'Progress:',
+			color: colorIndication('#00ff00', 100, game.progress),
+			value: shorten(game.progress) + '%',
+		},
+		{
+			text: 'Time:',
+			color:
+				game.difficulty === 'extreme'
+					? colorIndication('#ff0000', 600, game.timeTaken)
+					: 'var(--secondary)',
+			value: game.timeTaken,
+		},
+	]
 
 	function handleDifficulty(currentTarget: HTMLSelectElement) {
 		const diff = currentTarget.value as Difficulty
@@ -43,46 +85,52 @@ export default function gameInput({
 
 	return (
 		<div className={s.input}>
-			<select
-				onChange={(e) => handleDifficulty(e.currentTarget)}
-				defaultValue={game.difficulty}>
-				{difficulties.map((d) => (
-					<option
-						key={d}
-						value={d.toLowerCase()}>
-						{d}
-					</option>
+			<section>
+				<select
+					onChange={(e) => handleDifficulty(e.currentTarget)}
+					defaultValue={game.difficulty}>
+					{difficulties.map((d) => (
+						<option
+							key={d}
+							value={d.toLowerCase()}>
+							{d}
+						</option>
+					))}
+				</select>
+				{devMode && (
+					<>
+						<div className={s.border} />
+						<p>{game.word}</p>
+					</>
+				)}
+				{radialBtns.map((btn, i) => (
+					<Radial
+						key={i}
+						active={btn.active}
+						text={btn.text}
+						func={btn.func}
+						canEnable={btn.canEnable}
+					/>
 				))}
-			</select>
-			{devMode && <p>{game.word}</p>}
-			<button
-				className={showHints ? s.active : s.unactive}
-				onClick={() => setShowHints(!showHints)}>
-				{showHints ? 'Hide Hints' : 'Show Hints'}
-			</button>
-			<div>
-				<div className={s.container}>
-					<p>Progress: </p>
-					<p
-						style={{
-							color: colorIndication('#00ff00', 100, game.progress),
-						}}>
-						{shorten(game.progress)}%
-					</p>
-				</div>
-				<div className={s.container}>
-					<p>Time:</p>
-					<p
-						style={{
-							color:
-								game.difficulty === 'extreme'
-									? colorIndication('#ff0000', 600, game.timeTaken)
-									: 'var(--secondary)',
-						}}>
-						{game.timeTaken}
-					</p>
-				</div>
-			</div>
+			</section>
+			<section>
+				{info.map((inf, i) => (
+					<>
+						{i !== 0 && <div className={s.border} />}
+						<div
+							key={i}
+							className={s.infoContainer}>
+							<p>{inf.text}</p>
+							<p
+								style={{
+									color: inf.color,
+								}}>
+								{inf.value}
+							</p>
+						</div>
+					</>
+				))}
+			</section>
 		</div>
 	)
 }

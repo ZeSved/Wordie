@@ -4,15 +4,20 @@ import s from './game-board.module.scss'
 import { handleKeyboardInput } from '../utils/handleKeyboardInput'
 import { useEffect, useState } from 'react'
 import classNames from 'classnames'
+import { Indicate } from '../App'
 
 export default function Board({
 	game,
 	dispatch,
 	showHints,
+	indicate,
+	setIndicate,
 }: {
 	game: Game
 	dispatch: React.Dispatch<Action>
 	showHints: boolean
+	indicate: Indicate
+	setIndicate: React.Dispatch<React.SetStateAction<Indicate>>
 }) {
 	const [progress, setProgress] = useState<number[]>([])
 	const [progressOnRow, setProgressOnRow] = useState<ProgressOnRow>({ correct: [], exists: [] })
@@ -41,7 +46,17 @@ export default function Board({
 
 	useEffect(() => {
 		function keyDownHandler(e: KeyboardEvent) {
-			handleKeyboardInput(e, game, dispatch, progress, setProgress, progressOnRow, setProgressOnRow)
+			handleKeyboardInput(
+				e,
+				game,
+				dispatch,
+				progress,
+				setProgress,
+				progressOnRow,
+				setProgressOnRow,
+				indicate,
+				setIndicate
+			)
 		}
 
 		window.addEventListener('keydown', keyDownHandler)
