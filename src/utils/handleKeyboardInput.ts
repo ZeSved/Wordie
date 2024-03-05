@@ -21,6 +21,8 @@ export function handleKeyboardInput(
   const key = e.key.toLowerCase()
   const { correct, exists }: ProgressOnRow = progressOnRow
 
+  const { correct: c, notInWord: nIW, inWord: iW }: Indicate = indicate
+
   // If any alphabetic key was pressed
   if (ALLOWED_LETTERS.test(e.key)) {
     if (index === -1) return
@@ -99,6 +101,21 @@ export function handleKeyboardInput(
       if (i !== -1) { game.wordList[game.curRow][i].guessed.existsAnywhere = true }
     })
 
+    curRowArr.forEach(k => {
+      if (!c.includes(k.guessed.content) && k.guessed.correct) {
+        c.push(k.guessed.content.toUpperCase())
+      }
+
+      if (!iW.includes(k.guessed.content) && k.guessed.existsAnywhere) {
+        iW.push(k.guessed.content.toUpperCase())
+      }
+
+      if (!nIW.includes(k.guessed.content) && !game.word.includes(k.guessed.content)) {
+        nIW.push(k.guessed.content.toUpperCase())
+      }
+    })
+
+    setIndicate({ correct: c, notInWord: nIW, inWord: iW })
     helper.updateWordList(game.wordList, dispatch)
 
     if (gameWon !== undefined) {

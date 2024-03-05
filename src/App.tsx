@@ -53,6 +53,7 @@ function App() {
 	useEffect(() => {
 		if (game.status !== 'playing') {
 			clearInterval(intervalId)
+			setIndicate({ correct: [], notInWord: [], inWord: [] })
 		}
 
 		if ((game.difficulty === 'hard' || game.difficulty === 'extreme') && game.timeTaken >= 600) {

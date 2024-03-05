@@ -36,12 +36,12 @@ export default function gameInput({
 
 	const radialBtns: RadialBtn[] = [
 		{
-			active: showHints,
+			active: showHints || game.difficulty === 'extreme' || game.difficulty === 'hard',
 			text: showHints ? 'Hide Hints' : 'Show Hints',
 			func: () => setShowHints(!showHints),
 		},
 		{
-			active: showAlphabet,
+			active: showAlphabet || game.difficulty === 'extreme' || game.difficulty === 'hard',
 			text: showAlphabet ? 'Hide Alphabet' : 'Show Alphabet',
 			canEnable: game.difficulty !== 'extreme',
 			func: () => setShowAlphabet(!showAlphabet),
