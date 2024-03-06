@@ -29,21 +29,28 @@ export default function gameInput({
 }) {
 	useEffect(() => {
 		newGame(dispatch, game)
+
+		if (game.difficulty === 'extreme' || game.difficulty === 'hard') {
+			setShowAlphabet(false)
+			setShowHints(false)
+		}
 	}, [game.difficulty])
 
-	const devMode = window.location.origin === 'http://localhost:5173'
+	const devMode = window.location.origin === 'http://localhost:5173l'
 	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
+	const hardMode = game.difficulty === 'extreme' || game.difficulty === 'hard'
 
 	const radialBtns: RadialBtn[] = [
 		{
-			active: showHints || game.difficulty === 'extreme' || game.difficulty === 'hard',
+			active: showHints,
 			text: showHints ? 'Hide Hints' : 'Show Hints',
+			canEnable: game.difficulty !== 'extreme',
 			func: () => setShowHints(!showHints),
 		},
 		{
-			active: showAlphabet || game.difficulty === 'extreme' || game.difficulty === 'hard',
+			active: showAlphabet,
 			text: showAlphabet ? 'Hide Alphabet' : 'Show Alphabet',
-			canEnable: game.difficulty !== 'extreme',
+			canEnable: !hardMode,
 			func: () => setShowAlphabet(!showAlphabet),
 		},
 	]
@@ -75,9 +82,9 @@ export default function gameInput({
 		const percentage = maxValue / 10
 
 		if (dependancy >= percentage * 9) {
-			return `${color}80`
+			return `${color.replace(/00/g, '54')}95`
 		} else if (dependancy >= percentage * 5) {
-			return `${color}30`
+			return `${color.replace(/00/g, 'ab')}95`
 		} else {
 			return 'var(--secondary)'
 		}
@@ -100,7 +107,7 @@ export default function gameInput({
 				{devMode && (
 					<>
 						<div className={s.border} />
-						<p>{game.word}</p>
+						<p style={{ color: 'var(--cta-400)' }}>{game.word}</p>
 					</>
 				)}
 				{radialBtns.map((btn, i) => (

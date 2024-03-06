@@ -37,8 +37,8 @@ export default function Board({
 		}
 
 		if (game.curRow > i) {
-			u.guessed.correct && classNames.push(s.correct)
 			u.guessed.existsAnywhere && game.difficulty !== 'extreme' && classNames.push(s.guessed)
+			u.guessed.correct && classNames.push(s.correct)
 		}
 
 		return classNames

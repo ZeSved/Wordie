@@ -88,7 +88,7 @@ function App() {
 					indicate={indicate}
 					setIndicate={setIndicate}
 				/>
-				<Alphabet indicate={indicate} />
+				{showAlphabet && <Alphabet indicate={indicate} />}
 				<UserInput
 					game={game}
 					dispatch={dispatch}
