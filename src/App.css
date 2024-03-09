@@ -5,7 +5,9 @@
 }
 
 .main {
+  margin-inline: auto;
   height: 100%;
+  max-width: 80vw;
 
   display: flex;
   flex-direction: column;

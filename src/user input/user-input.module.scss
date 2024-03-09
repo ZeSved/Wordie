@@ -3,11 +3,11 @@
 .input {
 	display: flex;
 	gap: 2rem;
+	font-size: var(--font-s);
 
 	> section {
 		display: flex;
 		align-items: center;
-		padding-inline: 1rem;
 
 		border: 2px solid var(--cta-600);
 		border-radius: 100vh;

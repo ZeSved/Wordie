@@ -14,7 +14,7 @@ export default function Alphabet({ indicate }: { indicate: Indicate }) {
 							: indicate.inWord.includes(letter)
 							? '#eeff00'
 							: indicate.notInWord.includes(letter)
-							? '#ffffff30'
+							? 'var(--secondary-faint)'
 							: 'var(--secondary)',
 					}}
 					key={letter}>

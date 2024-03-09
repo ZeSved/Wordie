@@ -40,5 +40,10 @@ export function reducer(game: Game, action: Action): Game {
         ...game,
         timeTaken: action.payload
       }
+    case 'set-toast':
+      return {
+        ...game,
+        toast: action.payload
+      }
   }
 }

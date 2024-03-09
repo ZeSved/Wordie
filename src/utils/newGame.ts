@@ -7,8 +7,8 @@ export function newGame(
   { difficulty: d }: Game,
 ) {
   const word = generate({
-    maxLength: d === "easy" ? 5 : d === "medium" ? 7 : d === "hard" ? 8 : 15,
-    minLength: d === "easy" ? 3 : d === "medium" ? 5 : d === "hard" ? 6 : 8,
+    maxLength: d === "easy" ? 4 : d === "medium" ? 6 : d === "hard" ? 8 : 10,
+    minLength: d === "easy" ? 3 : d === "medium" ? 5 : d === "hard" ? 7 : 9,
   })
   // const word = 'house'
 

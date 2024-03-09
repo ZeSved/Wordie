@@ -6,6 +6,7 @@ export type Game = {
   progress: number
   difficulty: Difficulty
   timeTaken: number
+  toast: Toast
 }
 
 export type Token = {
@@ -15,6 +16,11 @@ export type Token = {
     content: string
     correct: boolean
   }
+}
+
+export type Toast = {
+  text: string
+  isWarning?: boolean
 }
 
 type Status = 'won' | 'lost' | 'playing'
@@ -40,4 +46,8 @@ export type Action =
   | {
     type: 'set-difficulty'
     payload: Difficulty
+  }
+  | {
+    type: 'set-toast'
+    payload: Toast
   }

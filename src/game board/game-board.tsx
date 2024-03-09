@@ -82,7 +82,8 @@ export default function Board({
 						<div
 							className={classNames(assignClasses(lt, i, j))}
 							key={j}
-							id={lt.content}>
+							id={lt.content}
+							style={{ fontSize: `${window.innerHeight / 20}px` }}>
 							<p>
 								{lt.guessed.content}
 								{!lt.guessed.content && lt.content}

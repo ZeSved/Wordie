@@ -9,7 +9,7 @@ import { newGame } from './utils/newGame'
 import UserInput from './user input/user-input'
 import FinalScreen from './final screen/final-screen'
 import Board from './game board/game-board'
-import Alphabet from './progress/alphabet'
+import Toast from './toast/toast'
 
 export const DEFAULT_GAME: Game = {
 	word: '',
@@ -19,6 +19,10 @@ export const DEFAULT_GAME: Game = {
 	progress: 0,
 	difficulty: 'easy',
 	timeTaken: 0,
+	toast: {
+		text: '',
+		isWarning: false,
+	},
 }
 
 export const allTimeStats = {
@@ -37,7 +41,9 @@ export type Indicate = {
 
 function App() {
 	const [game, dispatch] = useReducer(reducer, DEFAULT_GAME)
+
 	const [intervalId, setIntervalId] = useState<number>(0)
+
 	const [showHints, setShowHints] = useState<boolean>(true)
 	const [showAlphabet, setShowAlphabet] = useState<boolean>(true)
 	const [indicate, setIndicate] = useState<Indicate>({
@@ -56,9 +62,15 @@ function App() {
 			setIndicate({ correct: [], notInWord: [], inWord: [] })
 		}
 
-		if ((game.difficulty === 'hard' || game.difficulty === 'extreme') && game.timeTaken >= 600) {
-			clearInterval(intervalId)
-			dispatch({ type: 'set-status', payload: 'lost' })
+		if (game.difficulty === 'hard' || game.difficulty === 'extreme') {
+			if (game.timeTaken >= 600) {
+				clearInterval(intervalId)
+				dispatch({ type: 'set-status', payload: 'lost' })
+			} else if (game.timeTaken === 540) {
+				dispatch({ type: 'set-toast', payload: { isWarning: true, text: '1 minute remaining.' } })
+			} else if (game.timeTaken === 300) {
+				dispatch({ type: 'set-toast', payload: { isWarning: true, text: '5 minutes remaining.' } })
+			}
 		}
 	}, [game.timeTaken, game.status])
 
@@ -66,11 +78,20 @@ function App() {
 		const interval = setInterval(() => {
 			dispatch({ type: 'set-time', payload: (game.timeTaken += 1) })
 		}, 1000)
-
 		setIntervalId(interval)
 
 		return () => clearInterval(interval)
 	}, [game.word])
+
+	useEffect(() => {
+		const toastId = document.getElementById('toast-text')
+		toastId?.addEventListener('animationend', handleAnimation)
+		function handleAnimation() {
+			dispatch({ type: 'set-toast', payload: { text: '' } })
+		}
+
+		return () => toastId?.removeEventListener('animationend', handleAnimation)
+	}, [game.toast])
 
 	return (
 		<div className='wrapper'>
@@ -88,7 +109,7 @@ function App() {
 					indicate={indicate}
 					setIndicate={setIndicate}
 				/>
-				{showAlphabet && <Alphabet indicate={indicate} />}
+				<Toast {...game.toast} />
 				<UserInput
 					game={game}
 					dispatch={dispatch}
@@ -96,6 +117,7 @@ function App() {
 					setShowHints={setShowHints}
 					showAlphabet={showAlphabet}
 					setShowAlphabet={setShowAlphabet}
+					indicate={indicate}
 				/>
 			</div>
 		</div>

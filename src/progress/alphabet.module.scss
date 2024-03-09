@@ -1,10 +1,20 @@
 .main {
 	display: grid;
-	grid-template-columns: repeat(13, 2rem);
-	row-gap: 1rem;
-	width: 100%;
+	grid-template-columns: repeat(13, 1rem);
 
-	> p {
-		font-size: 2rem;
+	font-size: var(--font-s);
+	padding-inline: 1rem;
+	max-width: 11vw;
+	overflow: hidden;
+
+	animation: reveal 1s forwards ease-in;
+}
+
+@keyframes reveal {
+	from {
+		width: 0px;
+	}
+	to {
+		width: 100%;
 	}
 }

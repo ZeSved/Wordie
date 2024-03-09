@@ -1,0 +1,37 @@
+.toast,
+.warning {
+	font-size: var(--font-s);
+	max-width: 40rem;
+	overflow: hidden;
+	height: 2rem;
+
+	> p {
+		animation: forwards 5s activate ease-in-out;
+	}
+}
+
+.toast > p {
+	color: var(--secondary);
+}
+
+.warning > p {
+	color: red;
+}
+
+@keyframes activate {
+	from {
+		transform: translateX(-150%);
+	}
+	25% {
+		transform: translateX(0%);
+	}
+	50% {
+		transform: translateX(0%);
+	}
+	75% {
+		transform: translateX(0%);
+	}
+	to {
+		transform: translateX(-150%);
+	}
+}

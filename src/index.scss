@@ -7,7 +7,6 @@
 	padding: 0;
 	margin: 0;
 	font-family: 'JetBrains Mono', monospace;
-	font-size: 1.1rem;
 }
 
 *:disabled {
@@ -18,6 +17,7 @@
 :root {
 	--primary: #0e0e0e;
 	--secondary: #ffffff95;
+	--secondary-faint: #ffffff30;
 
 	--accent: #141414;
 
@@ -26,6 +26,8 @@
 	--cta-400: #7339ac;
 	--cta-200: #8c53c6;
 
+	--font-s: 1.2rem;
+
 	--default-gap: 1rem;
 }
 
@@ -33,10 +35,14 @@ html {
 	background-color: var(--primary);
 }
 
-select > option {
-	background-color: var(--primary);
-	color: var(--secondary);
-	text-align: center;
+select {
+	font-size: var(--font-s);
+	> option {
+		background-color: var(--primary);
+		color: var(--secondary);
+		text-align: center;
+		font-size: var(--font-s);
+	}
 }
 
 input,
