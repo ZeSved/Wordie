@@ -7,6 +7,7 @@ export type Game = {
   difficulty: Difficulty
   timeTaken: number
   toast: Toast
+  started: boolean
 }
 
 export type Token = {
@@ -50,4 +51,8 @@ export type Action =
   | {
     type: 'set-toast'
     payload: Toast
+  }
+  | {
+    type: 'set-started'
+    payload: boolean
   }

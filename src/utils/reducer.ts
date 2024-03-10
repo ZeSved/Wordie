@@ -3,9 +3,6 @@ import { Action, Game } from "../types/types";
 export function reducer(game: Game, action: Action): Game {
   switch (action.type) {
     case 'set-word':
-      const rootElm = document.documentElement
-      rootElm.style.setProperty('--word-length', action.payload.length.toString());
-
       return {
         ...game,
         word: action.payload
@@ -44,6 +41,11 @@ export function reducer(game: Game, action: Action): Game {
       return {
         ...game,
         toast: action.payload
+      }
+    case 'set-started':
+      return {
+        ...game,
+        started: action.payload
       }
   }
 }

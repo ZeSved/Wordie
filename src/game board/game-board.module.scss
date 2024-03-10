@@ -34,7 +34,7 @@
 
 			border-bottom: 2px dashed var(--cta-600);
 
-			transition: all 200ms;
+			transition: border-color 200ms;
 
 			&:hover {
 				border-color: var(--cta-400);
@@ -61,10 +61,6 @@
 		.hint > p {
 			animation: forwards 1s fadeIn;
 			color: var(--secondary-faint);
-		}
-
-		.guessed > p {
-			color: #eeff00;
 		}
 	}
 }

@@ -20,13 +20,18 @@ export function handleKeyboardInput(
   const allTime = JSON.parse(window.localStorage.getItem('allTimeStats') ?? JSON.stringify(allTimeStats))
   const key = e.key.toLowerCase()
   const { correct, exists }: ProgressOnRow = progressOnRow
-
   const { correct: c, notInWord: nIW, inWord: iW }: Indicate = indicate
+
+  if (!game.started && game.timeTaken > 0) return
 
   // If any alphabetic key was pressed
   if (ALLOWED_LETTERS.test(e.key)) {
     if (index === -1) return
     const { guessed: guess, content }: Token = curRowArr[index]
+
+    if (game.curRow === 0 && index === 0 && !game.started) {
+      dispatch({ type: 'set-started', payload: true })
+    }
 
     guess.content = e.key.toUpperCase()
     guess.correct = content === guess.content
@@ -125,7 +130,7 @@ export function handleKeyboardInput(
       if (gameWon) {
         allTime.games.won += 1
       }
-      allTime.averageCorrectPerSecond = game.word.length / game.timeTaken
+      allTime.averageCorrectPerSecond = game.timeTaken === 0 ? game.word.length : game.word.length / game.timeTaken
 
       window.localStorage.setItem('allTimeStats', JSON.stringify(allTime))
     }

@@ -1,8 +1,9 @@
 import { Game, Action } from '../types/types'
 import { newGame } from '../utils/newGame'
-import { shorten } from '../utils/shorten'
+import { shorten } from '../utils/modify'
 import { allTimeStats } from '../App'
 import s from './final-screen.module.scss'
+import { capitalizeFirstLetter } from '../utils/modify'
 
 export default function FinalScreen({
 	game,
@@ -15,25 +16,18 @@ export default function FinalScreen({
 		window.localStorage.getItem('allTimeStats') ?? JSON.stringify(allTimeStats)
 	)
 
-	function capitalizeLetter(word: string) {
-		const newWord = word.split('')
-
-		newWord[0] = newWord[0].toUpperCase()
-		return newWord.join('')
-	}
-
 	const stats: Stats[] = [
 		{
 			title: 'This Game',
 			content: [
 				{
 					name: `Word:`,
-					value: capitalizeLetter(game.word),
+					value: capitalizeFirstLetter(game.word),
 					linkSrc: `https://www.oxfordlearnersdictionaries.com/definition/english/${game.word}_1?q=${game.word}`,
 				},
 				{ name: `Number of Attempts:`, value: game.curRow },
-				{ name: `Time Taken:`, value: game.timeTaken },
-				{ name: `Difficulty: `, value: capitalizeLetter(game.difficulty) },
+				{ name: `Time Taken:`, value: game.timeTaken === 0 ? '< 0' : game.timeTaken },
+				{ name: `Difficulty: `, value: capitalizeFirstLetter(game.difficulty) },
 				{ name: `Correct Guesses Per Second: `, value: shorten(allTime.averageCorrectPerSecond) },
 			],
 		},
@@ -91,6 +85,7 @@ export default function FinalScreen({
 							Generate New Word
 						</button>
 					</div>
+					<div className='border' />
 					<div>
 						<button onClick={() => dispatch({ type: 'set-status', payload: 'playing' })}>
 							Close

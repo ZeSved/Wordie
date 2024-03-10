@@ -30,13 +30,6 @@
 			color: var(--secondary);
 		}
 
-		.indicator {
-			display: grid;
-			grid-template-columns: repeat(13, 6px);
-			column-gap: 0.5rem;
-			padding-inline: 0.5rem;
-		}
-
 		.infoContainer {
 			display: flex;
 			gap: 1rem;
@@ -100,10 +93,4 @@
 
 .display {
 	display: none;
-}
-
-.border {
-	background-color: var(--cta-600);
-	height: 100%;
-	width: 2px;
 }

@@ -54,3 +54,10 @@ button {
 li {
 	list-style: none;
 }
+
+.border {
+	background-color: var(--cta-600);
+	height: calc(var(--default-gap) * 4);
+	width: 2px;
+	max-width: 2px;
+}

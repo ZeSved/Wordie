@@ -6,7 +6,7 @@ import { Game } from './types/types'
 import { reducer } from './utils/reducer'
 import { newGame } from './utils/newGame'
 
-import UserInput from './user input/user-input'
+import Interaction from './interaction/interaction'
 import FinalScreen from './final screen/final-screen'
 import Board from './game board/game-board'
 import Toast from './toast/toast'
@@ -23,6 +23,7 @@ export const DEFAULT_GAME: Game = {
 		text: '',
 		isWarning: false,
 	},
+	started: false,
 }
 
 export const allTimeStats = {
@@ -60,6 +61,7 @@ function App() {
 		if (game.status !== 'playing') {
 			clearInterval(intervalId)
 			setIndicate({ correct: [], notInWord: [], inWord: [] })
+			dispatch({ type: 'set-started', payload: false })
 		}
 
 		if (game.difficulty === 'hard' || game.difficulty === 'extreme') {
@@ -75,13 +77,15 @@ function App() {
 	}, [game.timeTaken, game.status])
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			dispatch({ type: 'set-time', payload: (game.timeTaken += 1) })
-		}, 1000)
-		setIntervalId(interval)
+		if (game.started) {
+			const interval = setInterval(() => {
+				dispatch({ type: 'set-time', payload: (game.timeTaken += 1) })
+			}, 1000)
+			setIntervalId(interval)
 
-		return () => clearInterval(interval)
-	}, [game.word])
+			return () => clearInterval(interval)
+		}
+	}, [game.started])
 
 	useEffect(() => {
 		const toastId = document.getElementById('toast-text')
@@ -110,7 +114,7 @@ function App() {
 					setIndicate={setIndicate}
 				/>
 				<Toast {...game.toast} />
-				<UserInput
+				<Interaction
 					game={game}
 					dispatch={dispatch}
 					showHints={showHints}

@@ -1,20 +1,9 @@
 .main {
+	position: relative;
+	z-index: -1;
 	display: grid;
 	grid-template-columns: repeat(13, 1rem);
 
 	font-size: var(--font-s);
 	padding-inline: 1rem;
-	max-width: 11vw;
-	overflow: hidden;
-
-	animation: reveal 1s forwards ease-in;
-}
-
-@keyframes reveal {
-	from {
-		width: 0px;
-	}
-	to {
-		width: 100%;
-	}
 }

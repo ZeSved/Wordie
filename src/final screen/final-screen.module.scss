@@ -82,6 +82,27 @@
 }
 
 .input {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	border: 2px solid var(--cta-600);
+	border-radius: 100vh;
+
+	> div {
+		flex-grow: 1;
+		display: flex;
+		justify-content: center;
+
+		> button {
+			border: none;
+			outline: none;
+
+			color: var(--secondary);
+			font-size: var(--font-s);
+
+			background-color: transparent;
+		}
+	}
 }
 
 @keyframes slideIn {

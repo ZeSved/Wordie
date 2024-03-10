@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Action, Game, Difficulty } from '../types/types'
 import { newGame } from '../utils/newGame'
-import { shorten } from '../utils/shorten'
-import s from './user-input.module.scss'
+import { shorten } from '../utils/modify'
+import s from './interaction.module.scss'
 import Radial, { RadialBtn } from './radial'
 import Alphabet from '../progress/alphabet'
 import { Indicate } from '../App'
@@ -14,7 +14,7 @@ type Info = {
 	onlyShow?: boolean
 }
 
-export default function gameInput({
+export default function Interaction({
 	game,
 	dispatch,
 	showHints,
@@ -22,15 +22,9 @@ export default function gameInput({
 	showAlphabet,
 	setShowAlphabet,
 	indicate,
-}: {
-	game: Game
-	dispatch: React.Dispatch<Action>
-	showHints: boolean
-	setShowHints: React.Dispatch<React.SetStateAction<boolean>>
-	showAlphabet: boolean
-	setShowAlphabet: React.Dispatch<React.SetStateAction<boolean>>
-	indicate: Indicate
-}) {
+}: InteractionProps) {
+	const [showWord, setShowWord] = useState<boolean>(true)
+
 	useEffect(() => {
 		newGame(dispatch, game)
 
@@ -46,28 +40,18 @@ export default function gameInput({
 
 	const radialBtns: RadialBtn[] = [
 		{
-			active: showHints,
-			text: showHints ? 'Hide Hints' : 'Show Hints',
+			text: 'hints',
 			canEnable: game.difficulty !== 'extreme',
-			func: () => {
-				setShowHints(!showHints)
-				dispatch({
-					type: 'set-toast',
-					payload: { text: `${showHints ? 'Hiding' : 'Showing'} hints.` },
-				})
-			},
+			dispatch: dispatch,
+			setValue: setShowHints,
+			value: showHints,
 		},
 		{
-			active: showAlphabet,
-			text: showAlphabet ? 'Hide Alphabet' : 'Show Alphabet',
+			text: 'alphabet',
 			canEnable: !hardMode,
-			func: () => {
-				setShowAlphabet(!showAlphabet)
-				dispatch({
-					type: 'set-toast',
-					payload: { text: `${showAlphabet ? 'Hiding' : 'Showing'} alphabet.` },
-				})
-			},
+			dispatch: dispatch,
+			setValue: setShowAlphabet,
+			value: showAlphabet,
 		},
 	]
 
@@ -96,6 +80,7 @@ export default function gameInput({
 			type: 'set-toast',
 			payload: { text: `Difficulty changed to ${diff} and board reset.` },
 		})
+		dispatch({ type: 'set-started', payload: false })
 	}
 
 	function colorIndication(color: string, maxValue: number, dependancy: number) {
@@ -124,18 +109,27 @@ export default function gameInput({
 						</option>
 					))}
 				</select>
-				{devMode && (
+				{devMode && showWord && (
 					<>
-						<div className={s.border} />
+						<div className='border' />
 						<p style={{ color: 'var(--cta-400)' }}>{game.word}</p>
 					</>
+				)}
+				{devMode && (
+					<Radial
+						setValue={setShowWord}
+						dispatch={dispatch}
+						value={showWord}
+						text={'word'}
+					/>
 				)}
 				{radialBtns.map((btn, i) => (
 					<Radial
 						key={i}
-						active={btn.active}
 						text={btn.text}
-						func={btn.func}
+						dispatch={btn.dispatch}
+						setValue={btn.setValue}
+						value={btn.value}
 						canEnable={btn.canEnable}
 					/>
 				))}
@@ -144,12 +138,12 @@ export default function gameInput({
 				{showAlphabet && (
 					<>
 						<Alphabet indicate={indicate} />
-						<div className={s.border} />
+						<div className='border' />
 					</>
 				)}
 				{info.map((inf, i) => (
 					<>
-						{i !== 0 && <div className={s.border} />}
+						{i !== 0 && <div className='border' />}
 						<div
 							key={i}
 							className={s.infoContainer}>
@@ -166,4 +160,14 @@ export default function gameInput({
 			</section>
 		</div>
 	)
+}
+
+type InteractionProps = {
+	game: Game
+	dispatch: React.Dispatch<Action>
+	showHints: boolean
+	setShowHints: React.Dispatch<React.SetStateAction<boolean>>
+	showAlphabet: boolean
+	setShowAlphabet: React.Dispatch<React.SetStateAction<boolean>>
+	indicate: Indicate
 }
