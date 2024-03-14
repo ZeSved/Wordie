@@ -3,6 +3,10 @@ import { Action, Game } from "../types/types";
 export function reducer(game: Game, action: Action): Game {
   switch (action.type) {
     case 'set-word':
+      const root = document.documentElement
+      const fontSize = window.innerWidth / 90
+      root.style.setProperty('--gap-1', `${fontSize}px`)
+
       return {
         ...game,
         word: action.payload

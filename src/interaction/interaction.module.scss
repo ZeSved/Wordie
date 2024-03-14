@@ -3,7 +3,7 @@
 .input {
 	display: flex;
 	gap: 2rem;
-	font-size: var(--font-s);
+	font-size: var(--gap-1);
 
 	> section {
 		display: flex;
@@ -17,12 +17,12 @@
 			outline: none;
 
 			&:not(div, select) {
-				padding: 1rem;
+				padding: var(--gap-1);
 			}
 		}
 
 		> select {
-			padding: calc(var(--default-gap) - 2px);
+			padding: calc(var(--gap-2) - 2px);
 			border: 1px solid var(--primary);
 			border-radius: 100vh 0 0 100vh;
 
@@ -33,7 +33,7 @@
 		.infoContainer {
 			display: flex;
 			gap: 1rem;
-			padding-inline: 1rem;
+			padding-inline: var(--gap-1);
 
 			> p {
 				color: var(--secondary);
@@ -44,7 +44,7 @@
 
 .radial {
 	display: flex;
-	gap: var(--default-gap);
+	gap: var(--gap-2);
 	width: max-content;
 	justify-content: center;
 	align-items: center;
@@ -70,7 +70,7 @@
 
 			.circle {
 				background-color: var(--cta-200);
-				margin-left: var(--default-gap);
+				margin-left: var(--gap-2);
 			}
 		}
 
@@ -79,13 +79,13 @@
 
 			.circle {
 				background-color: var(--cta-600);
-				margin-right: var(--default-gap);
+				margin-right: var(--gap-2);
 			}
 		}
 
 		.circle {
-			width: calc(var(--default-gap) * 1.5);
-			height: calc(var(--default-gap) * 1.5);
+			width: calc(var(--gap-2) * 1.5);
+			height: calc(var(--gap-2) * 1.5);
 			border-radius: 100vh;
 		}
 	}

@@ -23,15 +23,15 @@
 	.cause {
 		display: flex;
 		flex-direction: column;
-		gap: var(--default-gap);
+		gap: var(--gap-2);
 
 		background-color: var(--accent);
 
 		width: fit-content;
 		height: fit-content;
 
-		padding: var(--default-gap);
-		border-radius: calc(var(--default-gap) * 2);
+		padding: var(--gap-2);
+		border-radius: calc(var(--gap-2) * 2);
 
 		overflow-y: auto;
 		max-height: 100vh;
@@ -41,7 +41,7 @@
 			text-align: center;
 			color: var(--cta-400);
 			background-color: var(--accent);
-			border-radius: var(--default-gap);
+			border-radius: var(--gap-2);
 		}
 
 		> h2 {
@@ -55,7 +55,7 @@
 		> ul {
 			> li {
 				border: 2px solid var(--accent);
-				border-radius: var(--default-gap);
+				border-radius: var(--gap-2);
 				padding: 0.5rem;
 
 				display: flex;
@@ -98,7 +98,7 @@
 			outline: none;
 
 			color: var(--secondary);
-			font-size: var(--font-s);
+			font-size: var(--gap-1);
 
 			background-color: transparent;
 		}

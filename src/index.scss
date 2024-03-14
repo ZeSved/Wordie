@@ -7,6 +7,7 @@
 	padding: 0;
 	margin: 0;
 	font-family: 'JetBrains Mono', monospace;
+	user-select: none;
 }
 
 *:disabled {
@@ -26,9 +27,7 @@
 	--cta-400: #7339ac;
 	--cta-200: #8c53c6;
 
-	--font-s: 1.2rem;
-
-	--default-gap: 1rem;
+	--gap-2: 1rem;
 }
 
 html {
@@ -36,12 +35,14 @@ html {
 }
 
 select {
-	font-size: var(--font-s);
+	font-size: var(--gap-1);
+	height: fit-content;
+	padding: 0;
 	> option {
 		background-color: var(--primary);
 		color: var(--secondary);
 		text-align: center;
-		font-size: var(--font-s);
+		font-size: var(--gap-1);
 	}
 }
 
@@ -57,7 +58,7 @@ li {
 
 .border {
 	background-color: var(--cta-600);
-	height: calc(var(--default-gap) * 4);
+	height: calc(var(--gap-2) * 2.5);
 	width: 2px;
 	max-width: 2px;
 }

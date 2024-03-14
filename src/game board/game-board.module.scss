@@ -2,7 +2,6 @@
 
 .main {
 	flex-grow: 1;
-	user-select: none;
 
 	display: flex;
 	flex-direction: column;
@@ -25,7 +24,7 @@
 		display: flex;
 		justify-content: space-around;
 
-		gap: var(--default-gap);
+		gap: var(--gap-2);
 
 		.box {
 			flex-grow: 1;
