@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Action, Game, Difficulty } from '../types/types'
+import { Action, Game, Difficulty, Language } from '../types/types'
 import { newGame } from '../utils/newGame'
-import { shorten } from '../utils/modify'
+import { capitalizeFirstLetter, shorten } from '../utils/modify'
 import s from './interaction.module.scss'
 import Radial, { RadialBtn } from './radial'
 import Alphabet from '../progress/alphabet'
@@ -32,12 +32,16 @@ export default function Interaction({
 			setShowAlphabet(false)
 			setShowHints(false)
 		}
-	}, [game.difficulty])
 
-	const devMode = window.location.origin === 'http://localhost:5173'
-	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
+		document.getElementById('selectDiff')?.blur()
+		document.getElementById('selectLang')?.blur()
+	}, [game.difficulty, game.language])
+
+	const devMode = window.location.origin === 'http://localhost:5173l'
 	const hardMode = game.difficulty === 'extreme' || game.difficulty === 'hard'
 
+	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
+	const languages = ['english', 'swedish']
 	const radialBtns: RadialBtn[] = [
 		{
 			text: 'hints',
@@ -54,7 +58,6 @@ export default function Interaction({
 			value: showAlphabet,
 		},
 	]
-
 	const info: Info[] = [
 		{
 			text: 'Progress:',
@@ -70,16 +73,31 @@ export default function Interaction({
 			value: game.timeTaken,
 		},
 	]
+	const charachters = {
+		english: [''],
+		swedish: ['å', 'ä', 'ö'],
+	}
 
 	function handleDifficulty(currentTarget: HTMLSelectElement) {
-		const diff = currentTarget.value as Difficulty
+		if (currentTarget.id === 'selectDiff') {
+			const newOption = currentTarget.value as Difficulty
+			dispatch({ type: 'set-difficulty', payload: newOption })
+			dispatch({
+				type: 'set-toast',
+				payload: { text: `Difficulty changed to ${newOption} and board reset.` },
+			})
+		}
+
+		if (currentTarget.id === 'selectLang') {
+			const newOption = currentTarget.value as Language
+			dispatch({ type: 'set-language', payload: newOption })
+			dispatch({
+				type: 'set-toast',
+				payload: { text: `Language of word changed to ${newOption} and board reset.` },
+			})
+		}
 
 		dispatch({ type: 'set-time', payload: 0 })
-		dispatch({ type: 'set-difficulty', payload: diff })
-		dispatch({
-			type: 'set-toast',
-			payload: { text: `Difficulty changed to ${diff} and board reset.` },
-		})
 		dispatch({ type: 'set-started', payload: false })
 	}
 
@@ -100,12 +118,26 @@ export default function Interaction({
 			<section>
 				<select
 					onChange={(e) => handleDifficulty(e.currentTarget)}
+					id='selectDiff'
 					defaultValue={game.difficulty}>
 					{difficulties.map((d) => (
 						<option
 							key={d}
 							value={d.toLowerCase()}>
 							{d}
+						</option>
+					))}
+				</select>
+				<div className='border' />
+				<select
+					onChange={(e) => handleDifficulty(e.currentTarget)}
+					id='selectLang'
+					defaultValue={game.difficulty}>
+					{languages.map((d) => (
+						<option
+							key={d}
+							value={d.toLowerCase()}>
+							{capitalizeFirstLetter(d)}
 						</option>
 					))}
 				</select>
@@ -133,6 +165,16 @@ export default function Interaction({
 						canEnable={btn.canEnable}
 					/>
 				))}
+				{game.language !== 'english' && (
+					<>
+						<div className='border' />
+						<div>
+							{charachters[`${game.language}`].map((le) => (
+								<button className='letter'>{le.toUpperCase()}</button>
+							))}
+						</div>
+					</>
+				)}
 			</section>
 			<section className={s.infoSection}>
 				{showAlphabet && (

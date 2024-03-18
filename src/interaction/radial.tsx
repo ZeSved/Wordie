@@ -2,8 +2,13 @@ import classNames from 'classnames'
 import s from './interaction.module.scss'
 import { Action } from '../types/types'
 import { capitalizeFirstLetter } from '../utils/modify'
+import { useEffect } from 'react'
 
 export default function Radial({ canEnable = true, text, setValue, value, dispatch }: RadialBtn) {
+	useEffect(() => {
+		document.getElementById(text)?.blur()
+	}, [value])
+
 	return (
 		<>
 			<div className='border' />
@@ -17,6 +22,7 @@ export default function Radial({ canEnable = true, text, setValue, value, dispat
 							payload: { text: `${value ? 'Hiding' : 'Showing'} ${text}.` },
 						})
 					}}
+					id={text}
 					disabled={!canEnable}
 					className={classNames(s.container, value ? s.active : s.unactive)}>
 					<div className={s.circle} />

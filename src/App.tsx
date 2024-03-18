@@ -24,6 +24,7 @@ export const DEFAULT_GAME: Game = {
 		isWarning: false,
 	},
 	started: false,
+	language: 'english',
 }
 
 export const allTimeStats = {
@@ -60,7 +61,6 @@ function App() {
 	useEffect(() => {
 		if (game.status !== 'playing') {
 			clearInterval(intervalId)
-			setIndicate({ correct: [], notInWord: [], inWord: [] })
 			dispatch({ type: 'set-started', payload: false })
 		}
 
@@ -86,6 +86,10 @@ function App() {
 			return () => clearInterval(interval)
 		}
 	}, [game.started])
+
+	useEffect(() => {
+		setIndicate({ correct: [], notInWord: [], inWord: [] })
+	}, [game.word])
 
 	useEffect(() => {
 		const toastId = document.getElementById('toast-text')

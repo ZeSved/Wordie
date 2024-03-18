@@ -85,7 +85,10 @@ export default function FinalScreen({
 							Generate New Word
 						</button>
 					</div>
-					<div className='border' />
+					<div
+						className='border'
+						style={{ height: 'calc(var(--gap-1) * 2)' }}
+					/>
 					<div>
 						<button onClick={() => dispatch({ type: 'set-status', payload: 'playing' })}>
 							Close

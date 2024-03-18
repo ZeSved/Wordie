@@ -4,7 +4,7 @@ export function reducer(game: Game, action: Action): Game {
   switch (action.type) {
     case 'set-word':
       const root = document.documentElement
-      const fontSize = window.innerWidth / 90
+      const fontSize = window.innerWidth / 100
       root.style.setProperty('--gap-1', `${fontSize}px`)
 
       return {
@@ -50,6 +50,11 @@ export function reducer(game: Game, action: Action): Game {
       return {
         ...game,
         started: action.payload
+      }
+    case 'set-language':
+      return {
+        ...game,
+        language: action.payload
       }
   }
 }
