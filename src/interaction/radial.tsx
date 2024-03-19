@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import s from './interaction.module.scss'
 import { Action } from '../types/types'
-import { capitalizeFirstLetter } from '../utils/modify'
+import { capitalize } from '../utils/modify'
 import { useEffect } from 'react'
 
 export default function Radial({ canEnable = true, text, setValue, value, dispatch }: RadialBtn) {
@@ -13,7 +13,7 @@ export default function Radial({ canEnable = true, text, setValue, value, dispat
 		<>
 			<div className='border' />
 			<div className={s.radial}>
-				<p>{`Show ${capitalizeFirstLetter(text)}`}</p>
+				<p>{`Show ${capitalize(text)}`}</p>
 				<button
 					onClick={() => {
 						setValue(!value)
@@ -39,3 +39,24 @@ export type RadialBtn = {
 	value: boolean
 	dispatch: React.Dispatch<Action>
 }
+
+type DefaultValue = {
+	text: string
+	canEnable?: boolean
+	imgSrc?: string
+	displayText?: string
+}
+
+export type InputBtn = DefaultValue &
+	(
+		| {
+				inputType: 'select'
+				content: string[]
+				defaultValue: string
+		  }
+		| {
+				inputType: 'button'
+				setValue: React.Dispatch<React.SetStateAction<boolean>>
+				value: boolean
+		  }
+	)

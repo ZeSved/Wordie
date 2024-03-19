@@ -3,7 +3,7 @@ import { newGame } from '../utils/newGame'
 import { shorten } from '../utils/modify'
 import { allTimeStats } from '../App'
 import s from './final-screen.module.scss'
-import { capitalizeFirstLetter } from '../utils/modify'
+import { capitalize } from '../utils/modify'
 
 export default function FinalScreen({
 	game,
@@ -22,12 +22,12 @@ export default function FinalScreen({
 			content: [
 				{
 					name: `Word:`,
-					value: capitalizeFirstLetter(game.word),
+					value: capitalize(game.word),
 					linkSrc: `https://www.oxfordlearnersdictionaries.com/definition/english/${game.word}_1?q=${game.word}`,
 				},
 				{ name: `Number of Attempts:`, value: game.curRow },
 				{ name: `Time Taken:`, value: game.timeTaken === 0 ? '< 0' : game.timeTaken },
-				{ name: `Difficulty: `, value: capitalizeFirstLetter(game.difficulty) },
+				{ name: `Difficulty: `, value: capitalize(game.difficulty) },
 				{ name: `Correct Guesses Per Second: `, value: shorten(allTime.averageCorrectPerSecond) },
 			],
 		},

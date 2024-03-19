@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Action, Game, Difficulty, Language } from '../types/types'
 import { newGame } from '../utils/newGame'
-import { capitalizeFirstLetter, shorten } from '../utils/modify'
+import { capitalize, shorten } from '../utils/modify'
 import s from './interaction.module.scss'
-import Radial, { RadialBtn } from './radial'
+import Radial, { InputBtn } from './radial'
 import Alphabet from '../progress/alphabet'
 import { Indicate } from '../App'
+
+import globe from '../public/1200px-Globe_icon.png'
 
 type Info = {
 	text: string
@@ -42,20 +44,36 @@ export default function Interaction({
 
 	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
 	const languages = ['english', 'swedish']
-	const radialBtns: RadialBtn[] = [
+	const inputBtns: InputBtn[] = [
+		{
+			text: 'difficulty',
+			inputType: 'select',
+			displayText: game.difficulty,
+			content: difficulties,
+			defaultValue: game.difficulty,
+		},
+		{
+			text: 'language',
+			inputType: 'select',
+			content: languages,
+			imgSrc: globe,
+			defaultValue: game.language,
+		},
 		{
 			text: 'hints',
 			canEnable: game.difficulty !== 'extreme',
-			dispatch: dispatch,
 			setValue: setShowHints,
 			value: showHints,
+			inputType: 'button',
+			displayText: '?',
 		},
 		{
 			text: 'alphabet',
 			canEnable: !hardMode,
-			dispatch: dispatch,
 			setValue: setShowAlphabet,
 			value: showAlphabet,
+			inputType: 'button',
+			displayText: 'ABC',
 		},
 	]
 	const info: Info[] = [
@@ -116,31 +134,6 @@ export default function Interaction({
 	return (
 		<div className={s.input}>
 			<section>
-				<select
-					onChange={(e) => handleDifficulty(e.currentTarget)}
-					id='selectDiff'
-					defaultValue={game.difficulty}>
-					{difficulties.map((d) => (
-						<option
-							key={d}
-							value={d.toLowerCase()}>
-							{d}
-						</option>
-					))}
-				</select>
-				<div className='border' />
-				<select
-					onChange={(e) => handleDifficulty(e.currentTarget)}
-					id='selectLang'
-					defaultValue={game.difficulty}>
-					{languages.map((d) => (
-						<option
-							key={d}
-							value={d.toLowerCase()}>
-							{capitalizeFirstLetter(d)}
-						</option>
-					))}
-				</select>
 				{devMode && showWord && (
 					<>
 						<div className='border' />
@@ -155,16 +148,51 @@ export default function Interaction({
 						text={'word'}
 					/>
 				)}
-				{radialBtns.map((btn, i) => (
-					<Radial
-						key={i}
-						text={btn.text}
-						dispatch={btn.dispatch}
-						setValue={btn.setValue}
-						value={btn.value}
-						canEnable={btn.canEnable}
-					/>
-				))}
+				{inputBtns.map((b, i) =>
+					b.inputType === 'select' ? (
+						<>
+							<select
+								onChange={(e) => handleDifficulty(e.currentTarget)}
+								id={b.text}
+								defaultValue={b.defaultValue}>
+								{b.content.map((d) => (
+									<option
+										key={d}
+										value={d.toLowerCase()}>
+										{capitalize(d)}
+									</option>
+								))}
+							</select>
+							<div className='border' />
+						</>
+					) : (
+						<>
+							<button
+								onClick={() => {
+									b.setValue(!b.value)
+									dispatch({
+										type: 'set-toast',
+										payload: { text: `${b.value ? 'Hiding' : 'Showing'} ${b.text}.` },
+									})
+								}}
+								id={b.text}
+								disabled={!b.canEnable}>
+								{b.displayText ? (
+									<p>{b.displayText}</p>
+								) : (
+									<img
+										src={b.imgSrc}
+										alt={b.text}
+									/>
+								)}
+								<div>
+									<p>{`Show ${capitalize(b.text)}`}</p>
+								</div>
+							</button>
+							{i !== inputBtns.length - 1 && <div className='border' />}
+						</>
+					)
+				)}
 				{game.language !== 'english' && (
 					<>
 						<div className='border' />

@@ -27,6 +27,8 @@
 	--cta-400: #7339ac;
 	--cta-200: #8c53c6;
 
+	--pink: #bd00bd;
+
 	--gap-2: 1rem;
 }
 
@@ -37,6 +39,7 @@ html {
 select {
 	font-size: var(--gap-1);
 	height: fit-content;
+	width: fit-content;
 	padding: 0;
 	> option {
 		background-color: var(--primary);
@@ -57,8 +60,8 @@ li {
 }
 
 .border {
-	background-color: var(--cta-600);
-	height: 100%;
+	background-color: var(--pink);
+	height: 66%;
 	width: 2px;
 	max-width: 2px;
 }

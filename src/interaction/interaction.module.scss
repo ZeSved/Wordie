@@ -8,25 +8,49 @@
 	> section {
 		display: flex;
 		align-items: center;
+		gap: var(--gap-1);
+		padding-inline: var(--gap-1);
 
-		border: 2px solid var(--cta-600);
-		border-radius: 100vh;
+		border-radius: var(--gap-2);
+		background-color: var(--accent);
 
 		> * {
 			border: none;
 			outline: none;
+		}
 
-			&:not(div, select) {
-				padding: var(--gap-1);
+		> button {
+			--gap: calc(var(--gap-1) * 1.6);
+
+			background-color: transparent;
+			display: flex;
+			align-items: center;
+
+			> img {
+				width: var(--gap);
+				height: var(--gap);
+			}
+
+			> p {
+				font-size: var(--gap);
+				color: var(--secondary);
+			}
+
+			> div {
+				width: 0;
+				overflow: hidden;
+
+				> p {
+					color: var(--secondary);
+					font-size: var(--gap-1);
+				}
 			}
 		}
 
 		> select {
-			padding: calc(var(--gap-2) - 2px);
-			border: 1px solid var(--primary);
-			border-radius: 100vh 0 0 100vh;
+			border: 1px solid var(--accent);
 
-			background-color: var(--primary);
+			background-color: var(--accent);
 			color: var(--secondary);
 		}
 
@@ -37,7 +61,6 @@
 			align-items: center;
 			justify-content: center;
 			gap: calc(var(--gap-1) / 2);
-			padding-inline: var(--gap-1);
 			position: relative;
 
 			.letter {
@@ -61,7 +84,6 @@
 		.infoContainer {
 			display: flex;
 			gap: 1rem;
-			padding-inline: var(--gap-1);
 
 			> p {
 				color: var(--secondary);
