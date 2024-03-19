@@ -168,9 +168,9 @@ export default function Interaction({
 				{game.language !== 'english' && (
 					<>
 						<div className='border' />
-						<div>
+						<div className={s.specialLetters}>
 							{charachters[`${game.language}`].map((le) => (
-								<button className='letter'>{le.toUpperCase()}</button>
+								<button className={s.letter}>{le.toUpperCase()}</button>
 							))}
 						</div>
 					</>
