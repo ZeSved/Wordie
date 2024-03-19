@@ -1479,6 +1479,7 @@ export const words = {
       "heading",
       "hearing",
       "helpful",
+      "heretic",
       "herself",
       "highest",
       "highway",
