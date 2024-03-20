@@ -21,6 +21,8 @@ export function newGame(
   dispatch({ type: "set-cur_row", payload: 0 })
   dispatch({ type: "set-progress", payload: 0 })
   dispatch({ type: "set-time", payload: 0 })
+  dispatch({ type: 'set-started', payload: false })
+
 }
 
 function createContent(word: string | string[]) {

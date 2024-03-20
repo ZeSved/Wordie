@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Action, Game, Difficulty, Language } from '../types/types'
+import { Action, Game } from '../types/types'
 import { newGame } from '../utils/newGame'
-import { capitalize, shorten } from '../utils/modify'
+import { shorten } from '../utils/modify'
 import s from './interaction.module.scss'
-import Radial, { InputBtn } from './radial'
+import Option, { InputBtn } from './option'
 import Alphabet from '../progress/alphabet'
 import { Indicate } from '../App'
 
 import globe from '../public/1200px-Globe_icon.png'
-import SVG from './SVG'
 
 type Info = {
 	text: string
@@ -24,7 +23,6 @@ export default function Interaction({
 	setShowHints,
 	indicate,
 }: InteractionProps) {
-	const [showWord, setShowWord] = useState<boolean>(true)
 	const [showAlphabet, setShowAlphabet] = useState<boolean>(true)
 
 	useEffect(() => {
@@ -39,7 +37,6 @@ export default function Interaction({
 		document.getElementById('selectLang')?.blur()
 	}, [game.difficulty, game.language])
 
-	const devMode = window.location.origin === 'http://localhost:5173'
 	const hardMode = game.difficulty === 'extreme' || game.difficulty === 'hard'
 
 	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
@@ -77,12 +74,16 @@ export default function Interaction({
 		},
 		{
 			text: 'word',
-			func: () => newGame(dispatch, game),
+			func: () => {
+				newGame(dispatch, game)
+				dispatch({ type: 'set-toast', payload: { text: 'Generated new word and reset game.' } })
+			},
 			inputType: 'button',
 			hasSvg: true,
 			canEnable: true,
 		},
 	]
+
 	const info: Info[] = [
 		{
 			text: 'Progress:',
@@ -98,32 +99,10 @@ export default function Interaction({
 			value: game.timeTaken,
 		},
 	]
+
 	const charachters = {
 		english: [''],
 		swedish: ['å', 'ä', 'ö'],
-	}
-
-	function handleDifficulty(currentTarget: HTMLSelectElement) {
-		if (currentTarget.id === 'difficulty') {
-			const newOption = currentTarget.value as Difficulty
-			dispatch({ type: 'set-difficulty', payload: newOption })
-			dispatch({
-				type: 'set-toast',
-				payload: { text: `Difficulty changed to ${newOption} and board reset.` },
-			})
-		}
-
-		if (currentTarget.id === 'language') {
-			const newOption = currentTarget.value as Language
-			dispatch({ type: 'set-language', payload: newOption })
-			dispatch({
-				type: 'set-toast',
-				payload: { text: `Language of word changed to ${newOption} and board reset.` },
-			})
-		}
-
-		dispatch({ type: 'set-time', payload: 0 })
-		dispatch({ type: 'set-started', payload: false })
 	}
 
 	function colorIndication(color: string, maxValue: number, dependancy: number) {
@@ -141,75 +120,16 @@ export default function Interaction({
 	return (
 		<div className={s.input}>
 			<section>
-				{devMode && showWord && (
+				{inputBtns.map((b, i) => (
 					<>
-						<div className='border' />
-						<p style={{ color: 'var(--cta-400)' }}>{game.word}</p>
+						<Option
+							key={i}
+							btns={{ ...b }}
+							dispatch={dispatch}
+						/>
+						{i !== inputBtns.length - 1 && <div className='border' />}
 					</>
-				)}
-				{devMode && (
-					<Radial
-						setValue={setShowWord}
-						dispatch={dispatch}
-						value={showWord}
-						text={'word'}
-					/>
-				)}
-				{inputBtns.map((b, i) =>
-					b.inputType === 'select' ? (
-						<>
-							<select
-								onChange={(e) => handleDifficulty(e.currentTarget)}
-								id={b.text}
-								defaultValue={b.defaultValue}>
-								{b.content.map((d) => (
-									<option
-										key={d}
-										value={d.toLowerCase()}>
-										{capitalize(d)}
-									</option>
-								))}
-							</select>
-							<div className='border' />
-						</>
-					) : (
-						<>
-							<button
-								onClick={
-									b.func
-										? () => b.func
-										: () => {
-												b.setValue!(!b.value)
-												dispatch({
-													type: 'set-toast',
-													payload: {
-														text: `${
-															b.text === 'word' ? 'Regenerating' : b.value ? 'Hiding' : 'Showing'
-														} ${b.text}.`,
-													},
-												})
-										  }
-								}
-								id={b.text}
-								disabled={!b.canEnable}>
-								{b.hasSvg ? (
-									<SVG color='var(--secondary)' />
-								) : b.displayText ? (
-									<p>{b.displayText}</p>
-								) : (
-									<img
-										src={b.imgSrc}
-										alt={b.text}
-									/>
-								)}
-								<div>
-									<p>{`Show ${capitalize(b.text)}`}</p>
-								</div>
-							</button>
-							{i !== inputBtns.length - 1 && <div className='border' />}
-						</>
-					)
-				)}
+				))}
 				{game.language !== 'english' && (
 					<>
 						<div className='border' />

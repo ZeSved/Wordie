@@ -5,3 +5,14 @@
 		color: $clr;
 	}
 }
+
+@mixin textGrad($clr1, $clr2) {
+	background: -webkit-linear-gradient($clr1, $clr2);
+	background: -moz-linear-gradient($clr1, $clr2);
+	background: -o-linear-gradient($clr1, $clr2);
+	background: linear-gradient($clr1, $clr2);
+	background-clip: text;
+	-moz-background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

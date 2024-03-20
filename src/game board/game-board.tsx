@@ -22,6 +22,15 @@ export default function Board({
 	const [progress, setProgress] = useState<number[]>([])
 	const [progressOnRow, setProgressOnRow] = useState<ProgressOnRow>({ correct: [], exists: [] })
 
+	useEffect(() => {
+		setProgress([])
+		setProgressOnRow({ correct: [], exists: [] })
+
+		document.querySelectorAll('.letter').forEach((el) => {
+			;/'hint'/.test(el.classList[1]) && el.classList.remove(el.classList[1])
+		})
+	}, [game.word])
+
 	function assignClasses(u: Token, i: number, ltrI: number) {
 		const classNames = [s.box]
 
@@ -80,7 +89,7 @@ export default function Board({
 					key={i}>
 					{ltr.map((lt, j) => (
 						<div
-							className={classNames(assignClasses(lt, i, j))}
+							className={classNames(assignClasses(lt, i, j), 'letter')}
 							key={j}
 							id={lt.content}
 							style={{ fontSize: `${window.innerHeight / 20}px` }}>
