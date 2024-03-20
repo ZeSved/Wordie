@@ -8,6 +8,7 @@ import Alphabet from '../progress/alphabet'
 import { Indicate } from '../App'
 
 import globe from '../public/1200px-Globe_icon.png'
+import SVG from './SVG'
 
 type Info = {
 	text: string
@@ -21,11 +22,10 @@ export default function Interaction({
 	dispatch,
 	showHints,
 	setShowHints,
-	showAlphabet,
-	setShowAlphabet,
 	indicate,
 }: InteractionProps) {
 	const [showWord, setShowWord] = useState<boolean>(true)
+	const [showAlphabet, setShowAlphabet] = useState<boolean>(true)
 
 	useEffect(() => {
 		newGame(dispatch, game)
@@ -39,7 +39,7 @@ export default function Interaction({
 		document.getElementById('selectLang')?.blur()
 	}, [game.difficulty, game.language])
 
-	const devMode = window.location.origin === 'http://localhost:5173l'
+	const devMode = window.location.origin === 'http://localhost:5173'
 	const hardMode = game.difficulty === 'extreme' || game.difficulty === 'hard'
 
 	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
@@ -75,6 +75,13 @@ export default function Interaction({
 			inputType: 'button',
 			displayText: 'ABC',
 		},
+		{
+			text: 'word',
+			func: () => newGame(dispatch, game),
+			inputType: 'button',
+			hasSvg: true,
+			canEnable: true,
+		},
 	]
 	const info: Info[] = [
 		{
@@ -97,7 +104,7 @@ export default function Interaction({
 	}
 
 	function handleDifficulty(currentTarget: HTMLSelectElement) {
-		if (currentTarget.id === 'selectDiff') {
+		if (currentTarget.id === 'difficulty') {
 			const newOption = currentTarget.value as Difficulty
 			dispatch({ type: 'set-difficulty', payload: newOption })
 			dispatch({
@@ -106,7 +113,7 @@ export default function Interaction({
 			})
 		}
 
-		if (currentTarget.id === 'selectLang') {
+		if (currentTarget.id === 'language') {
 			const newOption = currentTarget.value as Language
 			dispatch({ type: 'set-language', payload: newOption })
 			dispatch({
@@ -168,16 +175,26 @@ export default function Interaction({
 					) : (
 						<>
 							<button
-								onClick={() => {
-									b.setValue(!b.value)
-									dispatch({
-										type: 'set-toast',
-										payload: { text: `${b.value ? 'Hiding' : 'Showing'} ${b.text}.` },
-									})
-								}}
+								onClick={
+									b.func
+										? () => b.func
+										: () => {
+												b.setValue!(!b.value)
+												dispatch({
+													type: 'set-toast',
+													payload: {
+														text: `${
+															b.text === 'word' ? 'Regenerating' : b.value ? 'Hiding' : 'Showing'
+														} ${b.text}.`,
+													},
+												})
+										  }
+								}
 								id={b.text}
 								disabled={!b.canEnable}>
-								{b.displayText ? (
+								{b.hasSvg ? (
+									<SVG color='var(--secondary)' />
+								) : b.displayText ? (
 									<p>{b.displayText}</p>
 								) : (
 									<img
@@ -237,7 +254,5 @@ type InteractionProps = {
 	dispatch: React.Dispatch<Action>
 	showHints: boolean
 	setShowHints: React.Dispatch<React.SetStateAction<boolean>>
-	showAlphabet: boolean
-	setShowAlphabet: React.Dispatch<React.SetStateAction<boolean>>
 	indicate: Indicate
 }

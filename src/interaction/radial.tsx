@@ -45,6 +45,7 @@ type DefaultValue = {
 	canEnable?: boolean
 	imgSrc?: string
 	displayText?: string
+	hasSvg?: boolean
 }
 
 export type InputBtn = DefaultValue &
@@ -56,7 +57,8 @@ export type InputBtn = DefaultValue &
 		  }
 		| {
 				inputType: 'button'
-				setValue: React.Dispatch<React.SetStateAction<boolean>>
-				value: boolean
+				setValue?: React.Dispatch<React.SetStateAction<boolean>>
+				value?: boolean
+				func?: () => void
 		  }
 	)

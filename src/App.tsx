@@ -47,7 +47,6 @@ function App() {
 	const [intervalId, setIntervalId] = useState<number>(0)
 
 	const [showHints, setShowHints] = useState<boolean>(true)
-	const [showAlphabet, setShowAlphabet] = useState<boolean>(true)
 	const [indicate, setIndicate] = useState<Indicate>({
 		correct: [],
 		inWord: [],
@@ -123,8 +122,6 @@ function App() {
 					dispatch={dispatch}
 					showHints={showHints}
 					setShowHints={setShowHints}
-					showAlphabet={showAlphabet}
-					setShowAlphabet={setShowAlphabet}
 					indicate={indicate}
 				/>
 			</div>
