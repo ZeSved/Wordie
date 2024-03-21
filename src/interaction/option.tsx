@@ -2,7 +2,7 @@ import { Action, Difficulty, Language } from '../types/types'
 import { capitalize } from '../utils/modify'
 import { useEffect, useState } from 'react'
 import s from './interaction.module.scss'
-import SVG from './SVG'
+import SVG from './Reload_SVG'
 
 export default function Option({ btns, dispatch }: OptionProps) {
 	const [show, setShow] = useState<boolean>(false)
@@ -83,12 +83,10 @@ export default function Option({ btns, dispatch }: OptionProps) {
 				)}
 				<div
 					style={{
-						width: show
-							? `calc(var(--gap-1) * ${btns.text.length + (btns.text === 'word' ? 6 : 2)})`
-							: 0,
+						width: show ? `calc(var(--gap-1) * ${btns.text.length / 1.3})` : 0,
 					}}
 					className={show ? s.show : s.hide}>
-					<p>{`${btns.text === 'word' ? 'Regenerate' : 'Show'} ${capitalize(btns.text)}`}</p>
+					<p>{btns.text}</p>
 				</div>
 			</button>
 		</>

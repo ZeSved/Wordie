@@ -57,7 +57,7 @@ export default function Interaction({
 			defaultValue: game.language,
 		},
 		{
-			text: 'hints',
+			text: 'Show Hints',
 			canEnable: game.difficulty !== 'extreme',
 			setValue: setShowHints,
 			value: showHints,
@@ -65,7 +65,7 @@ export default function Interaction({
 			displayText: '?',
 		},
 		{
-			text: 'alphabet',
+			text: 'Show Alphabet',
 			canEnable: !hardMode,
 			setValue: setShowAlphabet,
 			value: showAlphabet,
@@ -73,7 +73,7 @@ export default function Interaction({
 			displayText: 'ABC',
 		},
 		{
-			text: 'word',
+			text: 'Regenerate Word',
 			func: () => {
 				newGame(dispatch, game)
 				dispatch({ type: 'set-toast', payload: { text: 'Generated new word and reset game.' } })

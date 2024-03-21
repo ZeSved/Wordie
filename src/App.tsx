@@ -76,14 +76,18 @@ function App() {
 	}, [game.timeTaken, game.status])
 
 	useEffect(() => {
-		if (game.started) {
-			const interval = setInterval(() => {
-				dispatch({ type: 'set-time', payload: (game.timeTaken += 1) })
-			}, 1000)
-			setIntervalId(interval)
+		async function timer() {
+			if (game.started) {
+				const interval = setInterval(() => {
+					dispatch({ type: 'set-time', payload: (game.timeTaken += 1) })
+				}, 1000)
+				setIntervalId(interval)
 
-			return () => clearInterval(interval)
+				return () => clearInterval(interval)
+			}
 		}
+
+		timer()
 	}, [game.started])
 
 	useEffect(() => {

@@ -31,6 +31,7 @@ export function handleKeyboardInput(
 
     if (game.curRow === 0 && index === 0 && !game.started) {
       dispatch({ type: 'set-started', payload: true })
+      dispatch({ type: 'set-time', payload: game.timeTaken += 1 })
     }
 
     guess.content = e.key.toUpperCase()
