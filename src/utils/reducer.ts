@@ -51,10 +51,5 @@ export function reducer(game: Game, action: Action): Game {
         ...game,
         started: action.payload
       }
-    case 'set-language':
-      return {
-        ...game,
-        language: action.payload
-      }
   }
 }

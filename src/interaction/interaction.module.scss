@@ -8,7 +8,6 @@
 	> section {
 		display: flex;
 		align-items: center;
-		gap: var(--gap-1);
 		padding-inline: var(--gap-1);
 
 		border-radius: var(--gap-2);
@@ -26,6 +25,7 @@
 			display: flex;
 			align-items: center;
 			cursor: pointer;
+			padding-inline: var(--gap-1);
 
 			> img {
 				width: var(--gap);
@@ -43,11 +43,38 @@
 
 			> div {
 				text-wrap: nowrap;
-				overflow: hidden;
-				transition: width 100ms, padding-inline 50ms;
+				// transition: width 100ms, padding-inline 50ms;
+				width: fit-content;
+				border-radius: calc(var(--gap-1) / 3);
+				padding: calc(var(--gap-1) / 3) calc(var(--gap-1) / 6);
 
 				&.show {
-					padding-inline: var(--gap-1);
+					transform: rotateY(0deg);
+
+					> p {
+						color: transparent;
+						transform: rotateY(180deg);
+					}
+				}
+
+				&.hide {
+					transform: rotateY(180deg);
+
+					&.on {
+						background-color: transparent;
+					}
+
+					&.on > p {
+						color: var(--primary);
+					}
+
+					> p {
+						transform: rotateY(0deg);
+					}
+				}
+
+				&.on {
+					background: linear-gradient(90deg, var(--pink), var(--cta-200));
 				}
 
 				> p {
@@ -64,36 +91,10 @@
 			color: var(--secondary);
 		}
 
-		.specialLetters {
-			--main-gap: calc(var(--gap-1) / 6);
-
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: calc(var(--gap-1) / 2);
-			position: relative;
-
-			.letter {
-				padding: calc(var(--gap-1) / 2);
-				font-size: var(--gap-1);
-				border: none;
-				outline: none;
-
-				border-radius: calc(var(--gap-1) / 2);
-				box-shadow: var(--main-gap) var(--main-gap) #545454;
-
-				transition: all 100ms;
-
-				&:hover {
-					box-shadow: 0 0;
-					transform: translate(var(--main-gap), var(--main-gap));
-				}
-			}
-		}
-
 		.infoContainer {
 			display: flex;
 			gap: 1rem;
+			padding-inline: var(--gap-1);
 
 			> p {
 				color: var(--secondary);

@@ -24,7 +24,6 @@ export const DEFAULT_GAME: Game = {
 		isWarning: false,
 	},
 	started: false,
-	language: 'english',
 }
 
 export const allTimeStats = {

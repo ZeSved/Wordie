@@ -1,8 +1,9 @@
-import { Action, Difficulty, Language } from '../types/types'
+import { Action, Difficulty } from '../types/types'
 import { capitalize } from '../utils/modify'
 import { useEffect, useState } from 'react'
 import s from './interaction.module.scss'
 import SVG from './Reload_SVG'
+import classNames from 'classnames'
 
 export default function Option({ btns, dispatch }: OptionProps) {
 	const [show, setShow] = useState<boolean>(false)
@@ -12,23 +13,12 @@ export default function Option({ btns, dispatch }: OptionProps) {
 	}, [btns])
 
 	function handleSelectEvents(currentTarget: HTMLSelectElement) {
-		if (currentTarget.id === 'difficulty') {
-			const newOption = currentTarget.value as Difficulty
-			dispatch({ type: 'set-difficulty', payload: newOption })
-			dispatch({
-				type: 'set-toast',
-				payload: { text: `Difficulty changed to ${newOption} and board reset.` },
-			})
-		}
-
-		if (currentTarget.id === 'language') {
-			const newOption = currentTarget.value as Language
-			dispatch({ type: 'set-language', payload: newOption })
-			dispatch({
-				type: 'set-toast',
-				payload: { text: `Language of word changed to ${newOption} and board reset.` },
-			})
-		}
+		const newOption = currentTarget.value as Difficulty
+		dispatch({ type: 'set-difficulty', payload: newOption })
+		dispatch({
+			type: 'set-toast',
+			payload: { text: `Difficulty changed to ${newOption} and board reset.` },
+		})
 
 		dispatch({ type: 'set-time', payload: 0 })
 		dispatch({ type: 'set-started', payload: false })
@@ -82,10 +72,10 @@ export default function Option({ btns, dispatch }: OptionProps) {
 					/>
 				)}
 				<div
-					style={{
-						width: show ? `calc(var(--gap-1) * ${btns.text.length / 1.3})` : 0,
-					}}
-					className={show ? s.show : s.hide}>
+					// style={{
+					// 	width: show ? `calc(var(--gap-1) * ${btns.text.length / 1.3})` : 0,
+					// }}
+					className={classNames(show ? s.show : s.hide, btns.value ? s.on : s.off)}>
 					<p>{btns.text}</p>
 				</div>
 			</button>

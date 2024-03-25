@@ -15,8 +15,18 @@
 	animation: slideIn forwards 500ms;
 
 	.cause {
-		border: 2px solid var(--cta-600);
 		margin-inline: auto;
+		height: max-content;
+
+		> h3 {
+			@include mixins.textGrad(var(--pink), var(--cta-200));
+		}
+	}
+
+	> div {
+		height: fit-content;
+		overflow-y: auto;
+		max-height: 100vh;
 	}
 
 	> div,
@@ -28,13 +38,9 @@
 		background-color: var(--accent);
 
 		width: fit-content;
-		height: fit-content;
 
 		padding: var(--gap-2);
 		border-radius: calc(var(--gap-2) * 2);
-
-		overflow-y: auto;
-		max-height: 100vh;
 
 		> h2,
 		> h3 {

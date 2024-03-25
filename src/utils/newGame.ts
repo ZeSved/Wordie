@@ -1,19 +1,18 @@
 // import { generate } from "random-words";
-import { Action, Game, Language, Token } from "../types/types";
+import { Action, Game, Token } from "../types/types";
 import { words as list } from '../constants/words'
 
 export function newGame(
   dispatch: React.Dispatch<Action>,
-  { difficulty: d, language: l }: Game,
+  { difficulty: d }: Game,
 ) {
   const numberOfCharachters: Length = `${Math.floor(Math.random() * (
     (d === "easy" ? 4 : d === "medium" ? 6 : 8) -
     (d === "easy" ? 3 : d === "medium" ? 5 : 7) + 1) +
     (d === "easy" ? 3 : d === "medium" ? 5 : 7)).toString() as Length}`
   const index: keyof typeof list.english = `letters_${numberOfCharachters}`
-  const language = l as Language
 
-  const collection = list[language][index]
+  const collection = list.english[index]
   const word = collection[Math.floor(Math.random() * ((collection.length - 1) - 0 + 1) + 0)]
 
   dispatch({ type: "set-word", payload: word })

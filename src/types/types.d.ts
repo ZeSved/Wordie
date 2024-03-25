@@ -8,7 +8,6 @@ export type Game = {
   timeTaken: number
   toast: Toast
   started: boolean
-  language: Language
 }
 
 export type Token = {
@@ -27,7 +26,6 @@ export type Toast = {
 
 type Status = 'won' | 'lost' | 'playing'
 type Difficulty = 'easy' | 'medium' | 'hard' | 'extreme'
-type Language = 'english' | 'swedish'
 
 export type Action =
   | {
@@ -57,8 +55,4 @@ export type Action =
   | {
     type: 'set-started'
     payload: boolean
-  }
-  | {
-    type: 'set-language'
-    payload: Language
   }

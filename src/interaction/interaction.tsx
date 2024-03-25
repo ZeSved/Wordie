@@ -7,8 +7,6 @@ import Option, { InputBtn } from './option'
 import Alphabet from '../progress/alphabet'
 import { Indicate } from '../App'
 
-import globe from '../public/1200px-Globe_icon.png'
-
 type Info = {
 	text: string
 	color?: string
@@ -34,13 +32,11 @@ export default function Interaction({
 		}
 
 		document.getElementById('selectDiff')?.blur()
-		document.getElementById('selectLang')?.blur()
-	}, [game.difficulty, game.language])
+	}, [game.difficulty])
 
 	const hardMode = game.difficulty === 'extreme' || game.difficulty === 'hard'
 
 	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
-	const languages = ['english', 'swedish']
 	const inputBtns: InputBtn[] = [
 		{
 			text: 'difficulty',
@@ -48,13 +44,6 @@ export default function Interaction({
 			displayText: game.difficulty,
 			content: difficulties,
 			defaultValue: game.difficulty,
-		},
-		{
-			text: 'language',
-			inputType: 'select',
-			content: languages,
-			imgSrc: globe,
-			defaultValue: game.language,
 		},
 		{
 			text: 'Show Hints',
@@ -100,11 +89,6 @@ export default function Interaction({
 		},
 	]
 
-	const charachters = {
-		english: [''],
-		swedish: ['å', 'ä', 'ö'],
-	}
-
 	function colorIndication(color: string, maxValue: number, dependancy: number) {
 		const percentage = maxValue / 10
 
@@ -130,16 +114,6 @@ export default function Interaction({
 						{i !== inputBtns.length - 1 && <div className='border' />}
 					</>
 				))}
-				{game.language !== 'english' && (
-					<>
-						<div className='border' />
-						<div className={s.specialLetters}>
-							{charachters[`${game.language}`].map((le) => (
-								<button className={s.letter}>{le.toUpperCase()}</button>
-							))}
-						</div>
-					</>
-				)}
 			</section>
 			<section className={s.infoSection}>
 				{showAlphabet && (
