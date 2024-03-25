@@ -4,6 +4,7 @@
 	grid-template-columns: repeat(13, 1rem);
 
 	font-size: var(--gap-1);
+	padding-inline: var(--gap-1);
 
 	> p {
 		color: var(--secondary);

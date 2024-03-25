@@ -7330,5 +7330,5 @@ export const words = {
       "yourself",
       "zimbabwe"
     ],
-  }
+  },
 }

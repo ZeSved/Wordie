@@ -9,8 +9,10 @@ export default function Option({ btns, dispatch }: OptionProps) {
 	const [show, setShow] = useState<boolean>(false)
 
 	useEffect(() => {
-		document.getElementById(btns.text)?.blur()
-	}, [btns])
+		if (!show) {
+			document.getElementById(btns.text)?.blur()
+		}
+	}, [show])
 
 	function handleSelectEvents(currentTarget: HTMLSelectElement) {
 		const newOption = currentTarget.value as Difficulty
@@ -64,7 +66,9 @@ export default function Option({ btns, dispatch }: OptionProps) {
 				{btns.hasSvg ? (
 					<SVG color='var(--secondary)' />
 				) : btns.displayText ? (
-					<p className={btns.value ? s.on : ''}>{btns.displayText}</p>
+					<p className={classNames(!show ? s.show : s.hide, btns.value ? s.on : s.off)}>
+						{btns.displayText}
+					</p>
 				) : (
 					<img
 						src={btns.imgSrc}
@@ -72,9 +76,11 @@ export default function Option({ btns, dispatch }: OptionProps) {
 					/>
 				)}
 				<div
-					// style={{
-					// 	width: show ? `calc(var(--gap-1) * ${btns.text.length / 1.3})` : 0,
-					// }}
+					style={{
+						top: 'calc(var(--gap-1) * 2.5 * -1)',
+						left: '-20px',
+						width: show ? `calc(var(--gap-1) * ${btns.text.length / 1.3})` : 0,
+					}}
 					className={classNames(show ? s.show : s.hide, btns.value ? s.on : s.off)}>
 					<p>{btns.text}</p>
 				</div>
