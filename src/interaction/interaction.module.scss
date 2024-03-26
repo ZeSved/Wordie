@@ -19,6 +19,7 @@
 
 		> button {
 			--gap: calc(var(--gap-1) * 1.6);
+			position: relative;
 			padding-inline: var(--gap-1);
 
 			background-color: transparent;
@@ -41,12 +42,35 @@
 			}
 
 			> div {
-				position: relative;
+				position: absolute;
+				z-index: -3;
 				text-wrap: nowrap;
 				overflow: hidden;
 
+				transition: bottom 0.2s, width 0.2s;
+
+				&.show {
+					bottom: calc(var(--gap-1) * 3);
+					background: linear-gradient(90deg, var(--pink) 0%, var(--cta-200) 100%);
+
+					&.off > p {
+						color: var(--secondary);
+					}
+
+					&.on > p {
+						color: var(--primary);
+					}
+				}
+
+				&.hide {
+					bottom: 0;
+
+					> p {
+						color: transparent;
+					}
+				}
+
 				> p {
-					color: var(--secondary);
 					font-size: var(--gap-1);
 				}
 			}
