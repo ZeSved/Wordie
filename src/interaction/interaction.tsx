@@ -4,8 +4,8 @@ import { newGame } from '../utils/newGame'
 import { shorten } from '../utils/modify'
 import s from './interaction.module.scss'
 import Option, { InputBtn } from './option'
-import Alphabet from '../progress/alphabet'
 import { Indicate } from '../App'
+import classNames from 'classnames'
 
 type Info = {
 	text: string
@@ -35,6 +35,7 @@ export default function Interaction({
 	}, [game.difficulty])
 
 	const hardMode = game.difficulty === 'extreme' || game.difficulty === 'hard'
+	const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 	const difficulties = ['Easy', 'Medium', 'Hard', 'Extreme']
 	const inputBtns: InputBtn[] = [
@@ -70,6 +71,7 @@ export default function Interaction({
 			inputType: 'button',
 			hasSvg: true,
 			canEnable: true,
+			toggleable: false,
 		},
 	]
 
@@ -116,12 +118,26 @@ export default function Interaction({
 				))}
 			</section>
 			<section className={s.infoSection}>
-				{showAlphabet && (
-					<>
-						<Alphabet indicate={indicate} />
-						<div className='border' />
-					</>
-				)}
+				<div className={classNames(s.letters, showAlphabet ? s.show : s.hide)}>
+					<div>
+						{letters.map((letter) => (
+							<p
+								style={{
+									color: indicate.correct.includes(letter)
+										? '#00ff00'
+										: indicate.inWord.includes(letter)
+										? '#eeff00'
+										: indicate.notInWord.includes(letter)
+										? 'var(--secondary-faint)'
+										: 'var(--secondary)',
+								}}
+								key={letter}>
+								{letter}
+							</p>
+						))}
+					</div>
+					<div className='border' />
+				</div>
 				{info.map((inf, i) => (
 					<>
 						{i !== 0 && <div className='border' />}

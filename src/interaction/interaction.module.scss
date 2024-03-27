@@ -47,23 +47,33 @@
 				text-wrap: nowrap;
 				overflow: hidden;
 
-				transition: bottom 0.2s, width 0.2s;
+				transition: bottom 0.2s, width 0.2s, background 0.2s;
+				border-radius: 100vh;
 
 				&.show {
 					bottom: calc(var(--gap-1) * 3);
-					background: linear-gradient(90deg, var(--pink) 0%, var(--cta-200) 100%);
 
-					&.off > p {
-						color: var(--secondary);
+					&.on,
+					&:not(.toggle) {
+						background: linear-gradient(90deg, var(--pink) 0%, var(--cta-200) 100%);
+
+						> p {
+							color: var(--primary);
+						}
 					}
 
-					&.on > p {
-						color: var(--primary);
+					&.off {
+						background: transparent;
+
+						> p {
+							color: var(--secondary);
+						}
 					}
 				}
 
 				&.hide {
 					bottom: 0;
+					background: transparent;
 
 					> p {
 						color: transparent;
@@ -90,6 +100,45 @@
 
 			> p {
 				color: var(--secondary);
+			}
+		}
+
+		.letters {
+			// transition: color 0.2s, grid-template-columns 0.2s, width 0.2s;
+			transition: all 0.2s;
+
+			&.show {
+				width: calc(var(--gap-1) * 13);
+
+				> div {
+					grid-template-columns: repeat(13, var(--gap-1));
+
+					padding-inline: var(--gap-1);
+
+					> p {
+						color: var(--secondary);
+					}
+				}
+			}
+
+			&.hide {
+				width: 0px;
+
+				> div {
+					grid-template-columns: repeat(13, 0px);
+
+					padding-inline: 0px;
+
+					> p {
+						color: transparent;
+					}
+				}
+			}
+
+			> div {
+				display: grid;
+
+				font-size: var(--gap-1);
 			}
 		}
 	}

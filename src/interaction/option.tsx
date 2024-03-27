@@ -77,10 +77,14 @@ export default function Option({ btns, dispatch }: OptionProps) {
 				)}
 				<div
 					style={{
-						width: show ? `calc(var(--gap-1) * ${btns.text.length / 1.3})` : 0,
+						width: `calc(var(--gap-1) * ${btns.text.length / 1.3})`,
 						right: `calc(var(--gap-1) * -${btns.text.length / 5})`,
 					}}
-					className={classNames(show ? s.show : s.hide, btns.value ? s.on : s.off)}>
+					className={classNames(
+						show ? s.show : s.hide,
+						btns.value ? s.on : s.off,
+						btns.toggleable ? s.toggle : ''
+					)}>
 					<p>{btns.text}</p>
 				</div>
 			</button>
@@ -99,6 +103,7 @@ export type InputBtn = {
 	imgSrc?: string
 	displayText?: string
 	hasSvg?: boolean
+	toggleable?: boolean
 } & (
 	| {
 			inputType: 'select'
