@@ -45,7 +45,7 @@
 		> h2,
 		> h3 {
 			text-align: center;
-			color: var(--cta-400);
+			@include mixins.textGrad(var(--pink), var(--cta-200));
 			background-color: var(--accent);
 			border-radius: var(--gap-2);
 		}
@@ -91,14 +91,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	border: 2px solid var(--cta-600);
-	border-radius: 100vh;
+	border-radius: var(--gap-2);
+	background-color: var(--primary);
 
 	> div {
-		flex-grow: 1;
-		display: flex;
-		justify-content: center;
-
 		> button {
 			border: none;
 			outline: none;

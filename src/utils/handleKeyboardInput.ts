@@ -1,6 +1,7 @@
 import { Action, Game, Token } from "../types/types"
 import { Indicate, allTimeStats } from "../App"
 import { ProgressOnRow } from "../game board/game-board"
+// import { words as list } from "../constants/words"
 
 const ALLOWED_LETTERS = /^[a-zA-Z]$/
 
@@ -97,6 +98,8 @@ export function handleKeyboardInput(
   // If the Enter key was pressed
   if (e.key === 'Enter') {
     if (index !== -1) return
+    // if (list.english[`letters_${game.word.length}` as keyof typeof list.english].includes(game.word)) return
+
     const lastRow = helper.checkCurrentRow(game)
     const gameWon = lastRow ? true : game.curRow === 5 ? false : undefined
 

@@ -47,7 +47,7 @@ export default function Interaction({
 			defaultValue: game.difficulty,
 		},
 		{
-			text: 'Show Hints',
+			text: ['show', 'hints'],
 			canEnable: game.difficulty !== 'extreme',
 			setValue: setShowHints,
 			value: showHints,
@@ -55,7 +55,7 @@ export default function Interaction({
 			displayText: '?',
 		},
 		{
-			text: 'Show Alphabet',
+			text: ['show', 'alphabet'],
 			canEnable: !hardMode,
 			setValue: setShowAlphabet,
 			value: showAlphabet,
@@ -63,7 +63,7 @@ export default function Interaction({
 			displayText: 'ABC',
 		},
 		{
-			text: 'Regenerate Word',
+			text: ['regenerate', 'word'],
 			func: () => {
 				newGame(dispatch, game)
 				dispatch({ type: 'set-toast', payload: { text: 'Generated new word and reset game.' } })
@@ -136,8 +136,8 @@ export default function Interaction({
 							</p>
 						))}
 					</div>
-					<div className='border' />
 				</div>
+				{showAlphabet && <div className='border' />}
 				{info.map((inf, i) => (
 					<>
 						{i !== 0 && <div className='border' />}

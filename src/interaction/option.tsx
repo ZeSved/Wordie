@@ -10,7 +10,7 @@ export default function Option({ btns, dispatch }: OptionProps) {
 
 	useEffect(() => {
 		if (!show) {
-			document.getElementById(btns.text)?.blur()
+			document.getElementById(btns.text[1])?.blur()
 		}
 	}, [show])
 
@@ -30,7 +30,7 @@ export default function Option({ btns, dispatch }: OptionProps) {
 		<>
 			<select
 				onChange={(e) => handleSelectEvents(e.currentTarget)}
-				id={btns.text}
+				id={btns.text[1]}
 				defaultValue={btns.defaultValue}>
 				{btns.content.map((d) => (
 					<option
@@ -55,13 +55,13 @@ export default function Option({ btns, dispatch }: OptionProps) {
 									type: 'set-toast',
 									payload: {
 										text: `${
-											btns.text === 'word' ? 'Regenerating' : btns.value ? 'Hiding' : 'Showing'
-										} ${btns.text}.`,
+											btns.text[1] === 'word' ? 'Regenerating' : btns.value ? 'Hiding' : 'Showing'
+										} ${btns.text[1]}.`,
 									},
 								})
 						  }
 				}
-				id={btns.text}
+				id={btns.text[1]}
 				disabled={!btns.canEnable}>
 				{btns.hasSvg ? (
 					<SVG color='var(--secondary)' />
@@ -72,20 +72,21 @@ export default function Option({ btns, dispatch }: OptionProps) {
 				) : (
 					<img
 						src={btns.imgSrc}
-						alt={btns.text}
+						alt={btns.text[1]}
 					/>
 				)}
 				<div
 					style={{
-						width: `calc(var(--gap-1) * ${btns.text.length / 1.3})`,
-						right: `calc(var(--gap-1) * -${btns.text.length / 5})`,
+						right: `calc(var(--gap-1) * -${(btns.text[1].length + btns.text[0].length) / 4.4})`,
 					}}
 					className={classNames(
 						show ? s.show : s.hide,
 						btns.value ? s.on : s.off,
 						btns.toggleable ? s.toggle : ''
 					)}>
-					<p>{btns.text}</p>
+					<p>
+						{capitalize(btns.text[0])} {capitalize(btns.text[1])}
+					</p>
 				</div>
 			</button>
 		</>
@@ -98,7 +99,7 @@ type OptionProps = {
 }
 
 export type InputBtn = {
-	text: string
+	text: string[] | string
 	canEnable?: boolean
 	imgSrc?: string
 	displayText?: string
