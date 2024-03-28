@@ -21,13 +21,14 @@ export default function Board({
 }) {
 	const [progress, setProgress] = useState<number[]>([])
 	const [progressOnRow, setProgressOnRow] = useState<ProgressOnRow>({ correct: [], exists: [] })
+	const [guessedWord, setGuessedWord] = useState<string[]>([])
 
 	useEffect(() => {
 		setProgress([])
 		setProgressOnRow({ correct: [], exists: [] })
 
-		document.querySelectorAll('.letter').forEach((el) => {
-			;/'hint'/.test(el.classList[1]) && el.classList.remove(el.classList[1])
+		document.querySelectorAll('.letter').forEach((elem) => {
+			;/'hint'/.test(elem.classList[1]) && elem.classList.remove(elem.classList[1])
 		})
 	}, [game.word])
 
@@ -56,15 +57,17 @@ export default function Board({
 	useEffect(() => {
 		function keyDownHandler(e: KeyboardEvent) {
 			handleKeyboardInput(
-				e,
+				e.key,
 				game,
-				dispatch,
 				progress,
-				setProgress,
 				progressOnRow,
-				setProgressOnRow,
 				indicate,
-				setIndicate
+				guessedWord,
+				dispatch,
+				setProgress,
+				setProgressOnRow,
+				setIndicate,
+				setGuessedWord
 			)
 		}
 

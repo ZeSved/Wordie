@@ -1,32 +1,36 @@
 import { Action, Game, Token } from "../types/types"
 import { Indicate, allTimeStats } from "../App"
 import { ProgressOnRow } from "../game board/game-board"
-// import { words as list } from "../constants/words"
+import { words as list } from "../constants/words"
 
 const ALLOWED_LETTERS = /^[a-zA-Z]$/
 
 export function handleKeyboardInput(
-  e: KeyboardEvent,
+  key: string,
+
   game: Game,
-  dispatch: React.Dispatch<Action>,
   progress: number[],
-  setProgress: React.Dispatch<React.SetStateAction<number[]>>,
   progressOnRow: ProgressOnRow,
-  setProgressOnRow: React.Dispatch<React.SetStateAction<ProgressOnRow>>,
   indicate: Indicate,
-  setIndicate: React.Dispatch<React.SetStateAction<Indicate>>
+  guessedWord: string[],
+
+  dispatch: React.Dispatch<Action>,
+  setProgress: React.Dispatch<React.SetStateAction<number[]>>,
+  setProgressOnRow: React.Dispatch<React.SetStateAction<ProgressOnRow>>,
+  setIndicate: React.Dispatch<React.SetStateAction<Indicate>>,
+  setGuessedWord: React.Dispatch<React.SetStateAction<string[]>>
 ) {
   const index = helper.findFirstInRow(game)
   const curRowArr = game.wordList[game.curRow]
   const allTime = JSON.parse(window.localStorage.getItem('allTimeStats') ?? JSON.stringify(allTimeStats))
-  const key = e.key.toLowerCase()
+  const Lkey = key.toLowerCase()
   const { correct, exists }: ProgressOnRow = progressOnRow
   const { correct: c, notInWord: nIW, inWord: iW }: Indicate = indicate
 
   if (!game.started && game.timeTaken > 0) return
 
   // If any alphabetic key was pressed
-  if (ALLOWED_LETTERS.test(e.key)) {
+  if (ALLOWED_LETTERS.test(key)) {
     if (index === -1) return
     const { guessed: guess, content }: Token = curRowArr[index]
 
@@ -35,19 +39,21 @@ export function handleKeyboardInput(
       dispatch({ type: 'set-time', payload: game.timeTaken += 1 })
     }
 
-    guess.content = e.key.toUpperCase()
+    guess.content = key.toUpperCase()
     guess.correct = content === guess.content
 
-    if (guess.correct) {
-      correct.push(key)
+    setGuessedWord([...guessedWord, guess.content])
 
-      if (exists.includes(key) && helper.remaining(game, progressOnRow, key).full) {
-        exists.splice(exists.indexOf(key), 1)
+    if (guess.correct) {
+      correct.push(Lkey)
+
+      if (exists.includes(Lkey) && helper.remaining(game, progressOnRow, Lkey).full) {
+        exists.splice(exists.indexOf(Lkey), 1)
       }
     }
 
-    if (helper.remaining(game, progressOnRow, key).remaining && !helper.remaining(game, progressOnRow, key).full) {
-      if (!guess.correct && game.word.includes(key)) exists.push(key)
+    if (helper.remaining(game, progressOnRow, Lkey).remaining && !helper.remaining(game, progressOnRow, Lkey).full) {
+      if (!guess.correct && game.word.includes(Lkey)) exists.push(Lkey)
     }
 
     if (!progress.includes(index) && guess.correct) { setProgress([...progress, index]) }
@@ -57,7 +63,7 @@ export function handleKeyboardInput(
   }
 
   // If the Backspace key was pressed
-  if (e.key === 'Backspace') {
+  if (key === 'Backspace') {
     if (index === 0) return
 
     const prevLetterIndex = (index === -1 ? game.word.length : index) - 1
@@ -92,13 +98,16 @@ export function handleKeyboardInput(
     prevLetCurRow.guessed.content = ''
     setProgress(progress)
     setProgressOnRow(progressOnRow)
+
+    guessedWord.splice(guessedWord.length - 1, 1)
+    setGuessedWord(guessedWord)
     return helper.updateWordList(game.wordList, dispatch)
   }
 
   // If the Enter key was pressed
-  if (e.key === 'Enter') {
+  if (key === 'Enter') {
     if (index !== -1) return
-    // if (list.english[`letters_${game.word.length}` as keyof typeof list.english].includes(game.word)) return
+    if (!list.english[`letters_${game.word.length}` as keyof typeof list.english].includes(guessedWord.join('').toLowerCase())) return
 
     const lastRow = helper.checkCurrentRow(game)
     const gameWon = lastRow ? true : game.curRow === 5 ? false : undefined
@@ -140,6 +149,7 @@ export function handleKeyboardInput(
     }
 
     setProgressOnRow({ correct: [], exists: [] })
+    setGuessedWord([])
     return dispatch({ type: "set-cur_row", payload: game.curRow + 1 })
   }
 }

@@ -91,6 +91,7 @@ function App() {
 
 	useEffect(() => {
 		setIndicate({ correct: [], notInWord: [], inWord: [] })
+		clearInterval(intervalId)
 	}, [game.word])
 
 	useEffect(() => {
