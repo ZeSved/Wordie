@@ -17,6 +17,9 @@
 	.current .box {
 		border-bottom: 4px solid var(--cta-200);
 	}
+	.wrong .box {
+		animation: wrong forwards 0.5s;
+	}
 
 	> div {
 		flex-grow: 1;
@@ -71,5 +74,14 @@
 	}
 	to {
 		opacity: 1;
+	}
+}
+
+@keyframes wrong {
+	from {
+		border-color: red;
+	}
+	to {
+		border-color: var(--cta-200);
 	}
 }

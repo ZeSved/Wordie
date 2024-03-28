@@ -57,7 +57,7 @@ export default function Board({
 	useEffect(() => {
 		function keyDownHandler(e: KeyboardEvent) {
 			handleKeyboardInput(
-				e.key,
+				e,
 				game,
 				progress,
 				progressOnRow,
@@ -89,6 +89,7 @@ export default function Board({
 			{game.wordList.map((ltr, i) => (
 				<div
 					className={game.curRow === i ? s.current : ''}
+					id={game.curRow === i ? 'current' : ''}
 					key={i}>
 					{ltr.map((lt, j) => (
 						<div

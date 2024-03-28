@@ -2,11 +2,12 @@ import { Action, Game, Token } from "../types/types"
 import { Indicate, allTimeStats } from "../App"
 import { ProgressOnRow } from "../game board/game-board"
 import { words as list } from "../constants/words"
+import s from '../game board/game-board.module.scss'
 
 const ALLOWED_LETTERS = /^[a-zA-Z]$/
 
 export function handleKeyboardInput(
-  key: string,
+  e: KeyboardEvent,
 
   game: Game,
   progress: number[],
@@ -23,14 +24,14 @@ export function handleKeyboardInput(
   const index = helper.findFirstInRow(game)
   const curRowArr = game.wordList[game.curRow]
   const allTime = JSON.parse(window.localStorage.getItem('allTimeStats') ?? JSON.stringify(allTimeStats))
-  const Lkey = key.toLowerCase()
+  const Lkey = e.key.toLowerCase()
   const { correct, exists }: ProgressOnRow = progressOnRow
   const { correct: c, notInWord: nIW, inWord: iW }: Indicate = indicate
 
   if (!game.started && game.timeTaken > 0) return
 
   // If any alphabetic key was pressed
-  if (ALLOWED_LETTERS.test(key)) {
+  if (ALLOWED_LETTERS.test(e.key)) {
     if (index === -1) return
     const { guessed: guess, content }: Token = curRowArr[index]
 
@@ -39,7 +40,7 @@ export function handleKeyboardInput(
       dispatch({ type: 'set-time', payload: game.timeTaken += 1 })
     }
 
-    guess.content = key.toUpperCase()
+    guess.content = e.key.toUpperCase()
     guess.correct = content === guess.content
 
     setGuessedWord([...guessedWord, guess.content])
@@ -63,7 +64,7 @@ export function handleKeyboardInput(
   }
 
   // If the Backspace key was pressed
-  if (key === 'Backspace') {
+  if (e.key === 'Backspace') {
     if (index === 0) return
 
     const prevLetterIndex = (index === -1 ? game.word.length : index) - 1
@@ -105,9 +106,15 @@ export function handleKeyboardInput(
   }
 
   // If the Enter key was pressed
-  if (key === 'Enter') {
+  if (e.key === 'Enter') {
     if (index !== -1) return
-    if (!list.english[`letters_${game.word.length}` as keyof typeof list.english].includes(guessedWord.join('').toLowerCase())) return
+    if (!list.english[`letters_${game.word.length}` as keyof typeof list.english].includes(guessedWord.join('').toLowerCase())) {
+      const cur = document.getElementById('current')
+
+      cur?.classList.add(s.wrong)
+      setTimeout(() => cur?.classList.remove(s.wrong), 550)
+      return
+    }
 
     const lastRow = helper.checkCurrentRow(game)
     const gameWon = lastRow ? true : game.curRow === 5 ? false : undefined
