@@ -1,8 +1,6 @@
 import { Action, Game, Token } from "../types/types"
 import { Indicate, allTimeStats } from "../App"
 import { ProgressOnRow } from "../game board/game-board"
-import { words as list } from "../constants/words"
-import s from '../game board/game-board.module.scss'
 
 const ALLOWED_LETTERS = /^[a-zA-Z]$/
 
@@ -108,13 +106,6 @@ export function handleKeyboardInput(
   // If the Enter key was pressed
   if (e.key === 'Enter') {
     if (index !== -1) return
-    if (!list.english[`letters_${game.word.length}` as keyof typeof list.english].includes(guessedWord.join('').toLowerCase())) {
-      const cur = document.getElementById('current')
-
-      cur?.classList.add(s.wrong)
-      setTimeout(() => cur?.classList.remove(s.wrong), 550)
-      return
-    }
 
     const lastRow = helper.checkCurrentRow(game)
     const gameWon = lastRow ? true : game.curRow === 5 ? false : undefined
