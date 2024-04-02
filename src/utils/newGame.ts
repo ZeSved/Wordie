@@ -13,7 +13,7 @@ export function newGame(
   const index: keyof typeof list.english = `letters_${numberOfCharachters}`
 
   const collection = list.english[index]
-  const word = collection[Math.floor(Math.random() * ((collection.length - 1) - 0 + 1) + 0)]
+  const word = collection[Math.floor(Math.random() * ((collection.length - 1) - 0 + 1) + 0)].toLowerCase()
 
   dispatch({ type: "set-word", payload: word })
   dispatch({ type: "set-word-list", payload: createContent(word) })
